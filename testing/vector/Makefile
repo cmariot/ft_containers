@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/03 15:19:22 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/03 17:13:18 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ clean :
 fclean :
 				@-rm -f $(NAME)
 				@-rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
+				@-rm -f VECTOR.log
 				@make fclean -C ../framework --no-print-directory
 				@printf "$(RED)"
 				@printf "Binary and object files removed\n"

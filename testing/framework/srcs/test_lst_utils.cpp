@@ -6,28 +6,25 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:35:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 15:53:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:45:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-t_test	*ft_rettest_lst(char *function, char *test_name,
-			void *test_add, char *expected_output)
+t_test	*ft_rettest_lst(std::string function, std::string test_name,
+			void *test_add, std::string expected_output)
 {
 	t_test		*ret;
-	std::string	tmp;
 
-	ret = (t_test *)malloc(sizeof(t_test));
+	ret = new t_test;
 	if (ret)
 	{
 		ret->function = function;
 		ret->test_name = test_name;
 		ret->test_add = (int (*)())test_add;
 		ret->expected_output = expected_output;
-		ret->filename = ft_strjoin(function, "_");
-		tmp = ret->filename + test_name;
-		ret->filename = tmp +  ".log";
+		ret->filename = function + "_" + ret->test_name + ".log";
 		ret->status = -2;
 		ret->next = NULL;
 		return (ret);
@@ -73,13 +70,13 @@ void	ft_cleartest_lst(t_test **test, bool opt)
 		tmp = (t_test *)(*test)->next;
 		if (opt == 1)
 			unlink((*test)->filename.c_str());
-		free(*test);
+		delete *test;
 		*test = tmp;
 	}
 }
 
-void	load_test(t_test **test, char *function, char *test_name,
-			void *function_add, char *expected_output)
+void	load_test(t_test **test, std::string function, std::string test_name,
+			void *function_add, std::string expected_output)
 {
 	if (test == NULL)
 		*test = ft_rettest_lst(function, test_name,

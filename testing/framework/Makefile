@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/03 15:16:05 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/03 16:42:16 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ SRC_ROOTDIR		= srcs/
 
 
 SRC_FILES	    = launch_tests.cpp \
-				  libft.cpp \
 				  logfiles.cpp \
 				  output.cpp \
 				  result_file.cpp \

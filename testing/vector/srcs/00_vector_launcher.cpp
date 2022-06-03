@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_laucher.cpp                                 :+:      :+:    :+:   */
+/*   00_vector_launcher.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 14:51:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:50:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	vector_launcher(void)
 {
 	s_test	*tests = NULL;
-	char	*function_name = (char *)"VECTOR";
+	std::string function_name = "VECTOR";
 
-	load_test(&tests, function_name, (char *)"Constructor", (void *)&constructor_test, NULL);
+	load_test(&tests, function_name, "Constructor", (void *)&constructor_test, "");
 	return (launch_tests(&tests));
 }

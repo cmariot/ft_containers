@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 15:58:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:41:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	create_threads(t_test **test)
 	return (status);
 }
 
-void	execute_test(t_test **test)
+void	execute_test(t_test **test, int log_file)
 {
 	pid_t	pid;
 	int		status;
@@ -61,6 +61,7 @@ void	execute_test(t_test **test)
 	{
 		output_redirection(&fd, &stdout_backup, *test);
 		status = create_threads(test);
+		close(log_file);
 		exit_child(test, &fd, &stdout_backup, status);
 	}
 	else
@@ -72,8 +73,6 @@ void	execute_test(t_test **test)
 			(*test)->status = WTERMSIG(status);
 	}
 }
-
-#define STDOUT 1
 
 int	launch_tests(t_test **test)
 {
@@ -90,7 +89,7 @@ int	launch_tests(t_test **test)
 	std::cout << (*test)->function << " TESTS:" << std::endl;
 	while (*test)
 	{
-		execute_test(test);
+		execute_test(test, log_file);
 		print_test_output(*test, total_number_of_tests, log_file);
 		if ((*test)->status == OK)
 			count_of_succeeded_tests++;

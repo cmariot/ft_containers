@@ -6,43 +6,34 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:47:45 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 15:44:54 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:31:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-char	*add_buf_to_str(char **str, char *buf)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*str, buf);
-	free(*str);
-	return (tmp);
-}
-
 std::string	filename_to_str(std::string file)
 {
 	int		file_descriptor;
 	int		read_return;
-	char	buf[255];
-	char	*str;
+	std::string buf;
+	std::string str;
 
 	file_descriptor = open(file.c_str(), O_RDONLY);
 	if (file_descriptor == -1)
 		std::cerr << "Error, open failed." << std::endl;
-	str = NULL;
+	str = "";
 	read_return = 1;
 	while (read_return)
 	{
-		read_return = read(file_descriptor, buf, 255);
+		read_return = read(file_descriptor, (char *)buf.c_str(), 255);
 		if (read_return == -1)
 			return (NULL);
 		buf[read_return] = '\0';
-		if (str == NULL)
-			str = ft_strdup(buf);
+		if (str.empty() == true)
+			str = buf;
 		else
-			str = add_buf_to_str(&str, buf);
+			str += buf;
 	}
 	close(file_descriptor);
 	return (str);
