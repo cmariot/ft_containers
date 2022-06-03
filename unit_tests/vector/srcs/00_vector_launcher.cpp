@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_constructor_test.cpp                            :+:      :+:    :+:   */
+/*   00_vector_launcher.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 16:52:25 by cmariot          ###   ########.fr       */
+/*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
+/*   Updated: 2022/06/03 17:29:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	constructor_test(void)
+int	vector_launcher(void)
 {
-	ft::vector			constructor;
-	
-	return (0);
+	s_test	*tests = NULL;
+	std::string function_name = "VECTOR";
+
+	load_test(&tests, function_name, "Constructor", (void *)&constructor_test, "");
+	return (launch_tests(&tests));
 }
