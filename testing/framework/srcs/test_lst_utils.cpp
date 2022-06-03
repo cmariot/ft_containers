@@ -1,0 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_lst_utils.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 23:35:51 by cmariot           #+#    #+#             */
+/*   Updated: 2022/06/03 15:53:02 by cmariot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libunit.hpp"
+
+t_test	*ft_rettest_lst(char *function, char *test_name,
+			void *test_add, char *expected_output)
+{
+	t_test		*ret;
+	std::string	tmp;
+
+	ret = (t_test *)malloc(sizeof(t_test));
+	if (ret)
+	{
+		ret->function = function;
+		ret->test_name = test_name;
+		ret->test_add = (int (*)())test_add;
+		ret->expected_output = expected_output;
+		ret->filename = ft_strjoin(function, "_");
+		tmp = ret->filename + test_name;
+		ret->filename = tmp +  ".log";
+		ret->status = -2;
+		ret->next = NULL;
+		return (ret);
+	}
+	else
+		return (NULL);
+}
+
+t_test	*ft_lasttest_lst(t_test *test)
+{
+	if (test)
+	{
+		while (test->next)
+			test = (t_test *)test->next;
+		return (test);
+	}
+	else
+		return (NULL);
+}
+
+void	ft_addtest_lst(t_test **test_add, t_test *ret)
+{
+	t_test	*tmp;
+
+	if (test_add)
+	{
+		if (*test_add == NULL)
+			*test_add = ret;
+		else
+		{
+			tmp = ft_lasttest_lst(*test_add);
+			tmp->next = ret;
+		}
+	}
+}
+
+void	ft_cleartest_lst(t_test **test, bool opt)
+{
+	t_test	*tmp;
+
+	while (*test)
+	{
+		tmp = (t_test *)(*test)->next;
+		if (opt == 1)
+			unlink((*test)->filename.c_str());
+		free(*test);
+		*test = tmp;
+	}
+}
+
+void	load_test(t_test **test, char *function, char *test_name,
+			void *function_add, char *expected_output)
+{
+	if (test == NULL)
+		*test = ft_rettest_lst(function, test_name,
+				function_add, expected_output);
+	else
+		ft_addtest_lst(test, ft_rettest_lst(function, test_name,
+				function_add, expected_output));
+}
