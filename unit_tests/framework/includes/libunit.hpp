@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 14:35:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/04 14:50:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 
 # include <iostream>
+# include <iomanip>
 # include <fstream>
 
 # define OK 0
@@ -67,7 +68,7 @@ void			exit_child(t_test **test, int *fd, int *stdout_backup, int status);
 
 std::ofstream	create_log_file(t_test *test);
 void			check_stdout_output(t_test *test, int fd);
-void			print_test_output(t_test *test, int test_number, std::ofstream &fd);
+void			print_test_output(t_test *test, int test_number, std::ofstream &fd, bool cout);
 int				display_results(int count_of_succeeded_tests, int total_number_of_tests);
 
 /* TIMEOUT.C */

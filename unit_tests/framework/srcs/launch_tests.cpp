@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 14:16:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/04 14:53:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	create_threads(t_test **test)
 		if (check_timeout(init_time))
 		{
 			pthread_cancel(thread_id);
+			pthread_join(thread_id, NULL);
 			return (TIMEOUT);
 		}
 		else if ((*test)->status != -2)
@@ -92,7 +93,7 @@ int	launch_tests(t_test **test)
 	while (*test)
 	{
 		execute_test(test, log_file);
-		print_test_output(*test, total_number_of_tests, log_file);
+		print_test_output(*test, total_number_of_tests, log_file, false);
 		if ((*test)->status == OK)
 			count_of_succeeded_tests++;
 		total_number_of_tests++;

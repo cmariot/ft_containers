@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 14:26:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:06:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	check_stdout_output(t_test *test, std::ofstream &fd)
 	else
 	{
 		fd << std::endl;
-		fd << "[OUTPUT :" << std::endl << output << "]" << std::endl;
+		fd << "[OUTPUT] :" << std::endl << output << std::endl;
 	}
 }
 
-void	print_test_output(t_test *test, int test_number, std::ofstream &fd)
+void	print_test_output(t_test *test, int test_number, std::ofstream &fd, bool cout)
 {
-	if (fd != std::cout)
-		print_test_output(test, test_number, (std::ofstream &)std::cout);
+	if (cout == false)
+		print_test_output(test, test_number, (std::ofstream &)std::cout, true);
 	fd << test->function << "_";
 	fd << std::setw(2) << std::setfill('0');
 	fd << test_number;
