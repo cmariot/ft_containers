@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:47:45 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/03 16:31:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/04 14:14:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,16 @@
 
 std::string	filename_to_str(std::string file)
 {
-	int		file_descriptor;
-	int		read_return;
-	std::string buf;
-	std::string str;
-
-	file_descriptor = open(file.c_str(), O_RDONLY);
-	if (file_descriptor == -1)
-		std::cerr << "Error, open failed." << std::endl;
-	str = "";
-	read_return = 1;
-	while (read_return)
-	{
-		read_return = read(file_descriptor, (char *)buf.c_str(), 255);
-		if (read_return == -1)
-			return (NULL);
-		buf[read_return] = '\0';
-		if (str.empty() == true)
-			str = buf;
-		else
-			str += buf;
-	}
-	close(file_descriptor);
-	return (str);
+	std::ifstream	ifs(file);
+	
+	if (ifs.is_open() == false)
+		return ("");
+	std::string		content(
+				(std::istreambuf_iterator<char>(ifs)),
+				(std::istreambuf_iterator<char>())
+			);
+	ifs.close();
+	return (content);
 }
 
 void	exit_child(t_test **test, int *fd, int *stdout_backup, int status)
