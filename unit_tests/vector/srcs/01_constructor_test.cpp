@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 13:50:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/05 14:54:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 int	constructor_test(void)
 {
-	ft::vector<int>			constructor;
+	std::vector<char>			std;
+	ft::vector<char>			ft;
 
-	std::cout << "lol" << std::endl;
-	return (0);
+	if (ft.size() != std.size())
+		return (1);
+	if (ft.empty() != std.empty())
+		return (1);
+	if (ft.max_size() != std.max_size())
+		return (1);
+	else
+		return (0);
 }
