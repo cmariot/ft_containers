@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:05:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 16:33:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ namespace	ft
 				//CONSTRUCTORS
 					
 					// Empty container constructor (default constructor)
-					explicit vector (const allocator_type& alloc = allocator_type()) : _elements(NULL), _size(0), _capacity(0), _allocator(alloc)
+					explicit vector (const allocator_type& alloc = allocator_type())
+						: _elements(NULL), _size(0), _capacity(0), _allocator(alloc)
 					{
 						return ;
 					};
