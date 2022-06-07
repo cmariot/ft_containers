@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_constructor_tests.cpp                           :+:      :+:    :+:   */
+/*   15_assign.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:12:31 by cmariot          ###   ########.fr       */
+/*   Created: 2022/06/07 09:15:59 by cmariot           #+#    #+#             */
+/*   Updated: 2022/06/07 09:19:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	constructor_test(void)
+int	assign_test(void)
 {
-	std::vector<char>			std;
-	ft::vector<char>			ft;
-
-	if (ft.size() != std.size())
-		return (1);
-	if (ft.empty() != std.empty())
-		return (2);
-	if (ft.max_size() != std.max_size())
-		return (3);
-	else
-		return (0);
+	return (1);
 }

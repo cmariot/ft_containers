@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/05 19:33:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:05:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 
 namespace	ft
 {
-	
-	template	<class T>
-	T const &	min(T const & a, T const & b) {
-		return (a < b ? a : b);
-	}
 
 	/*
 	 * Vectors are used to store elements in a strict linear sequence.
@@ -41,38 +36,48 @@ namespace	ft
 	{
 
 		//TYPE ALIAS
-			typedef T			value_type;
-			typedef Alloc		allocator_type;
-			typedef T &			reference;
-			typedef const T &	const_reference;
-			typedef T *			pointer;
-			typedef const T *	const_pointer;
-			//typedef 		iterator;
-			//typedef 		const_iterator;
-			//typedef 		reverse_iterator;
-			//typedef 		const_reverse_iterator;
-			typedef ptrdiff_t	difference_type;
-			typedef size_t		size_type;
+			public :
+				typedef T			value_type;
+				typedef Alloc		allocator_type;
+				typedef T &			reference;
+				typedef const T &	const_reference;
+				typedef T *			pointer;
+				typedef const T *	const_pointer;
+				//typedef 		iterator;
+				//typedef 		const_iterator;
+				//typedef 		reverse_iterator;
+				//typedef 		const_reverse_iterator;
+				typedef ptrdiff_t	difference_type;
+				typedef size_t		size_type;
 
 
 
 		//MEMBER TYPES :
 			public :
-				pointer					_elements;
-				size_type				_size;				//nb elements in the vector
-				size_type				_capacity;			//storage space currently allocated
-
 			private :
+				//iterator __begin_;
+				//iterator __end_;
+				pointer		_elements;
+				size_type	_size;
+				size_type	_capacity;
+				Alloc		_allocator;
 
 
 		//MEMBER FUNCTIONS :
 			public :
+				
 				//CONSTRUCTORS
-					//Default constructor
-					vector() : _elements(NULL), _size(0), _capacity(0)
+					
+					// Empty container constructor (default constructor)
+					explicit vector (const allocator_type& alloc = allocator_type()) : _elements(NULL), _size(0), _capacity(0), _allocator(alloc)
 					{
 						return ;
 					};
+					// Fill constructor
+//					vector(size_type n, ) : _elements(NULL)
+					// explicit vector(size_type n, )
+					// Range constructor
+					// Copy constructor
 				//DESTRUCTOR
 					~vector() {};
 				//OPERATOR=
@@ -90,7 +95,7 @@ namespace	ft
 					//MAX_SIZE
 					size_type max_size() const
 					{
-						return (ft::min((size_type)std::numeric_limits<difference_type>::max(),
+						return (std::min((size_type)std::numeric_limits<difference_type>::max(),
 							std::numeric_limits<size_type>::max() / sizeof(value_type)));
 					};
 					//RESIZE

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/05 03:01:42 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/05 22:47:17 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,9 @@ LIBRARY			 = -L ../framework -lunit
 
 SRC_ROOTDIR		= srcs/
 
-SRC_SUBDIR	    = 00_main.cpp \
+SRC_SUBDIR	    = main.cpp \
 				  00_vector_launcher.cpp \
-				  01_constructor_test.cpp
+				  01_constructor_tests.cpp
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 

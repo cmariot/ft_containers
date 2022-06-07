@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 15:12:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/05 23:10:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	print_test_output(t_test *test, int test_number, std::ofstream &fd, bool co
 	fd << std::setw(2) << std::setfill('0');
 	fd << test_number;
 	fd << ": " << test->test_name << ":\t";
+	fd << "\t";
 	if (test->status == OK)
 		fd << GREEN"[OK]" RESET;
 	else if (test->status == KO)
