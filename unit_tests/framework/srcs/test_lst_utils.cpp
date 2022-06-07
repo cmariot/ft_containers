@@ -6,13 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:35:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 15:38:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:26:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-t_test	*ft_rettest_lst(std::string function, std::string test_name,
+t_test	*new_test_list(std::string function, std::string test_name,
 			void *test_add, std::string expected_output)
 {
 	t_test		*ret;
@@ -33,7 +33,7 @@ t_test	*ft_rettest_lst(std::string function, std::string test_name,
 		return (NULL);
 }
 
-t_test	*ft_lasttest_lst(t_test *test)
+t_test	*get_last_test(t_test *test)
 {
 	if (test)
 	{
@@ -45,7 +45,7 @@ t_test	*ft_lasttest_lst(t_test *test)
 		return (NULL);
 }
 
-void	ft_addtest_lst(t_test **test_add, t_test *ret)
+void	add_test_to_list(t_test **test_add, t_test *ret)
 {
 	t_test	*tmp;
 
@@ -55,13 +55,13 @@ void	ft_addtest_lst(t_test **test_add, t_test *ret)
 			*test_add = ret;
 		else
 		{
-			tmp = ft_lasttest_lst(*test_add);
+			tmp = get_last_test(*test_add);
 			tmp->next = ret;
 		}
 	}
 }
 
-void	ft_cleartest_lst(t_test **test, bool opt)
+void	clear_test_list(t_test **test, bool opt)
 {
 	t_test	*tmp;
 
@@ -75,13 +75,20 @@ void	ft_cleartest_lst(t_test **test, bool opt)
 	}
 }
 
+/*
+ * First arg : Address of the t_test linked list, used to store all the tests
+ * Second arg : Name of the function, will be print on the tester output
+ * Third arg : Name of the test, same as second arg
+ * Fourth arg : Pointer on the function to execute in the test
+ * Fifth : Expected output, set "" to disble the test
+ */
 void	load_test(t_test **test, std::string function, std::string test_name,
 			void *function_add, std::string expected_output)
 {
 	if (test == NULL)
-		*test = ft_rettest_lst(function, test_name,
+		*test = new_test_list(function, test_name,
 				function_add, expected_output);
 	else
-		ft_addtest_lst(test, ft_rettest_lst(function, test_name,
+		add_test_to_list(test, new_test_list(function, test_name,
 				function_add, expected_output));
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:15 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:18:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:27:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int	empty_test(void)
 {
-	return (1);
+	std::vector<int>		std;
+	ft::vector<int>			ft;
+
+	if (std.empty() != ft.empty())
+		return (1);
+	return (0);
 }

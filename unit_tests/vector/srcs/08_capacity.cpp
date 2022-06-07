@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:18:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:28:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int	capacity_test(void)
 {
-	return (1);
+	std::vector<int>		std;
+	ft::vector<int>			ft;
+
+	if (std.capacity() != ft.capacity())
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:18:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 18:25:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int	size_test(void)
 {
-	return (1);
+	std::vector<int>		std;
+	ft::vector<int>			ft;
+
+	if (std.size() != ft.size())
+		return (1);
+	return (0);
 }

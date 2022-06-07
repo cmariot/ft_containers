@@ -1,38 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output.cpp                                         :+:      :+:    :+:   */
+/*   print_test_output.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 14:00:10 by cmariot          ###   ########.fr       */
+/*   Created: 2022/06/07 18:55:57 by cmariot           #+#    #+#             */
+/*   Updated: 2022/06/07 19:10:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-int	display_results(int count_of_succeeded_tests, int total_number_of_tests)
+/*
+ * Get all the file content and store it in a std::string
+ */
+
+static std::string	get_file_content(std::string file)
 {
-	if (count_of_succeeded_tests == total_number_of_tests)
-	{
-		std::cout << count_of_succeeded_tests << " / " << total_number_of_tests;
-		std::cout << " = " << GREEN"[OK]" RESET << std::endl;
-		return (0);
-	}
-	else
-	{
-		std::cout << count_of_succeeded_tests << " / " << total_number_of_tests;
-		std::cout << " = " << RED"[KO]" RESET << std::endl;
-		return (-1);
-	}
+	std::ifstream	ifs(file);
+	
+	if (ifs.is_open() == false)
+		return ("");
+	std::string		content(
+				(std::istreambuf_iterator<char>(ifs)),
+				(std::istreambuf_iterator<char>())
+			);
+	ifs.close();
+	return (content);
 }
 
-void	check_stdout_output(t_test *test, std::ofstream &fd)
+/*
+ * Get the content of the file that stores the function output,
+ * Compare the output with the expected output
+ * or display the output depending the function call parameters.
+ */
+
+static void	check_stdout_output(t_test *test, std::ofstream &fd)
 {
 	std::string	output;
 
-	output = filename_to_str(test->filename);
+	output = get_file_content(test->filename);
 	if (test->expected_output.empty() == false)
 	{
 		if (output == test->expected_output)
@@ -53,15 +61,18 @@ void	check_stdout_output(t_test *test, std::ofstream &fd)
 	}
 }
 
+/*
+ * Print the test result on the ofstream fd (i.e. on the logfile)
+ * (and call recursively the same function to print on std::cout)
+ */
+
 void	print_test_output(t_test *test, int test_number, std::ofstream &fd, bool cout)
 {
 	if (cout == false)
 		print_test_output(test, test_number, (std::ofstream &)std::cout, true);
 	fd << test->function << "_";
-	fd << std::setw(2) << std::setfill('0');
-	fd << test_number;
-	fd << ": " << test->test_name << ":\t";
-	fd << "\t";
+	fd << std::setw(2) << std::setfill('0') << test_number;
+	fd << ": " << test->test_name << ":\t\t";
 	if (test->status == OK)
 		fd << GREEN"[OK]" RESET;
 	else if (test->status == KO)

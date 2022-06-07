@@ -6,103 +6,46 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 16:21:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:23:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-void	*execute(void *add)
-{
-	t_test	*test;
-
-	test = (t_test *)add;
-	test->status = (*test).test_add();
-	return (test);
-}
-
-int	create_threads(t_test **test)
-{
-	int			status;
-	pthread_t	thread_id;
-	size_t		init_time;
-
-	init_time = get_time();
-	pthread_create(&thread_id, NULL, &execute, *test);
-	while (1)
-	{
-		if (check_timeout(init_time))
-		{
-			pthread_cancel(thread_id);
-			pthread_join(thread_id, NULL);
-			return (TIMEOUT);
-		}
-		else if ((*test)->status != -2)
-			break ;
-	}
-	pthread_join(thread_id, NULL);
-	status = (*test)->status;
-	return (status);
-}
-
-void	execute_test(t_test **test, std::ofstream &log_file)
-{
-	pid_t	pid;
-	int		status;
-	int		fd;
-	int		stdout_backup;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		std::cerr << "Error, fork failed." << std::endl;
-		return ;
-	}
-	else if (pid == 0)
-	{
-		output_redirection(&fd, &stdout_backup, *test);
-		status = create_threads(test);
-		log_file.close();
-		ft_cleartest_lst(test, 1);
-		exit_child(test, &fd, &stdout_backup, status);
-	}
-	else
-	{
-		wait(&status);
-		if (WIFEXITED(status))
-			(*test)->status = WEXITSTATUS(status);
-		else if WIFSIGNALED(status)
-			(*test)->status = WTERMSIG(status);
-	}
-}
+/*
+ * Launch the tester :
+ *  - Create a logfile to store the output
+ *  - Exectute each test store in the list t_test
+ *  - Print test results
+ */
 
 int	launch_tests(t_test **test)
 {
-	int				total_number_of_tests;
-	int				count_of_succeeded_tests;
-	int				routine_exit = 0;
 	std::ofstream	log_file;
-	t_test			*backup;
+	t_test			*element;
+	int				total;
+	int				succeeded;
+	int				routine_exit = 0;
 
 	log_file = create_log_file(*test);
 	if (!log_file.is_open())
 		return (1);
-	total_number_of_tests = 0;
-	count_of_succeeded_tests = 0;
-	std::cout << (*test)->function << " TESTS:" << std::endl;
+	total = 0;
+	succeeded = 0;
+	std::cout << (*test)->function << " TESTS:" << std::endl << std::endl;
 	while (*test)
 	{
 		execute_test(test, log_file);
-		print_test_output(*test, total_number_of_tests, log_file, false);
+		print_test_output(*test, total, log_file, false);
 		if ((*test)->status == OK)
-			count_of_succeeded_tests++;
-		total_number_of_tests++;
-		backup = (*test);
+			succeeded++;
+		total++;
+		element = *test;
 		*test = (*test)->next;
-		delete backup;
+		delete element;
 	}
 	routine_exit
-		= display_results(count_of_succeeded_tests, total_number_of_tests);
+		= display_results(succeeded, total);
 	log_file.close();
 	return (routine_exit);
 }

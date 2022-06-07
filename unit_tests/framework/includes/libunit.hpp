@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 13:59:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 19:21:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,23 @@ typedef struct s_test {
 	struct s_test	*next;					// Pointer on the next test
 }	t_test;
 
-/* TEST_LST_UTILS.C */
+
+/*
+ * Load all the tests with this function before execute them with the launch test function.
+ */
 
 void			load_test(t_test **test, std::string function, std::string test_name,
 					void *function_add, std::string expected_output);
-void			ft_addtest_lst(t_test **test, t_test *new_test);
-t_test			*ft_newtest_lst(std::string *function, std::string *test_name,
-					void *test_add, std::string *expected_output);
-t_test			*ft_lasttest_lst(t_test *test);
-void			ft_cleartest_lst(t_test **test, bool opt);
-
-/* LAUNCH_TESTS.C */
 
 int				launch_tests(t_test **test);
-void			execute_test(t_test **test);
-int				create_threads(t_test **test);
-void			*execute(void *add);
-
-/* LOGFILES.C */
-
-std::string		filename_to_str(std::string file);
-void			output_redirection(int *fd, int *stdout_backup, t_test *test);
-void			exit_child(t_test **test, int *fd, int *stdout_backup, int status);
-
-/* OUTPUT.C */
-
 std::ofstream	create_log_file(t_test *test);
-void			check_stdout_output(t_test *test, int fd);
-void			print_test_output(t_test *test, int test_number, std::ofstream &fd, bool cout);
-int				display_results(int count_of_succeeded_tests, int total_number_of_tests);
-
-/* TIMEOUT.C */
-
-void			*execute(void *add);
+void			execute_test(t_test **test, std::ofstream &log_file);
 size_t			get_time(void);
 int				check_timeout(size_t init_time);
+void			clear_test_list(t_test **test, bool opt);
+void			print_test_output(t_test *test, int test_nb, std::ofstream &fd, bool cout);
+int				display_results(int succeeded, int total);
+
+
 
 #endif
