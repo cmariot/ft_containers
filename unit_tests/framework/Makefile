@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/07 21:42:21 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/07 22:09:16 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,9 @@ INCLUDES		 = -I includes
 SRC_ROOTDIR		= srcs/
 
 
-SRC_FILES	    = launch_tests.cpp \
-				  test_lst_utils.cpp \
+SRC_FILES	    = load_test.cpp \
+				  launch_tests.cpp \
+				  clear_test_list.cpp \
 				  create_log_file.cpp \
 				  execute_test.cpp \
 				  timeout.cpp \

@@ -1,51 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_lst_utils.cpp                                 :+:      :+:    :+:   */
+/*   load_test.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/07 23:35:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 21:11:31 by cmariot          ###   ########.fr       */
+/*   Created: 2022/06/07 22:04:08 by cmariot           #+#    #+#             */
+/*   Updated: 2022/06/07 22:14:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-t_test	*new_test_list(std::string function, std::string test_name,
-			void *test_add, std::string expected_output)
-{
-	t_test		*ret;
-
-	ret = new t_test;
-	if (ret)
-	{
-		ret->function = function;
-		ret->test_name = test_name;
-		ret->test_add = (int (*)(void))test_add;
-		ret->expected_output = expected_output;
-		ret->filename = ret->function + "_" + ret->test_name + ".log";
-		ret->status = -2;
-		ret->next = NULL;
-		return (ret);
-	}
-	else
-		return (NULL);
-}
-
-t_test	*get_last_test(t_test *test)
-{
-	if (test)
-	{
-		while (test->next)
-			test = (t_test *)test->next;
-		return (test);
-	}
-	else
-		return (NULL);
-}
-
-void	add_test_to_list(t_test **test, t_test *ret)
+static void	add_test_to_list(t_test **test, t_test *ret)
 {
 	t_test	*tmp;
 
@@ -55,25 +22,33 @@ void	add_test_to_list(t_test **test, t_test *ret)
 			*test = ret;
 		else
 		{
-			tmp = get_last_test(*test);
+			tmp = *test;
+			while (tmp->next != NULL)
+				tmp = tmp->next;
 			tmp->next = ret;
 		}
 	}
 }
 
-void	clear_test_list(t_test **test)
+static t_test	*new_test_list(std::string function, std::string test_name,
+			void *test_add, std::string expected_output)
 {
-	t_test	*tmp;
+	t_test		*new_list;
 
-	if (test)
+	new_list = new t_test;
+	if (new_list)
 	{
-		while (*test)
-		{
-			tmp = (*test)->next;
-			delete *test;
-			*test = tmp;
-		}
+		new_list->function = function;
+		new_list->test_name = test_name;
+		new_list->test_add = (int (*)(void))test_add;
+		new_list->expected_output = expected_output;
+		new_list->filename = new_list->function + "_" + new_list->test_name + ".log";
+		new_list->status = -2;
+		new_list->next = NULL;
+		return (new_list);
 	}
+	else
+		return (NULL);
 }
 
 /*

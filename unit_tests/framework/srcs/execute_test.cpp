@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:37:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 21:00:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 22:51:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ static void	exit_child(t_test **test, int *fd, int *stdout_backup, int status)
 	exit(status);
 }
 
-/*
- * Use a function ptr to launch the test function.
- */
+/* Use a function ptr to launch the test function. */
 
 static void	*execute(void *ptr)
 {
@@ -62,6 +60,7 @@ static int	create_threads(t_test **test)
 		}
 		else if ((*test)->status != -2)
 			break ;
+		usleep(500);
 	}
 	pthread_join(thread_id, NULL);
 	return ((*test)->status);
