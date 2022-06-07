@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:37:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 19:10:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:00:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exit_child(t_test **test, int *fd, int *stdout_backup, int status)
 {
-	clear_test_list(test, 0);
+	clear_test_list(test);
 	close(*fd);
 	dup2(*stdout_backup, 1);
 	close(*stdout_backup);
@@ -43,12 +43,15 @@ static void	*execute(void *ptr)
 
 static int	create_threads(t_test **test)
 {
-	int			status;
 	pthread_t	thread_id;
 	size_t		init_time;
 
 	init_time = get_time();
-	pthread_create(&thread_id, NULL, &execute, *test);
+	if (pthread_create(&thread_id, NULL, &execute, *test))
+	{
+		std::cerr << "Error : Thread creation failed." << std::endl;
+		return (42);
+	}
 	while (1)
 	{
 		if (check_timeout(init_time))
@@ -61,24 +64,24 @@ static int	create_threads(t_test **test)
 			break ;
 	}
 	pthread_join(thread_id, NULL);
-	status = (*test)->status;
-	return (status);
+	return ((*test)->status);
 }
 
 /*
  * Create a tmp file and redirect the STDOUT output into this file.
  */
 
-static void	output_redirection(int *fd, int *stdout_backup, t_test *test)
+static int	output_redirection(int *fd, int *stdout_backup, t_test *test)
 {
-	*fd = open((char *)std::string(test->filename + ".log").c_str(), O_RDWR | O_CREAT | O_TRUNC, 0640);
+	*fd = open((char *)std::string(test->filename).c_str(), O_RDWR | O_CREAT | O_TRUNC, 0640);
 	if (*fd == -1)
 	{
 		std::cerr << "Error, file opening failed." << std::endl;
-		return ;
+		return (1);
 	}
 	*stdout_backup = dup(1);
 	dup2(*fd, 1);
+	return (0);
 }
 
 /*
@@ -90,7 +93,7 @@ static void	output_redirection(int *fd, int *stdout_backup, t_test *test)
  *	- in the parent : wait the exxit status of the child
  */
 
-void	execute_test(t_test **test, std::ofstream &log_file)
+int	execute_test(t_test **test, std::ofstream &log_file)
 {
 	pid_t	pid;
 	int		status;
@@ -101,11 +104,12 @@ void	execute_test(t_test **test, std::ofstream &log_file)
 	if (pid == -1)
 	{
 		std::cerr << "Error, fork failed." << std::endl;
-		return ;
+		return (1);
 	}
 	else if (pid == 0)
 	{
-		output_redirection(&fd, &stdout_backup, *test);
+		if (output_redirection(&fd, &stdout_backup, *test))
+			exit_child(test, &fd, &stdout_backup, 1);
 		status = create_threads(test);
 		log_file.close();
 		exit_child(test, &fd, &stdout_backup, status);
@@ -118,4 +122,5 @@ void	execute_test(t_test **test, std::ofstream &log_file)
 		else if WIFSIGNALED(status)
 			(*test)->status = WTERMSIG(status);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/07 19:13:36 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/07 21:06:14 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,8 @@ NAME			 = libunit.a
 CC				 = c++
 
 
-CFLAGS			 = -Wall -Wextra -Werror -g3 -pthread
-LFLAGS			 = -Wall -Wextra -Werror -g3 -pthread
+CFLAGS			 = -Wall -Wextra -Werror -pthread -O3
+LFLAGS			 = -Wall -Wextra -Werror -pthread -O3
 
 
 INCLUDES		 = -I includes

@@ -6,11 +6,18 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 19:23:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:37:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
+
+static int	clean_exit(t_test **test, std::ofstream &log_file)
+{
+	log_file.close();
+	clear_test_list(test);
+	return (1);
+}
 
 /*
  * Launch the tester :
@@ -23,19 +30,17 @@ int	launch_tests(t_test **test)
 {
 	std::ofstream	log_file;
 	t_test			*element;
-	int				total;
-	int				succeeded;
-	int				routine_exit = 0;
+	int				succeeded = 0;
+	int				total = 0;
 
+	std::cout << BOLDWHITE << (*test)->function << " TESTS :" << RESET << std::endl << std::endl;
 	log_file = create_log_file(*test);
-	if (!log_file.is_open())
+	if (log_file.is_open() == false)
 		return (1);
-	total = 0;
-	succeeded = 0;
-	std::cout << (*test)->function << " TESTS:" << std::endl << std::endl;
 	while (*test)
 	{
-		execute_test(test, log_file);
+		if (execute_test(test, log_file))
+			return (clean_exit(test, log_file));
 		print_test_output(*test, total, log_file, false);
 		if ((*test)->status == OK)
 			succeeded++;
@@ -44,8 +49,5 @@ int	launch_tests(t_test **test)
 		*test = (*test)->next;
 		delete element;
 	}
-	routine_exit
-		= display_results(succeeded, total);
-	log_file.close();
-	return (routine_exit);
+	return (results(succeeded, total, log_file, true));
 }

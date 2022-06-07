@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 19:21:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:33:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@
 # include <iomanip>
 # include <fstream>
 
-# define OK 0
-# define KO 255
-# define TIMEOUT 32
-# define TIMEOUT_DELAY 10
+# define OK				0
+# define KO				255
+# define TIMEOUT		32
+# define TIMEOUT_DELAY	10
 
-# define GREEN "\033[1;32m"
-# define RED "\033[1;31m"
-# define RESET "\033[0m"
+# define GREEN		"\033[1;32m"
+# define RED		"\033[1;31m"
+# define BOLDWHITE	"\033[1m\033[37m"
+# define RESET		"\033[0m"
 
 typedef struct s_test {
 	std::string		function;				// Function name
@@ -42,23 +43,17 @@ typedef struct s_test {
 	struct s_test	*next;					// Pointer on the next test
 }	t_test;
 
-
-/*
- * Load all the tests with this function before execute them with the launch test function.
- */
-
+// Load all the tests with this function before execute them with the launch test function.
 void			load_test(t_test **test, std::string function, std::string test_name,
 					void *function_add, std::string expected_output);
 
 int				launch_tests(t_test **test);
 std::ofstream	create_log_file(t_test *test);
-void			execute_test(t_test **test, std::ofstream &log_file);
+int				execute_test(t_test **test, std::ofstream &log_file);
 size_t			get_time(void);
 int				check_timeout(size_t init_time);
-void			clear_test_list(t_test **test, bool opt);
+void			clear_test_list(t_test **test);
 void			print_test_output(t_test *test, int test_nb, std::ofstream &fd, bool cout);
-int				display_results(int succeeded, int total);
-
-
+int				results(int succeeded, int total, std::ofstream &fd, bool recursive);
 
 #endif

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output.cpp                                         :+:      :+:    :+:   */
+/*   display_results.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 19:02:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:36:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libunit.hpp"
 
-int	display_results(int count_of_succeeded_tests, int total_number_of_tests)
+int	results(int succeeded, int total, std::ofstream &fd, bool recursive)
 {
-	if (count_of_succeeded_tests == total_number_of_tests)
-	{
-		std::cout << count_of_succeeded_tests << " / " << total_number_of_tests;
-		std::cout << " = " << GREEN"[OK]" RESET << std::endl;
-		return (0);
-	}
+	if (recursive == true)
+		results(succeeded, total, static_cast<std::ofstream &>(std::cout), false);
+	fd << std::endl << BOLDWHITE << succeeded << " / " << total << " = ";
+	if (succeeded == total)
+		fd << GREEN "[OK]" RESET << std::endl;
 	else
-	{
-		std::cout << count_of_succeeded_tests << " / " << total_number_of_tests;
-		std::cout << " = " << RED"[KO]" RESET << std::endl;
-		return (-1);
-	}
+		fd << RED "[KO]" RESET << std::endl;
+	if (recursive == false)
+		fd.close();
+	return (0);
 }
