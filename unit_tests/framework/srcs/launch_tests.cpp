@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 13:58:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 16:21:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	execute_test(t_test **test, std::ofstream &log_file)
 		output_redirection(&fd, &stdout_backup, *test);
 		status = create_threads(test);
 		log_file.close();
+		ft_cleartest_lst(test, 1);
 		exit_child(test, &fd, &stdout_backup, status);
 	}
 	else
@@ -77,13 +78,12 @@ void	execute_test(t_test **test, std::ofstream &log_file)
 
 int	launch_tests(t_test **test)
 {
-	t_test			*first;
 	int				total_number_of_tests;
 	int				count_of_succeeded_tests;
 	int				routine_exit = 0;
 	std::ofstream	log_file;
+	t_test			*backup;
 
-	first = (*test);
 	log_file = create_log_file(*test);
 	if (!log_file.is_open())
 		return (1);
@@ -97,11 +97,12 @@ int	launch_tests(t_test **test)
 		if ((*test)->status == OK)
 			count_of_succeeded_tests++;
 		total_number_of_tests++;
+		backup = (*test);
 		*test = (*test)->next;
+		delete backup;
 	}
 	routine_exit
 		= display_results(count_of_succeeded_tests, total_number_of_tests);
-	ft_cleartest_lst(&first, 1);
 	log_file.close();
 	return (routine_exit);
 }
