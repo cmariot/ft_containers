@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:25:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:28:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ int	vector_launcher(void)
 	load_test(&tests, function_name, "Size", (void *)&size_test, "");
 	load_test(&tests, function_name, "Max_size", (void *)&max_size_test, "");
 	load_test(&tests, function_name, "Resize", (void *)&resize_test, "");
-	load_test(&tests, function_name, "Capacity", (void *)&to_do, "");
-	load_test(&tests, function_name, "Empty", (void *)&to_do, "");
-	load_test(&tests, function_name, "Reserve", (void *)&to_do, "");
-	load_test(&tests, function_name, "Orerator []", (void *)&to_do, "");
-	load_test(&tests, function_name, "Access At", (void *)&to_do, "");
-	load_test(&tests, function_name, "Front", (void *)&to_do, "");
-	load_test(&tests, function_name, "Back", (void *)&to_do, "");
+	load_test(&tests, function_name, "Capacity", (void *)&capacity_test, "");
+	load_test(&tests, function_name, "Empty", (void *)&empty_test, "");
+	load_test(&tests, function_name, "Reserve", (void *)&reserve_test, "");
+	load_test(&tests, function_name, "Orerator []", (void *)&operators_test, "");
+	load_test(&tests, function_name, "Access At", (void *)&at_test, "");
+	load_test(&tests, function_name, "Front", (void *)&front_test, "");
+	load_test(&tests, function_name, "Back", (void *)&back_test, "");
 	load_test(&tests, function_name, "Assign", (void *)&to_do, "");
-	load_test(&tests, function_name, "Push_back", (void *)&to_do, "");
-	load_test(&tests, function_name, "Pop_back", (void *)&to_do, "");
-	load_test(&tests, function_name, "Insert", (void *)&to_do, "");
-	load_test(&tests, function_name, "Erase", (void *)&to_do, "");
-	load_test(&tests, function_name, "Swap", (void *)&to_do, "");
-	load_test(&tests, function_name, "Clear", (void *)&to_do, "");
-	load_test(&tests, function_name, "Allocator", (void *)&to_do, "");
-	load_test(&tests, function_name, "Relational", (void *)&to_do, "");
-	load_test(&tests, function_name, "Swap", (void *)&to_do, "");
+	load_test(&tests, function_name, "Push_back", (void *)&push_back_test, "");
+	load_test(&tests, function_name, "Pop_back", (void *)&pop_back_test, "");
+	load_test(&tests, function_name, "Insert", (void *)&insert_test, "");
+	load_test(&tests, function_name, "Erase", (void *)&erase_test, "");
+	load_test(&tests, function_name, "Swap", (void *)&swap_test, "");
+	load_test(&tests, function_name, "Clear", (void *)&clear_test, "");
+	load_test(&tests, function_name, "Allocator", (void *)&allocator_test, "");
+	load_test(&tests, function_name, "Relational", (void *)&relational_test, "");
+	load_test(&tests, function_name, "Swap", (void *)&swap2_test, "");
 	return (launch_tests(&tests));
 }

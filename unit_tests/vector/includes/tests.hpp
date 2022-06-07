@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:17:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 09:25:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 09:29:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		operators_test(void);
 int		at_test(void);
 int		front_test(void);
 int		back_test(void);
+int		assign_test(void);
 int		push_back_test(void);
 int		pop_back_test(void);
 int		insert_test(void);
