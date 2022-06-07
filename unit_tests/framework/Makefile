@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/07 21:06:14 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/07 21:42:21 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRC_FILES	    = launch_tests.cpp \
 				  execute_test.cpp \
 				  timeout.cpp \
 				  print_test_output.cpp \
-				  display_results.cpp
+				  results.cpp
 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_FILES))
