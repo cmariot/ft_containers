@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:35:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 13:59:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 15:38:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_test	*ft_rettest_lst(std::string function, std::string test_name,
 		ret->test_name = test_name;
 		ret->test_add = (int (*)())test_add;
 		ret->expected_output = expected_output;
-		ret->filename = function + "_" + ret->test_name + ".log";
+		ret->filename = ret->function + "_" + ret->test_name + ".log";
 		ret->status = -2;
 		ret->next = NULL;
 		return (ret);
@@ -67,7 +67,7 @@ void	ft_cleartest_lst(t_test **test, bool opt)
 
 	while (*test)
 	{
-		tmp = (t_test *)(*test)->next;
+		tmp = (*test)->next;
 		if (opt == 1)
 			unlink((*test)->filename.c_str());
 		delete *test;

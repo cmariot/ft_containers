@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 14:50:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:59:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <sys/time.h>
+# include <pthread.h>
 
 # include <iostream>
 # include <iomanip>

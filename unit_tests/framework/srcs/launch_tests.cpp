@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 22:01:37 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/04 14:53:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:58:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	execute_test(t_test **test, std::ofstream &log_file)
 
 int	launch_tests(t_test **test)
 {
-	t_test	*first;
-	int		total_number_of_tests;
-	int		count_of_succeeded_tests;
-	int		routine_exit = 0;
-	std::ofstream		log_file;
+	t_test			*first;
+	int				total_number_of_tests;
+	int				count_of_succeeded_tests;
+	int				routine_exit = 0;
+	std::ofstream	log_file;
 
 	first = (*test);
 	log_file = create_log_file(*test);
@@ -97,7 +97,7 @@ int	launch_tests(t_test **test)
 		if ((*test)->status == OK)
 			count_of_succeeded_tests++;
 		total_number_of_tests++;
-		*test = (t_test *)(*test)->next;
+		*test = (*test)->next;
 	}
 	routine_exit
 		= display_results(count_of_succeeded_tests, total_number_of_tests);

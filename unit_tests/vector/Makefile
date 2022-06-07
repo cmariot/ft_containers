@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/05 22:47:17 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/07 12:28:24 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME			 = vector_tests
 CC				 = c++
 
 
-CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -g
+CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -g3 -pthread
 
 
 INCLUDES		 = -I includes
@@ -49,7 +49,31 @@ SRC_ROOTDIR		= srcs/
 
 SRC_SUBDIR	    = main.cpp \
 				  00_vector_launcher.cpp \
-				  01_constructor_tests.cpp
+				  01_constructor_tests.cpp \
+				  02_destructor_tests.cpp \
+				  03_operator_equal_tests.cpp \
+				  04_iterators.cpp \
+				  05_size.cpp \
+				  06_max_size.cpp \
+				  07_resize.cpp \
+				  08_capacity.cpp \
+				  09_empty.cpp \
+				  10_reserve.cpp \
+				  11_operators.cpp \
+				  12_at.cpp \
+				  13_front.cpp \
+				  14_back.cpp \
+				  15_assign.cpp \
+				  16_push_back.cpp \
+				  17_pop_back.cpp \
+				  18_insert.cpp \
+				  19_erase.cpp \
+				  20_swap.cpp \
+				  21_clear.cpp \
+				  22_allocator.cpp \
+				  23_relational.cpp \
+				  24_swap.cpp \
+
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))
 
@@ -107,7 +131,7 @@ $(NAME)	: 		$(OBJS)
 
 
 leaks :			all
-				valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
+				valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 
 test :			all
