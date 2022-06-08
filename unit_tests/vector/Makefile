@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/08 12:00:36 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/08 14:11:55 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME			 = vector_tests
 CC				 = c++
 
 
-CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -pthread
 
 
 INCLUDES		 = -I includes
