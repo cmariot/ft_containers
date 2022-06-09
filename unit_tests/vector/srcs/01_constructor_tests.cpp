@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/08 17:22:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:33:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,15 @@ int	constructor_test(void)
 	//Fill constructor
 	{
 		size_t	n		= 5;
-		void *	value	= NULL;
+		int 	value	= 42;
 
-		ft::vector<void *>		ft_fill(n, value);
-		std::vector<void *>		std_fill(n, value);
+		ft::vector<int>			ft_fill(n, value);
+		std::vector<int>		std_fill(n, value);
 
 		// Copy constructor
 		{
-			ft::vector<void *>		copy(ft_fill);
-
-			if (copy.size() != ft_fill.size())
-				return (1);
+			ft::vector<int>		ft_copy(ft_fill);
+			std::vector<int>	std_copy(std_fill);
 		}
 	}
 	return (0);

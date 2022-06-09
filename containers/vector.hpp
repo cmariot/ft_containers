@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/08 19:12:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/09 13:48:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,18 @@ namespace ft
 			typedef const T &	const_reference;
 			typedef T *			pointer;
 			typedef const T *	const_pointer;
-			//typedef 	std::iterator<ft::vector<T, Allocator()>>	iterator;
-			//typedef 	std::iterator	const_iterator;
-			//typedef 	std::iterator	reverse_iterator;
-			//typedef 	std::iterator	const_reverse_iterator;
+			//typedef 		iterator;
+			//typedef 		const_iterator;
+			//typedef 		reverse_iterator;
+			//typedef 		const_reverse_iterator;
 
 
 		//MEMBER TYPES :
-		//A passer en protected
-		public :
-			pointer		_elements;
-			size_type	_size;
-			size_type	_capacity;
-			Allocator	_allocator;
+		protected :
+			pointer				_elements;
+			size_type			_size;
+			size_type			_capacity;
+			allocator_type		_allocator;
 
 
 		//MEMBER FUNCTIONS :
@@ -76,14 +75,14 @@ namespace ft
 			//CONSTRUCTORS
 				// Empty container constructor (default constructor)
 				vector(const Allocator & = Allocator()) :
-					_elements(NULL), _size(0), _capacity(0)
+					_elements(NULL), _size(0), _capacity(0), _allocator(Allocator())
 				{
 					return ;
 				};
 
 				// Fill constructor by size and value
 				explicit vector(size_type n, const T& value = T(), const Allocator& = Allocator()) :
-					_size(n), _capacity(n)
+					_size(n), _capacity(n), _allocator(Allocator())
 				{
 					if (_size <= max_size())
 					{
@@ -99,8 +98,9 @@ namespace ft
 				vector(InputIterator first, InputIterator last, const Allocator& = Allocator())
 				{
 					_size = std::distance(first, last);
-					_capacity(_size);
+					_capacity = _size;
 					_elements = get_allocator().allocate(_size);
+					_allocator = Allocator();
 					for (size_type i = 0 ; i < _size ; i++)
 					{
 						get_allocator().construct(&_elements[i], *first);
@@ -112,42 +112,40 @@ namespace ft
 				// Copy constructor
 				vector(const vector<T, Allocator> & x)
 				{
+					if (_elements && _size)
+					{
+						for (size_type i = 0 ; i < _size ; ++i)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+					}
 					*this = x;
 					return ;
 				};
 
 
 			//DESTRUCTOR
-				~vector(void)
+			~vector(void)
+			{
+				if (_elements && _size)
 				{
-					if (_size)
-					{
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-					}
-					return ;
-				};
+					for (size_type i = 0 ; i < _size ; ++i)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+				}
+				return ;
+			};
 
 
 			//OPERATOR=
-				vector const &	operator = (const vector<T, Allocator> & rhs)
-				{
-					if (_elements && _size)
-					{
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-					}
-					_size = rhs.size();
-					_capacity = rhs.capacity();
-					_allocator = rhs.get_allocator();
-					_elements = get_allocator().allocate(_size);
-					for (size_type i = 0 ; i < _size ; i++)
-						get_allocator().construct(&_elements[i], rhs._elements[i]);
-					return (*this);
-				};
-
+			vector const &	operator = (const vector<T, Allocator> & rhs)
+			{
+				_size = rhs.size();
+				_allocator = Allocator();
+				_elements = get_allocator().allocate(_size);
+				for (size_type i = 0 ; i < _size ; i++)
+					get_allocator().construct(&_elements[i], rhs._elements[i]);
+				return (*this);
+			};
 
 			//ITERATORS
 				//BEGIN
@@ -189,11 +187,52 @@ namespace ft
 
 			//ELEMENT ACCESS
 				//OPERATOR[]
+				reference	operator [] (size_type i)
+				{
+				   return (_elements[i]);
+				};
+				const_reference operator [] (size_type i) const
+				{
+					return (_elements[i]);
+				};
 				//AT
+				reference	at(size_type i)
+				{
+					if (i >= size())
+						throw (std::out_of_range("Out of range"));
+				   return (_elements[i]);
+				};
+				const_reference at(size_type i) const
+				{
+					if (i >= size())
+						throw (std::out_of_range("Out of range"));
+					return (_elements[i]);
+				};
 				//FRONT
+				reference	front()
+				{
+					return (_elements[0]);
+				};
+				const_reference	front() const
+				{
+					return (_elements[0]);
+				};
 				//BACK
+				reference	back()
+				{
+					return (_elements[size() - 1]);
+				};
+				const_reference	back() const
+				{
+					return (_elements[size() - 1]);
+				};
 			//MODIFIERS
 				//ASSIGN
+				void assign (size_type n, const value_type& val)
+				{
+					(void)n;
+					(void)val;
+				} ;
 				//PUSH_BACK
 				//POP_BACK
 				//INSERT
@@ -212,6 +251,21 @@ namespace ft
 		//NON-MEMBER FUNCTION OVERLOADS
 		public :
 			//RELATIONNAL OPERATORS
+			template <class U, class Alloc>
+			bool operator == (const vector<U,Alloc>& rhs)
+			{
+				if (size() != rhs.size())
+					return (false);
+				else if (capacity() != rhs.capacity())
+					return (false);
+				else if (get_allocator() != rhs.get_allocator())
+					return (false);
+				else
+					for (size_type i = 0 ; i < size() ; i++)
+						if ((*this)[i] != rhs[i])
+							return (false);
+				return (true);
+			} ;
 			//SWAP
 
 	} ;

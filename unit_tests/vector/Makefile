@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/08 14:11:55 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/09 13:28:50 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME			 = vector_tests
 CC				 = c++
 
 
-CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -pthread
+CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -pthread -g3
 
 
 INCLUDES		 = -I includes
@@ -131,7 +131,7 @@ $(NAME)	: 		$(OBJS)
 
 
 leaks :			all
-				valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./$(NAME)
 
 
 test :			all
