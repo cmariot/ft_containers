@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/08 17:20:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/08 19:12:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ namespace ft
 			//typedef 	std::iterator	const_reverse_iterator;
 
 
-
 		//MEMBER TYPES :
+		//A passer en protected
 		public :
 			pointer		_elements;
 			size_type	_size;
@@ -72,16 +72,15 @@ namespace ft
 
 		//MEMBER FUNCTIONS :
 		public :
-			
+
 			//CONSTRUCTORS
-				
 				// Empty container constructor (default constructor)
 				vector(const Allocator & = Allocator()) :
 					_elements(NULL), _size(0), _capacity(0)
 				{
 					return ;
 				};
-				
+
 				// Fill constructor by size and value
 				explicit vector(size_type n, const T& value = T(), const Allocator& = Allocator()) :
 					_size(n), _capacity(n)
@@ -94,16 +93,22 @@ namespace ft
 						return ;
 					}
 				};
-				
+
 				// Range constructor
 				template <class InputIterator>
 				vector(InputIterator first, InputIterator last, const Allocator& = Allocator())
 				{
-					(void)first;
-					(void)last;
+					_size = std::distance(first, last);
+					_capacity(_size);
+					_elements = get_allocator().allocate(_size);
+					for (size_type i = 0 ; i < _size ; i++)
+					{
+						get_allocator().construct(&_elements[i], *first);
+						++first;
+					}
 					return ;
 				};
-				
+
 				// Copy constructor
 				vector(const vector<T, Allocator> & x)
 				{
@@ -126,8 +131,14 @@ namespace ft
 
 
 			//OPERATOR=
-				vector const &	operator = (const vector & rhs)
+				vector const &	operator = (const vector<T, Allocator> & rhs)
 				{
+					if (_elements && _size)
+					{
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+					}
 					_size = rhs.size();
 					_capacity = rhs.capacity();
 					_allocator = rhs.get_allocator();
@@ -136,35 +147,46 @@ namespace ft
 						get_allocator().construct(&_elements[i], rhs._elements[i]);
 					return (*this);
 				};
+
+
 			//ITERATORS
 				//BEGIN
 				//END
 				//RBEGIN
 				//REND
+
+
 			//CAPACITY
+				
 				//SIZE : return the number of elements in the vector
 				size_type size() const
 				{
 					return (_size);
 				};
+
 				//MAX_SIZE
 				size_type max_size() const
 				{
 					return (std::min((size_type)std::numeric_limits<difference_type>::max(),
 						std::numeric_limits<size_type>::max() / sizeof(value_type)));
 				};
+
 				//RESIZE
+
 				//CAPACITY : return the storage space currently allocated
 				size_type capacity() const
 				{
 					return (_capacity);
 				};
+
 				//EMPTY : return true if the size is 0
 				bool empty() const
 				{
 					return (_size == 0);
 				};
+
 				//RESERVE
+
 			//ELEMENT ACCESS
 				//OPERATOR[]
 				//AT
@@ -178,6 +200,7 @@ namespace ft
 				//ERASE
 				//SWAP
 				//CLEAR
+			
 			//ALLOCATOR
 				//GET_ALLOCATOR
 				allocator_type get_allocator() const
@@ -185,11 +208,11 @@ namespace ft
 					return (_allocator);
 				};
 
+
 		//NON-MEMBER FUNCTION OVERLOADS
 		public :
 			//RELATIONNAL OPERATORS
 			//SWAP
-		private :
 
 	} ;
 
