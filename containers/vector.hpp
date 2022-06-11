@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/11 12:33:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:55:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,16 @@ namespace ft
 			// CONSTRUCTORS :
 
 				// Empty container constructor (default constructor)
-				vector(const Allocator & = Allocator()) :
-					_elements(NULL), _size(0), _capacity(0), _allocator(Allocator())
+				vector(const allocator_type & alloc = allocator_type()) :
+					_elements(NULL), _size(0), _capacity(0), _allocator(alloc)
 				{
 					return ;
 				};
 
 				// Fill constructor by size and value
-				explicit vector(size_type n, const_reference value = T(), const Allocator& = Allocator()) :
-					_size(n), _capacity(n), _allocator(Allocator())
+				explicit vector(size_type n, const_reference value = value_type(),
+						const allocator_type & alloc = allocator_type()) :
+					_size(n), _capacity(n), _allocator(alloc)
 				{
 					if (_size <= max_size())
 					{
@@ -96,11 +97,12 @@ namespace ft
 
 				// Range constructor
 				template <class InputIterator>
-				vector(InputIterator first, InputIterator last, const Allocator& = Allocator())
+				vector(InputIterator first, InputIterator last,
+						const allocator_type & alloc = allocator_type())
 				{
 					_size = std::distance(first, last);
 					_capacity = _size;
-					_allocator = Allocator();
+					_allocator = alloc;
 					_elements = get_allocator().allocate(_size);
 					for (size_type i = 0 ; i < _size ; i++)
 					{
@@ -111,7 +113,7 @@ namespace ft
 				};
 
 				// Copy constructor
-				vector(const vector<T, Allocator> & x)
+				vector(const vector & x)
 				{
 					*this = x;
 					return ;
@@ -121,7 +123,7 @@ namespace ft
 			//DESTRUCTOR
 			~vector(void)
 			{
-				if (_elements && _size)
+				if (_elements)
 				{
 					for (size_type i = 0 ; i < _size ; ++i)
 						get_allocator().destroy(&_elements[i]);
@@ -136,8 +138,7 @@ namespace ft
 			{
 				_size = rhs.size();
 				_capacity = _size;
-				_allocator = rhs.get_allocator();
-				_elements = get_allocator().allocate(_size);
+				_elements = rhs.get_allocator().allocate(_size);
 				for (size_type i = 0 ; i < _size ; i++)
 					get_allocator().construct(&_elements[i], rhs._elements[i]);
 				return (*this);

@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/09 13:28:50 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/11 13:04:48 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ $(NAME)	: 		$(OBJS)
 
 
 leaks :			all
-				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./$(NAME)
+				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=66 ./$(NAME)
 
 
 test :			all

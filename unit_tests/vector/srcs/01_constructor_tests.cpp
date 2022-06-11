@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/10 19:44:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:26:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	constructor_test(void)
 {
 	//Default constructor
 	{
-		ft::vector<char>	ft_default;
-		std::vector<char>	std_default;
+		std::vector<char>	ft_default;
 	}
 
 	//Fill constructor
@@ -31,13 +30,17 @@ int	constructor_test(void)
 		// Copy constructor
 		{
 			ft::vector<int>		ft_copy(ft_fill);
-			std::vector<int>	std_copy(std_fill);
 		}
 
 		// Range constructor
 		{
 			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
-			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
+		}
+
+		// Operator equal
+		{
+			ft::vector<int>		ft_equal = ft_fill;
+			ft_equal = ft_fill;
 		}
 	}
 	return (0);

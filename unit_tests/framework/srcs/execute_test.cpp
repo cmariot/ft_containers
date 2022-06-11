@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:37:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/08 11:58:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/09 22:54:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,11 @@ int	execute_test(t_test **test, std::ofstream &log_file)
 	else if (pid == 0)
 	{
 		if (output_redirection(&fd, &stdout_backup, *test))
-			exit_child(test, &fd, &stdout_backup, 1);
+		{
+			clear_test_list(test);
+			close(fd);
+			return (1);
+		}
 		status = create_threads(test);
 		log_file.close();
 		exit_child(test, &fd, &stdout_backup, status);

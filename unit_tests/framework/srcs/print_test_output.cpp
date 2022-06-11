@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:55:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 22:24:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/11 13:05:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	print_test_output(t_test *test, int test_number, std::ofstream &fd, bool co
 		fd << RED "[SIGPIPE]" RESET;
 	else if (test->status == SIGILL)
 		fd << RED "[SIGILL]" RESET;
+	else if (test->status == 66)
+		fd << RED "[LEAKS]" RESET;
 	else
 		fd << RED "[EXIT : " << test->status << "]" RESET;
 	check_stdout_output(test, fd);
