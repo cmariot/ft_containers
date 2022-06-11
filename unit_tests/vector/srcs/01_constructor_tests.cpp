@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/09 12:33:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:44:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int	constructor_test(void)
 		{
 			ft::vector<int>		ft_copy(ft_fill);
 			std::vector<int>	std_copy(std_fill);
+		}
+
+		// Range constructor
+		{
+			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
+			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
 		}
 	}
 	return (0);

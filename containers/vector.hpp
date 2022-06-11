@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/09 13:48:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/11 12:33:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ namespace ft
 		//MEMBER FUNCTIONS :
 		public :
 
-			//CONSTRUCTORS
+			// CONSTRUCTORS :
+
 				// Empty container constructor (default constructor)
 				vector(const Allocator & = Allocator()) :
 					_elements(NULL), _size(0), _capacity(0), _allocator(Allocator())
@@ -81,7 +82,7 @@ namespace ft
 				};
 
 				// Fill constructor by size and value
-				explicit vector(size_type n, const T& value = T(), const Allocator& = Allocator()) :
+				explicit vector(size_type n, const_reference value = T(), const Allocator& = Allocator()) :
 					_size(n), _capacity(n), _allocator(Allocator())
 				{
 					if (_size <= max_size())
@@ -99,8 +100,8 @@ namespace ft
 				{
 					_size = std::distance(first, last);
 					_capacity = _size;
-					_elements = get_allocator().allocate(_size);
 					_allocator = Allocator();
+					_elements = get_allocator().allocate(_size);
 					for (size_type i = 0 ; i < _size ; i++)
 					{
 						get_allocator().construct(&_elements[i], *first);
@@ -112,12 +113,6 @@ namespace ft
 				// Copy constructor
 				vector(const vector<T, Allocator> & x)
 				{
-					if (_elements && _size)
-					{
-						for (size_type i = 0 ; i < _size ; ++i)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-					}
 					*this = x;
 					return ;
 				};
@@ -140,7 +135,8 @@ namespace ft
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
 				_size = rhs.size();
-				_allocator = Allocator();
+				_capacity = _size;
+				_allocator = rhs.get_allocator();
 				_elements = get_allocator().allocate(_size);
 				for (size_type i = 0 ; i < _size ; i++)
 					get_allocator().construct(&_elements[i], rhs._elements[i]);
