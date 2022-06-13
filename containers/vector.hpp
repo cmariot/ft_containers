@@ -6,19 +6,19 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 19:08:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 20:56:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <iostream>
+# include <cstddef>
 
 /*
  * A namespace is an optionally-named declarative region.
  * The name of a namespace can be used to access entities declared in that namespace;
- * that is, the members of the namespace.
+ * That are the members of the namespace.
  */
 
 namespace ft
@@ -28,7 +28,7 @@ namespace ft
 	 * Vectors are used to store elements in a strict linear sequence.
 	 * Elements can be directly accessed by their position.
 	 * The size of the container can change dynamically when new elements are added.
-
+	 *
 	 * - T		Type of the element
 	 * - Alloc	Type of the allocator used to define the storage allocation model
 	 */
@@ -42,35 +42,39 @@ namespace ft
 			//ITERATORS
 			struct Iterator
 			{
-
 				typedef std::forward_iterator_tag	iterator_category;
 				typedef std::ptrdiff_t				difference_type;
 				typedef T							value_type;
 				typedef T *							pointer;
 				typedef T &							reference;
 
+				// CONSTRUCTOR
 				Iterator(pointer ptr) :
 					m_ptr(ptr)
 				{
 					return ;
 				};
-				
+
+				// DEREFERENCE
 				reference operator * (void) const
 				{
 					return (*m_ptr);
 				}
 
+				// DEREFERENCE
 				pointer operator -> (void)
 				{
 					return (m_ptr);
 				}
 
+				// PREFIX INCREMENTATION
 				Iterator & operator ++ (void)
 				{
 					m_ptr++;
 					return (*this);
 				}
 
+				// SUFIX INCREMENTATION
 				Iterator operator ++ (int)
 				{
 					Iterator tmp(*this);
@@ -78,15 +82,18 @@ namespace ft
 					return (tmp);
 				}
 
-				friend bool operator == (const Iterator& a, const Iterator& b)
+				// COMPARAISON ==
+				friend bool operator == (const Iterator & a, const Iterator & b)
 				{
 					return (a.m_ptr == b.m_ptr);
 				};
 
-				friend bool operator != (const Iterator& a, const Iterator& b)
+				// COMPARAISON !=
+				friend bool operator != (const Iterator & a, const Iterator & b)
 				{
 					return (a.m_ptr != b.m_ptr);
 				};
+
 
 				private :
 
@@ -142,7 +149,7 @@ namespace ft
 						const allocator_type & alloc = allocator_type()) :
 					_size(n), _capacity(n), _allocator(alloc)
 				{
-					if (_size <= max_size())
+					if (_size and _size <= max_size())
 					{
 						_elements = get_allocator().allocate(_size);
 						for (size_type i = 0 ; i < _size ; i++)
@@ -176,9 +183,9 @@ namespace ft
 				// Copy constructor
 				vector(const vector & x)
 				{
-					this->_size = x.size();
-					this->_capacity = x.size();
-					this->_allocator = x.get_allocator();
+					_size = x.size();
+					_capacity = x.size();
+					_allocator = x.get_allocator();
 					if (_size and _size <= max_size())
 					{
 						_elements = get_allocator().allocate(_size);
@@ -213,14 +220,14 @@ namespace ft
 
 			//ITERATORS
 				//BEGIN
-				iterator begin(void)
+				iterator begin(void) const
 				{
-					return (iterator(&_elements[0]));
+					return (iterator(& _elements[0]));
 				}
 				//END
-				iterator end(void)
+				iterator end(void) const
 				{
-					return (iterator(&_elements[size()]));
+					return (iterator(& _elements[size()]));
 				}
 				//RBEGIN
 				//REND
@@ -387,8 +394,8 @@ namespace ft
 
 			//SWAP
 
-	} ;
+	};	// end of class ft::vector
 
-} ;
+};	// end of namespace ft
 
 #endif
