@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:47 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:31:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 13:32:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	max_size_test(void)
 		ft::vector<int>			ft_fill(n, value);
 		std::vector<int>		std_fill(n, value);
 
-		//std::cout << "ft_fill.max_size() = " << ft_fill.max_size() << std::endl;
-		//std::cout << "std_fill.max_size() = " << std_fill.max_size() << std::endl;
 		if (ft_fill.max_size() != std_fill.max_size())
 			return (-1);
 

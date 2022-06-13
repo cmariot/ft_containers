@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:38:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 14:53:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <cstddef>
 # include <limits>
 # include <memory>
+# include <stdlib.h>
 
 /*
  * A namespace is an optionally-named declarative region.
@@ -180,14 +181,30 @@ namespace ft
 					return (_size);
 				};
 
-				//MAX_SIZE
+				//MAX_SIZE : return the number of elements that might be
+				//allocated as maximum by a call to member allocate.
 				size_type max_size() const
 				{
-					return (std::min((size_type)std::numeric_limits<difference_type>::max(),
-						std::numeric_limits<size_type>::max() / sizeof(value_type)));
+					return (get_allocator().max_size());
 				};
 
 				//RESIZE
+				void resize(size_type n, value_type val = value_type())
+				{
+					if (n < size())
+					{
+						//reduce _elements to only contains the first n elements
+					}
+					else if (n > size())
+					{
+						if (n > capacity())
+						{
+							//allocation
+						}
+						// add elements at the end
+						(void)val;
+					}
+				};
 
 				//CAPACITY : return the storage space currently allocated
 				size_type capacity() const
@@ -202,6 +219,13 @@ namespace ft
 				};
 
 				//RESERVE
+				void reserve(size_type n)
+				{
+					if (n > capacity())
+					{
+						(void)n;
+					}
+				};
 
 			//ELEMENT ACCESS
 				//OPERATOR[]
@@ -213,11 +237,14 @@ namespace ft
 				{
 					return (_elements[i]);
 				};
+
 				//AT
 				reference	at(size_type i)
 				{
 					if (i >= size())
+					{
 						throw (std::out_of_range("Out of range"));
+					}
 				   return (_elements[i]);
 				};
 				const_reference at(size_type i) const
@@ -226,6 +253,7 @@ namespace ft
 						throw (std::out_of_range("Out of range"));
 					return (_elements[i]);
 				};
+
 				//FRONT
 				reference	front()
 				{
@@ -235,6 +263,7 @@ namespace ft
 				{
 					return (_elements[0]);
 				};
+
 				//BACK
 				reference	back()
 				{
@@ -244,6 +273,7 @@ namespace ft
 				{
 					return (_elements[size() - 1]);
 				};
+
 			//MODIFIERS
 				//ASSIGN
 				void assign (size_type n, const value_type& val)
@@ -256,6 +286,14 @@ namespace ft
 				//INSERT
 				//ERASE
 				//SWAP
+				template <class U, class Alloc>
+				void swap (vector <U, Alloc> & x)
+				{
+					vector<U, Alloc>	tmp(*this);
+
+					*this = x;
+					x = tmp;
+				};
 				//CLEAR
 			
 			//ALLOCATOR
