@@ -6,20 +6,22 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:12:44 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:00:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:09:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
+// Test for the leaks after the destruction
+
 int	destructor_test(void)
 {
-	//Default constructor
+	// Destructor for the default constructor
 	{
 		ft::vector<char>	ft_default;
 	}
 
-	//Fill constructor
+	// Destructor for the fill constructor
 	{
 		size_t	n		= 5;
 		int 	value	= 42;
@@ -27,12 +29,12 @@ int	destructor_test(void)
 		ft::vector<int>			ft_fill(n, value);
 		std::vector<int>		std_fill(n, value);
 
-		// Copy constructor
+		// Destructor for the copy constructor
 		{
 			ft::vector<int>		ft_copy(ft_fill);
 		}
 
-		// Range constructor
+		// Destructor fot the range constructor
 		{
 			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
 		}

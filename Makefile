@@ -9,3 +9,6 @@ re :
 
 leaks :
 	@make leaks -C unit_tests/vector --no-print-directory
+
+showleaks :
+	@make showleaks -C unit_tests/vector --no-print-directory

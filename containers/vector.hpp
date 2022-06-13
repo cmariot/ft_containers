@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:18:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:38:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,17 @@ namespace ft
 					_size = std::distance(first, last);
 					_capacity = _size;
 					_allocator = alloc;
-					_elements = get_allocator().allocate(_size);
-					for (size_type i = 0 ; i < _size ; i++)
+					if (_size and _size <= max_size())
 					{
-						get_allocator().construct(&_elements[i], *first);
-						++first;
+						_elements = get_allocator().allocate(_size);
+						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&_elements[i], *first);
+							++first;
+						}
 					}
+					else
+						_elements = NULL;
 					return ;
 				};
 
@@ -124,6 +129,8 @@ namespace ft
 						for (size_type i = 0 ; i < _size ; i++)
 							get_allocator().construct(&_elements[i], x[i]);
 					}
+					else
+						_elements = NULL;
 					return ;
 				};
 
@@ -144,15 +151,17 @@ namespace ft
 			//OPERATOR=
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
+				if (_elements)
+				{
+					for (size_type i = 0 ; i < _size ; ++i)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+				}
 				_size = rhs.size();
 				_capacity = rhs.capacity();
-				_allocator = rhs.get_allocator();
-				//if ()
-					_elements = get_allocator().allocate(size());
+				_elements = get_allocator().allocate(size());
 				for (size_type i = 0 ; i < size() ; i++)
 					get_allocator().construct(&_elements[i], rhs[i]);
-				// Leaks ici, utiliser clear() pour desallouer les elements ?
-				// Allouer seulement quand c'est necessaire
 				return (*this);
 			};
 
