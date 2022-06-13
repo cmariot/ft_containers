@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/11 13:55:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:18:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,15 @@ namespace ft
 				// Copy constructor
 				vector(const vector & x)
 				{
-					*this = x;
+					this->_size = x.size();
+					this->_capacity = x.capacity();
+					this->_allocator = x.get_allocator();
+					if (_size and _size <= max_size())
+					{
+						_elements = get_allocator().allocate(_size);
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().construct(&_elements[i], x[i]);
+					}
 					return ;
 				};
 
@@ -137,10 +145,14 @@ namespace ft
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
 				_size = rhs.size();
-				_capacity = _size;
-				_elements = rhs.get_allocator().allocate(_size);
-				for (size_type i = 0 ; i < _size ; i++)
-					get_allocator().construct(&_elements[i], rhs._elements[i]);
+				_capacity = rhs.capacity();
+				_allocator = rhs.get_allocator();
+				//if ()
+					_elements = get_allocator().allocate(size());
+				for (size_type i = 0 ; i < size() ; i++)
+					get_allocator().construct(&_elements[i], rhs[i]);
+				// Leaks ici, utiliser clear() pour desallouer les elements ?
+				// Allouer seulement quand c'est necessaire
 				return (*this);
 			};
 

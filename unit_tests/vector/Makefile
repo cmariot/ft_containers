@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/11 13:04:48 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/13 10:44:54 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,7 +131,7 @@ $(NAME)	: 		$(OBJS)
 
 
 leaks :			all
-				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=66 ./$(NAME)
+				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=66 ./$(NAME) 2> valgrind.log
 
 
 test :			all
@@ -150,6 +150,7 @@ fclean :
 				@-rm -f $(NAME)
 				@-rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
 				@-rm -f VECTOR.log
+				@-rm -f valgrind.log
 				@make fclean -C ../framework --no-print-directory
 				@printf "$(RED)"
 				@printf "Binary and object files removed\n"
