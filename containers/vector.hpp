@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 17:28:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 19:08:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 # define VECTOR_HPP
 
 # include <iostream>
-# include <cstddef>
-# include <limits>
-# include <memory>
-# include <stdlib.h>
 
 /*
  * A namespace is an optionally-named declarative region.
@@ -41,6 +37,64 @@ namespace ft
 	class	vector
 	{
 
+		public :
+
+			//ITERATORS
+			struct Iterator
+			{
+
+				typedef std::forward_iterator_tag	iterator_category;
+				typedef std::ptrdiff_t				difference_type;
+				typedef T							value_type;
+				typedef T *							pointer;
+				typedef T &							reference;
+
+				Iterator(pointer ptr) :
+					m_ptr(ptr)
+				{
+					return ;
+				};
+				
+				reference operator * (void) const
+				{
+					return (*m_ptr);
+				}
+
+				pointer operator -> (void)
+				{
+					return (m_ptr);
+				}
+
+				Iterator & operator ++ (void)
+				{
+					m_ptr++;
+					return (*this);
+				}
+
+				Iterator operator ++ (int)
+				{
+					Iterator tmp(*this);
+					++(*this);
+					return (tmp);
+				}
+
+				friend bool operator == (const Iterator& a, const Iterator& b)
+				{
+					return (a.m_ptr == b.m_ptr);
+				};
+
+				friend bool operator != (const Iterator& a, const Iterator& b)
+				{
+					return (a.m_ptr != b.m_ptr);
+				};
+
+				private :
+
+					pointer		m_ptr;
+
+			};
+
+
 		/* 
 		 * TYPEDEFS :
 		 * Declarations containing the decl-specifier typedef declare identifiers that can
@@ -48,22 +102,23 @@ namespace ft
 		 */
 
 		public :
-			typedef T			value_type;
-			typedef Allocator	allocator_type;
-			typedef size_t		size_type;
-			typedef ptrdiff_t	difference_type;
-			typedef T &			reference;
-			typedef const T &	const_reference;
-			typedef T *			pointer;
-			typedef const T *	const_pointer;
-			//typedef 		iterator;
-			//typedef 		const_iterator;
+			typedef T						value_type;
+			typedef Allocator				allocator_type;
+			typedef size_t					size_type;
+			typedef ptrdiff_t				difference_type;
+			typedef T &						reference;
+			typedef const T &				const_reference;
+			typedef T *						pointer;
+			typedef const T *				const_pointer;
+			typedef vector::Iterator		iterator;
+			typedef const vector::Iterator	const_iterator;
 			//typedef 		reverse_iterator;
 			//typedef 		const_reverse_iterator;
 
 
 		//MEMBER TYPES :
 		protected :
+			
 			pointer				_elements;
 			size_type			_size;
 			size_type			_capacity;
@@ -158,7 +213,15 @@ namespace ft
 
 			//ITERATORS
 				//BEGIN
+				iterator begin(void)
+				{
+					return (iterator(&_elements[0]));
+				}
 				//END
+				iterator end(void)
+				{
+					return (iterator(&_elements[size()]));
+				}
 				//RBEGIN
 				//REND
 
@@ -245,21 +308,21 @@ namespace ft
 				//FRONT
 				reference	front(void)
 				{
-					return (_elements[0]);
+					return (begin());
 				};
 				const_reference	front(void) const
 				{
-					return (_elements[0]);
+					return (begin());
 				};
 
 				//BACK
 				reference	back(void)
 				{
-					return (_elements[size() - 1]);
+					return (end());
 				};
 				const_reference	back(void) const
 				{
-					return (_elements[size() - 1]);
+					return (end());
 				};
 
 			//MODIFIERS

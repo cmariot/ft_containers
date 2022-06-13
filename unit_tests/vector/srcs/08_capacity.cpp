@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 12:06:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 18:53:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	capacity_test(void)
 
 		// Range constructor
 		{
-			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
+			ft::vector<int>		ft_range(ft_fill.begin(), ft_fill.end());
 			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
 
 			if (ft_range.capacity() != std_range.capacity() || ft_range.capacity() != n)

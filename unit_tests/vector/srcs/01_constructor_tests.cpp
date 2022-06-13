@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 16:56:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 18:50:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	constructor_test(void)
 
 		// Range constructor
 		{
-			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
+			ft::vector<int>		ft_range(ft_fill.begin(), ft_fill.end());
 			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
 
 			if (ft_range.size() != std_range.size())

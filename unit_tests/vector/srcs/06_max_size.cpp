@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:47 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 13:32:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 18:53:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	max_size_test(void)
 
 		// Range constructor
 		{
-			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
+			ft::vector<int>		ft_range(ft_fill.begin(), ft_fill.end());
 			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
 
 			if (ft_range.max_size() != std_range.max_size())

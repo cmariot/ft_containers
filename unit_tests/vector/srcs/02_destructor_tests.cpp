@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:12:44 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:09:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 18:52:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	destructor_test(void)
 
 		// Destructor fot the range constructor
 		{
-			ft::vector<int>		ft_range(std_fill.begin(), std_fill.end());
+			ft::vector<int>		ft_range(ft_fill.begin(), ft_fill.end());
 		}
 	}
 	return (0);
