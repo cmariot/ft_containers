@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 14:53:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 17:28:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ namespace ft
 				vector(const vector & x)
 				{
 					this->_size = x.size();
-					this->_capacity = x.capacity();
+					this->_capacity = x.size();
 					this->_allocator = x.get_allocator();
 					if (_size and _size <= max_size())
 					{
@@ -139,12 +139,7 @@ namespace ft
 			//DESTRUCTOR
 			~vector(void)
 			{
-				if (_elements)
-				{
-					for (size_type i = 0 ; i < _size ; ++i)
-						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-				}
+				clear();
 				return ;
 			};
 
@@ -152,12 +147,7 @@ namespace ft
 			//OPERATOR=
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
-				if (_elements)
-				{
-					for (size_type i = 0 ; i < _size ; ++i)
-						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-				}
+				clear();
 				_size = rhs.size();
 				_capacity = rhs.capacity();
 				_elements = get_allocator().allocate(size());
@@ -176,14 +166,14 @@ namespace ft
 			//CAPACITY
 				
 				//SIZE : return the number of elements in the vector
-				size_type size() const
+				size_type	size(void) const
 				{
 					return (_size);
 				};
 
 				//MAX_SIZE : return the number of elements that might be
 				//allocated as maximum by a call to member allocate.
-				size_type max_size() const
+				size_type	max_size(void) const
 				{
 					return (get_allocator().max_size());
 				};
@@ -207,13 +197,13 @@ namespace ft
 				};
 
 				//CAPACITY : return the storage space currently allocated
-				size_type capacity() const
+				size_type	capacity(void) const
 				{
 					return (_capacity);
 				};
 
 				//EMPTY : return true if the size is 0
-				bool empty() const
+				bool	empty(void) const
 				{
 					return (_size == 0);
 				};
@@ -242,12 +232,10 @@ namespace ft
 				reference	at(size_type i)
 				{
 					if (i >= size())
-					{
 						throw (std::out_of_range("Out of range"));
-					}
 				   return (_elements[i]);
 				};
-				const_reference at(size_type i) const
+				const_reference	at(size_type i) const
 				{
 					if (i >= size())
 						throw (std::out_of_range("Out of range"));
@@ -255,28 +243,28 @@ namespace ft
 				};
 
 				//FRONT
-				reference	front()
+				reference	front(void)
 				{
 					return (_elements[0]);
 				};
-				const_reference	front() const
+				const_reference	front(void) const
 				{
 					return (_elements[0]);
 				};
 
 				//BACK
-				reference	back()
+				reference	back(void)
 				{
 					return (_elements[size() - 1]);
 				};
-				const_reference	back() const
+				const_reference	back(void) const
 				{
 					return (_elements[size() - 1]);
 				};
 
 			//MODIFIERS
 				//ASSIGN
-				void assign (size_type n, const value_type& val)
+				void	assign(size_type n, const value_type& val)
 				{
 					(void)n;
 					(void)val;
@@ -286,19 +274,30 @@ namespace ft
 				//INSERT
 				//ERASE
 				//SWAP
-				template <class U, class Alloc>
-				void swap (vector <U, Alloc> & x)
+				void	swap(vector & x)
 				{
-					vector<U, Alloc>	tmp(*this);
+					vector	tmp(*this);
 
 					*this = x;
 					x = tmp;
 				};
+
 				//CLEAR
-			
+				void	clear(void)
+				{
+					if (_elements)
+					{
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = NULL;
+						_size = 0;
+					}
+				};
+
 			//ALLOCATOR
 				//GET_ALLOCATOR
-				allocator_type get_allocator() const
+				allocator_type	get_allocator(void) const
 				{
 					return (_allocator);
 				};
@@ -321,7 +320,8 @@ namespace ft
 						if ((*this)[i] != rhs[i])
 							return (false);
 				return (true);
-			} ;
+			};
+
 			//SWAP
 
 	} ;

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:17:09 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:28:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/13 16:09:54 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,10 @@
 
 int	allocator_test(void)
 {
-	return (-1);
+	ft::vector<int>		ft_test;
+	std::vector<int>	std_test;
+
+	if (std_test.get_allocator() != ft_test.get_allocator())
+		return (-1);
+	return (0);
 }
