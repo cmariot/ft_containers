@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/13 10:38:21 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/13 22:36:24 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,6 @@ RESET			= \033[0m
 all : 			header $(NAME) footer
 
 
-
 $(OBJ_ROOTDIR)%.o: $(SRC_ROOTDIR)%.cpp
 				@mkdir -p $(OBJ_DIR)
 				$(CC) $(CPPFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
@@ -133,6 +132,7 @@ $(NAME)	: 		$(OBJS)
 leaks :			all
 				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=66 ./$(NAME) 2> valgrind.log
 
+
 showleaks :		all
 				valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=66 ./$(NAME)
 
@@ -142,7 +142,7 @@ test :			all
 
 
 clean :
-				@rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
+				@rm -rf $(OBJ_ROOTDIR)
 				@make clean -C ../framework --no-print-directory
 				@printf "$(RED)"
 				@printf "Object files removed\n"
@@ -151,7 +151,7 @@ clean :
 
 fclean :
 				@-rm -f $(NAME)
-				@-rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
+				@-rm -rf $(OBJ_ROOTDIR)
 				@-rm -f VECTOR.log
 				@-rm -f valgrind.log
 				@make fclean -C ../framework --no-print-directory
