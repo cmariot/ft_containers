@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 20:56:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 09:26:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ namespace ft
 	 * The size of the container can change dynamically when new elements are added.
 	 *
 	 * - T		Type of the element
+	 *
 	 * - Alloc	Type of the allocator used to define the storage allocation model
+	 *			Default to std::allocator<T>
 	 */
 
 	template	< class T, class Allocator = std::allocator<T> >
@@ -338,8 +340,42 @@ namespace ft
 				{
 					(void)n;
 					(void)val;
-				} ;
+				};
+
 				//PUSH_BACK
+				void push_back(const value_type & val)
+				{
+					pointer		tmp;
+
+					if (_size + 1 > capacity())
+					{
+						// Update the capacity
+						if (_capacity == 0)
+							_capacity = 1;
+						else
+							_capacity *= 2;
+
+						// Create the new array
+						tmp = get_allocator().allocate(_capacity);
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().construct(&tmp[i], at(i));
+						get_allocator().construct(&tmp[_size], val);
+						
+						// Clear the old one
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = tmp;
+						
+					}
+					else
+					{
+						std::cout << "ELSE" << std::endl;
+						_elements[_size] = val;
+					}
+					_size = _size + 1;
+				};
+
 				//POP_BACK
 				//INSERT
 				//ERASE
