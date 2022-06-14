@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 14:36:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 18:54:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	iterators_test(void)
 
 	// Assign elements to their new value with iterators
 	int	i = 0;
-	for (ft::vector<int>::Iterator begin = ft_iterators.begin() ; begin != ft_iterators.end() ; begin++)
+	for (ft::vector<int>::iterator begin = ft_iterators.begin() ; begin != ft_iterators.end() ; begin++)
 	{
 		*begin = i;
 		i++;
@@ -26,12 +26,15 @@ int	iterators_test(void)
 
 	// Check value with iterators
 	i = 0;
-	for (ft::vector<int>::Iterator begin = ft_iterators.begin() ; begin != ft_iterators.end() ; begin++)
+	for (ft::vector<int>::iterator begin = ft_iterators.begin() ; begin != ft_iterators.end() ; begin++)
 	{
 		if (*begin != i)
 			return (-1);
 		i++;
 	}
 
-	return (0);
+	// Reverse iterator
+	// + Const ?
+
+	return (-1);
 }

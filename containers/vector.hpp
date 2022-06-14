@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 17:09:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 19:17:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ namespace ft
 		public :
 
 			//ITERATORS
-			struct Iterator
+			struct iterator
 			{
 				typedef std::forward_iterator_tag	iterator_category;
 				typedef std::ptrdiff_t				difference_type;
@@ -54,7 +54,7 @@ namespace ft
 				typedef const T &					const_reference;
 
 				// CONSTRUCTOR
-				Iterator(pointer ptr) :
+				iterator(pointer ptr) :
 					m_ptr(ptr)
 				{
 					return ;
@@ -73,28 +73,28 @@ namespace ft
 				}
 
 				// PREFIX INCREMENTATION
-				Iterator & operator ++ (void)
+				iterator & operator ++ (void)
 				{
 					m_ptr++;
 					return (*this);
 				}
 
 				// SUFIX INCREMENTATION
-				Iterator operator ++ (int)
+				iterator operator ++ (int)
 				{
-					Iterator tmp(*this);
+					iterator tmp(*this);
 					++(*this);
 					return (tmp);
 				}
 
 				// COMPARAISON ==
-				friend bool operator == (const Iterator & a, const Iterator & b)
+				friend bool operator == (const iterator & a, const iterator & b)
 				{
 					return (a.m_ptr == b.m_ptr);
 				};
 
 				// COMPARAISON !=
-				friend bool operator != (const Iterator & a, const Iterator & b)
+				friend bool operator != (const iterator & a, const iterator & b)
 				{
 					return (a.m_ptr != b.m_ptr);
 				};
@@ -122,8 +122,8 @@ namespace ft
 			typedef const T &				const_reference;
 			typedef T *						pointer;
 			typedef const T *				const_pointer;
-			typedef vector::Iterator		iterator;
-			typedef const vector::Iterator	const_iterator;
+			typedef vector::iterator		iterator;
+			typedef const vector::iterator	const_iterator;
 			//typedef 		reverse_iterator;
 			//typedef 		const_reverse_iterator;
 
@@ -166,24 +166,12 @@ namespace ft
 				};
 
 				// Range constructor
-				template <class InputIterator>
-				vector(InputIterator first, InputIterator last,
+				template <class Inputiterator>
+				vector(Inputiterator first, Inputiterator last,
 						const allocator_type & alloc = allocator_type())
 				{
-					_size = std::distance(first, last);
-					_capacity = _size;
 					_allocator = alloc;
-					if (_size and _size <= max_size())
-					{
-						_elements = get_allocator().allocate(_size);
-						for (size_type i = 0 ; i < _size ; i++)
-						{
-							get_allocator().construct(&_elements[i], *first);
-							++first;
-						}
-					}
-					else
-						_elements = NULL;
+					assign(first, last);
 					return ;
 				};
 
@@ -342,10 +330,36 @@ namespace ft
 
 			//MODIFIERS
 				//ASSIGN
+				template <class Inputiterator>
+				void assign (Inputiterator first, Inputiterator last)
+				{
+					_size = std::distance(first, last);
+					_capacity = _size;
+					if (_size and _size <= max_size())
+					{
+						_elements = get_allocator().allocate(_size);
+						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&_elements[i], *first);
+							++first;
+						}
+					}
+					else
+						_elements = NULL;
+				};
 				void	assign(size_type n, const value_type& val)
 				{
-					(void)n;
-					(void)val;
+					size_type	i = 0;
+
+					clear();
+					_size = n;
+					_elements = get_allocator().allocate(_size);
+					_capacity = _size;
+					while (i < n)
+					{
+						get_allocator().construct(&_elements[i], val);
+						i++;
+					}
 				};
 
 				//PUSH_BACK
@@ -389,8 +403,8 @@ namespace ft
 				
 				void	insert(iterator position, size_type n, const value_type& val);
 			
-				template <class InputIterator>
-				void	insert(iterator position, InputIterator first, InputIterator last);
+				template <class Inputiterator>
+				void	insert(iterator position, Inputiterator first, Inputiterator last);
 
 				//ERASE
 				iterator	erase(iterator position)

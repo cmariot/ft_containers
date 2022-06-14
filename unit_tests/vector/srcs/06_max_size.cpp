@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:47 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:53:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 18:54:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ int	max_size_test(void)
 				return (-1);
 		}
 	}
+
+	// Difference selon les systemes
+
 	return (0);
 }
