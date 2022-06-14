@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:17:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 15:23:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:22:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 int	swap2_test(void)
 {
-	ft::vector<int>	foo(static_cast<size_t>(3), 100);   // three ints with a value of 100
+	ft::vector<int>	foo(static_cast<size_t>(3), 100);	// three ints with a value of 100
 	ft::vector<int>	foo_copy(foo);
 	
-	ft::vector<int>	bar(static_cast<size_t>(5), 200);   // five ints with a value of 200
+	ft::vector<int>	bar(static_cast<size_t>(5), 200);	// five ints with a value of 200
 	ft::vector<int>	bar_copy(bar);
 
 	ft::swap<int, std::allocator<int> >(foo, bar);
