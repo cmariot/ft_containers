@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 20:56:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 19:17:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define VECTOR_HPP
 
 # include <cstddef>
+# include <memory>
+# include <iostream>
 
 /*
  * A namespace is an optionally-named declarative region.
@@ -30,7 +32,9 @@ namespace ft
 	 * The size of the container can change dynamically when new elements are added.
 	 *
 	 * - T		Type of the element
+	 *
 	 * - Alloc	Type of the allocator used to define the storage allocation model
+	 *			Default to std::allocator<T>
 	 */
 
 	template	< class T, class Allocator = std::allocator<T> >
@@ -40,16 +44,17 @@ namespace ft
 		public :
 
 			//ITERATORS
-			struct Iterator
+			struct iterator
 			{
 				typedef std::forward_iterator_tag	iterator_category;
 				typedef std::ptrdiff_t				difference_type;
 				typedef T							value_type;
 				typedef T *							pointer;
 				typedef T &							reference;
+				typedef const T &					const_reference;
 
 				// CONSTRUCTOR
-				Iterator(pointer ptr) :
+				iterator(pointer ptr) :
 					m_ptr(ptr)
 				{
 					return ;
@@ -68,28 +73,28 @@ namespace ft
 				}
 
 				// PREFIX INCREMENTATION
-				Iterator & operator ++ (void)
+				iterator & operator ++ (void)
 				{
 					m_ptr++;
 					return (*this);
 				}
 
 				// SUFIX INCREMENTATION
-				Iterator operator ++ (int)
+				iterator operator ++ (int)
 				{
-					Iterator tmp(*this);
+					iterator tmp(*this);
 					++(*this);
 					return (tmp);
 				}
 
 				// COMPARAISON ==
-				friend bool operator == (const Iterator & a, const Iterator & b)
+				friend bool operator == (const iterator & a, const iterator & b)
 				{
 					return (a.m_ptr == b.m_ptr);
 				};
 
 				// COMPARAISON !=
-				friend bool operator != (const Iterator & a, const Iterator & b)
+				friend bool operator != (const iterator & a, const iterator & b)
 				{
 					return (a.m_ptr != b.m_ptr);
 				};
@@ -117,8 +122,8 @@ namespace ft
 			typedef const T &				const_reference;
 			typedef T *						pointer;
 			typedef const T *				const_pointer;
-			typedef vector::Iterator		iterator;
-			typedef const vector::Iterator	const_iterator;
+			typedef vector::iterator		iterator;
+			typedef const vector::iterator	const_iterator;
 			//typedef 		reverse_iterator;
 			//typedef 		const_reverse_iterator;
 
@@ -154,29 +159,19 @@ namespace ft
 						_elements = get_allocator().allocate(_size);
 						for (size_type i = 0 ; i < _size ; i++)
 							get_allocator().construct(&_elements[i], value);
-						return ;
-					}
-				};
-
-				// Range constructor
-				template <class InputIterator>
-				vector(InputIterator first, InputIterator last,
-						const allocator_type & alloc = allocator_type())
-				{
-					_size = std::distance(first, last);
-					_capacity = _size;
-					_allocator = alloc;
-					if (_size and _size <= max_size())
-					{
-						_elements = get_allocator().allocate(_size);
-						for (size_type i = 0 ; i < _size ; i++)
-						{
-							get_allocator().construct(&_elements[i], *first);
-							++first;
-						}
 					}
 					else
 						_elements = NULL;
+					return ;
+				};
+
+				// Range constructor
+				template <class Inputiterator>
+				vector(Inputiterator first, Inputiterator last,
+						const allocator_type & alloc = allocator_type())
+				{
+					_allocator = alloc;
+					assign(first, last);
 					return ;
 				};
 
@@ -251,19 +246,10 @@ namespace ft
 				//RESIZE
 				void resize(size_type n, value_type val = value_type())
 				{
-					if (n < size())
-					{
-						//reduce _elements to only contains the first n elements
-					}
-					else if (n > size())
-					{
-						if (n > capacity())
-						{
-							//allocation
-						}
-						// add elements at the end
-						(void)val;
-					}
+					while (size() > n)
+						pop_back();
+					while (size() < n)
+						push_back(val);
 				};
 
 				//CAPACITY : return the storage space currently allocated
@@ -281,9 +267,19 @@ namespace ft
 				//RESERVE
 				void reserve(size_type n)
 				{
+					//exception n > max_size()
 					if (n > capacity())
 					{
-						(void)n;
+						pointer		tmp;
+						size_type	size_backup = _size;
+
+						tmp = get_allocator().allocate(n);
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().construct(&tmp[i], _elements[i]);
+						clear();
+						_capacity = n;
+						_size = size_backup;
+						_elements = tmp;
 					}
 				};
 
@@ -334,15 +330,151 @@ namespace ft
 
 			//MODIFIERS
 				//ASSIGN
+				template <class Inputiterator>
+				void assign (Inputiterator first, Inputiterator last)
+				{
+					_size = std::distance(first, last);
+					_capacity = _size;
+					if (_size and _size <= max_size())
+					{
+						_elements = get_allocator().allocate(_size);
+						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&_elements[i], *first);
+							++first;
+						}
+					}
+					else
+						_elements = NULL;
+				};
 				void	assign(size_type n, const value_type& val)
 				{
-					(void)n;
-					(void)val;
-				} ;
+					size_type	i = 0;
+
+					clear();
+					_size = n;
+					_elements = get_allocator().allocate(_size);
+					_capacity = _size;
+					while (i < n)
+					{
+						get_allocator().construct(&_elements[i], val);
+						i++;
+					}
+				};
+
 				//PUSH_BACK
+				void	push_back(const value_type & val)
+				{
+					pointer		tmp;
+
+					if (_size + 1 > capacity())
+					{
+						if (_capacity == 0)
+							_capacity = 1;
+						else
+							_capacity *= 2;
+						tmp = get_allocator().allocate(_capacity);
+						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&tmp[i], _elements[i]);
+							get_allocator().destroy(&_elements[i]);
+						}
+						get_allocator().deallocate(_elements, _size);
+						get_allocator().construct(&tmp[_size], val);
+						_elements = tmp;
+					}
+					else
+						get_allocator().construct(&_elements[_size], val);
+					_size = _size + 1;
+				};
+
 				//POP_BACK
+				void	pop_back(void)
+				{
+					if (!empty())
+					{
+						get_allocator().destroy(&_elements[_size]);
+						_size--;
+					}
+				};
+
 				//INSERT
+				iterator	insert(iterator position, const value_type& val);
+				
+				void	insert(iterator position, size_type n, const value_type& val);
+			
+				template <class Inputiterator>
+				void	insert(iterator position, Inputiterator first, Inputiterator last);
+
 				//ERASE
+				iterator	erase(iterator position)
+				{
+					pointer	tmp;
+
+					if (position == end())
+						pop_back();
+					else
+					{
+						int			i = 0;
+						iterator	it = begin();
+
+						tmp = get_allocator().allocate(_size - 1);
+						while (it != position)
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						it++;
+						while (it != end())
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = tmp;
+						_size--;
+					}
+					return (begin());
+				};
+
+				iterator	erase(iterator first, iterator last)
+				{
+					pointer	tmp;
+
+					if (last == end())
+					{
+						while (first++ != end())
+							pop_back();
+					}
+					else
+					{
+						int			i = 0;
+						iterator	it = begin();
+
+						tmp = get_allocator().allocate(_size - std::distance(first, last));
+						while (it != first)
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						it += std::distance(first, last);
+						i += std::distance(first, last) - 1;
+						while (it != end())
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = tmp;
+						_size -= std::distance(first, last);
+					}
+					return (begin());
+				};
+
 				//SWAP
 				void	swap(vector & x)
 				{
@@ -392,9 +524,20 @@ namespace ft
 				return (true);
 			};
 
-			//SWAP
+
 
 	};	// end of class ft::vector
+	
+	//NON-MEMBER FUNCTION OVERLOADS
+		//SWAP
+		template <class U, class Alloc>
+		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
+		{
+			vector<U, Alloc>	tmp(x);
+
+			x = y;
+			y = tmp;
+		};
 
 };	// end of namespace ft
 

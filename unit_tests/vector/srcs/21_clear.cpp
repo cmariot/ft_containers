@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:58 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:55:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:00:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	clear_test(void)
 			return (-1);
 		if (ft_default.empty() != std_default.empty())
 			return (-1);
+		for (size_t i = 0 ; i < ft_default.size() ; i++)
+			if (ft_default[i] != std_default[i])
+				return (-1);
 	}
 
 	//Fill constructor

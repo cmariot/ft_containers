@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:53:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:10:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,21 @@ int	capacity_test(void)
 		}
 
 		// A tester : capacity() apres modification des vecteurs
+		while (ft_fill.empty() == false && std_fill.empty() == false)
+		{
+			ft_fill.pop_back();
+			std_fill.pop_back();
+			if (ft_fill.capacity() != std_fill.capacity())
+				return (-1);
+		}
 
+		for (int i = 0 ; i < 1200 ; i++)
+		{
+			ft_fill.push_back(i);
+			std_fill.push_back(i);
+			if (ft_fill.capacity() != std_fill.capacity())
+				return (-1);
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:54 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 14:07:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:42:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	swap_test(void)
 		if (bar[i] != foo_copy[i])
 			return (-1);
 
-	return 0;
+	return (0);
 }
