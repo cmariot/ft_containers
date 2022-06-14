@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 16:03:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:09:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,16 +258,10 @@ namespace ft
 				//RESIZE
 				void resize(size_type n, value_type val = value_type())
 				{
-					if (size() > n)
-					{
-						while (size() > n)
-							pop_back();
-					}
-					else if (size() < n)
-					{
-						while (size() < n)
-							push_back(val);
-					}
+					while (size() > n)
+						pop_back();
+					while (size() < n)
+						push_back(val);
 				};
 
 				//CAPACITY : return the storage space currently allocated
@@ -285,9 +279,19 @@ namespace ft
 				//RESERVE
 				void reserve(size_type n)
 				{
+					//exception n > max_size()
 					if (n > capacity())
 					{
-						(void)n;
+						pointer		tmp;
+						size_type	size_backup = _size;
+
+						tmp = get_allocator().allocate(n);
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().construct(&tmp[i], _elements[i]);
+						clear();
+						_capacity = n;
+						_size = size_backup;
+						_elements = tmp;
 					}
 				};
 
@@ -373,7 +377,7 @@ namespace ft
 				//POP_BACK
 				void	pop_back(void)
 				{
-					if (empty() == false)
+					if (!empty())
 					{
 						get_allocator().destroy(&_elements[_size]);
 						_size--;
@@ -427,11 +431,8 @@ namespace ft
 
 					if (last == end())
 					{
-						while (first != end())
-						{
+						while (first++ != end())
 							pop_back();
-							first++;
-						}
 					}
 					else
 					{
