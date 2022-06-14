@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 19:17:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 21:13:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -505,30 +505,85 @@ namespace ft
 				};
 
 
-		//NON-MEMBER FUNCTION OVERLOADS
-		public :
-			//RELATIONNAL OPERATORS
-			template <class U, class Alloc>
-			bool operator == (const vector<U,Alloc>& rhs)
-			{
-				if (size() != rhs.size())
-					return (false);
-				else if (capacity() != rhs.capacity())
-					return (false);
-				else if (get_allocator() != rhs.get_allocator())
-					return (false);
-				else
-					for (size_type i = 0 ; i < size() ; i++)
-						if ((*this)[i] != rhs[i])
-							return (false);
-				return (true);
-			};
-
-
-
 	};	// end of class ft::vector
-	
+
+
+	//NON-MEMBER RELATIONNAL OPERATORS OVERLOADS
+
+		//OPERATOR ==
+		template <class T, class Alloc>
+		bool operator == (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if (!(lhs[i] == rhs[i]))
+					return (false);
+			return (true);
+		};
+
+		//OPERATOR !=
+		template <class T, class Alloc>
+		bool operator != (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if (!(lhs[i] == rhs[i]))
+					return (true);
+			return (false);
+		};
+
+		//OPERATOR <
+		template <class T, class Alloc>
+		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if ((rhs[i] < lhs[i]) and !(lhs[i] < rhs[i]))
+					return (false);
+			return (true);
+		};
+
+		//OPERATOR <=
+		template <class T, class Alloc>
+		bool operator <= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if (!(rhs[i] < lhs[i]))
+					return (false);
+			return (true);
+		};
+
+		//OPERATOR >
+		template <class T, class Alloc>
+		bool operator > (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if ((lhs[i] < rhs[i]) and !(rhs[i] < lhs[i]))
+					return (false);
+			return (true);
+		};
+
+		//OPERATOR >=
+		template <class T, class Alloc>
+		bool operator >= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0 ; i < lhs.size() ; i++)
+				if (!(lhs[i] < rhs[i]))
+					return (false);
+			return (true);
+		};
+
 	//NON-MEMBER FUNCTION OVERLOADS
+
 		//SWAP
 		template <class U, class Alloc>
 		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
