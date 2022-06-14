@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 15:23:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:03:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,19 +258,15 @@ namespace ft
 				//RESIZE
 				void resize(size_type n, value_type val = value_type())
 				{
-					if (n < size())
+					if (size() > n)
 					{
-						while (size() != n)
+						while (size() > n)
 							pop_back();
 					}
-					else if (n > size())
+					else if (size() < n)
 					{
-						if (n > capacity())
-						{
-							//allocation
-						}
-						// add elements at the end
-						(void)val;
+						while (size() < n)
+							push_back(val);
 					}
 				};
 
