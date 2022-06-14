@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 11:03:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:36:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	iterators_test(void)
 	for (ft::vector<int>::Iterator begin = ft_iterators.begin() ; begin != ft_iterators.end() ; begin++)
 	{
 		if (*begin != i)
-			return (1);
+			return (-1);
 		i++;
 	}
 

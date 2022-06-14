@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 11:00:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 15:23:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ namespace ft
 				typedef T							value_type;
 				typedef T *							pointer;
 				typedef T &							reference;
+				typedef const T &					const_reference;
 
 				// CONSTRUCTOR
 				Iterator(pointer ptr) :
@@ -158,8 +159,10 @@ namespace ft
 						_elements = get_allocator().allocate(_size);
 						for (size_type i = 0 ; i < _size ; i++)
 							get_allocator().construct(&_elements[i], value);
-						return ;
 					}
+					else
+						_elements = NULL;
+					return ;
 				};
 
 				// Range constructor
@@ -257,8 +260,7 @@ namespace ft
 				{
 					if (n < size())
 					{
-						//reduce _elements to only contains the first n elements
-						while (size() > n)
+						while (size() != n)
 							pop_back();
 					}
 					else if (n > size())
@@ -383,7 +385,85 @@ namespace ft
 				};
 
 				//INSERT
+				iterator	insert(iterator position, const value_type& val);
+				
+				void	insert(iterator position, size_type n, const value_type& val);
+			
+				template <class InputIterator>
+				void	insert(iterator position, InputIterator first, InputIterator last);
+
 				//ERASE
+				iterator	erase(iterator position)
+				{
+					pointer	tmp;
+
+					if (position == end())
+						pop_back();
+					else
+					{
+						int			i = 0;
+						iterator	it = begin();
+
+						tmp = get_allocator().allocate(_size - 1);
+						while (it != position)
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						it++;
+						while (it != end())
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = tmp;
+						_size--;
+					}
+					return (begin());
+				};
+
+				iterator	erase(iterator first, iterator last)
+				{
+					pointer	tmp;
+
+					if (last == end())
+					{
+						while (first != end())
+						{
+							pop_back();
+							first++;
+						}
+					}
+					else
+					{
+						int			i = 0;
+						iterator	it = begin();
+
+						tmp = get_allocator().allocate(_size - std::distance(first, last));
+						while (it != first)
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						it += std::distance(first, last);
+						i += std::distance(first, last) - 1;
+						while (it != end())
+						{
+							get_allocator().construct(&tmp[i++], *it);
+							it++;
+						}
+						for (size_type i = 0 ; i < _size ; i++)
+							get_allocator().destroy(&_elements[i]);
+						get_allocator().deallocate(_elements, _size);
+						_elements = tmp;
+						_size -= std::distance(first, last);
+					}
+					return (begin());
+				};
+
 				//SWAP
 				void	swap(vector & x)
 				{
@@ -433,9 +513,20 @@ namespace ft
 				return (true);
 			};
 
-			//SWAP
+
 
 	};	// end of class ft::vector
+	
+	//NON-MEMBER FUNCTION OVERLOADS
+		//SWAP
+		template <class U, class Alloc>
+		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
+		{
+			vector<U, Alloc>	tmp(x);
+
+			x = y;
+			y = tmp;
+		};
 
 };	// end of namespace ft
 
