@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 09:26:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 11:00:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define VECTOR_HPP
 
 # include <cstddef>
+# include <memory>
+# include <iostream>
 
 /*
  * A namespace is an optionally-named declarative region.
@@ -256,6 +258,8 @@ namespace ft
 					if (n < size())
 					{
 						//reduce _elements to only contains the first n elements
+						while (size() > n)
+							pop_back();
 					}
 					else if (n > size())
 					{
@@ -343,40 +347,41 @@ namespace ft
 				};
 
 				//PUSH_BACK
-				void push_back(const value_type & val)
+				void	push_back(const value_type & val)
 				{
 					pointer		tmp;
 
 					if (_size + 1 > capacity())
 					{
-						// Update the capacity
 						if (_capacity == 0)
 							_capacity = 1;
 						else
 							_capacity *= 2;
-
-						// Create the new array
 						tmp = get_allocator().allocate(_capacity);
 						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().construct(&tmp[i], at(i));
-						get_allocator().construct(&tmp[_size], val);
-						
-						// Clear the old one
-						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&tmp[i], _elements[i]);
 							get_allocator().destroy(&_elements[i]);
+						}
 						get_allocator().deallocate(_elements, _size);
+						get_allocator().construct(&tmp[_size], val);
 						_elements = tmp;
-						
 					}
 					else
-					{
-						std::cout << "ELSE" << std::endl;
-						_elements[_size] = val;
-					}
+						get_allocator().construct(&_elements[_size], val);
 					_size = _size + 1;
 				};
 
 				//POP_BACK
+				void	pop_back(void)
+				{
+					if (empty() == false)
+					{
+						get_allocator().destroy(&_elements[_size]);
+						_size--;
+					}
+				};
+
 				//INSERT
 				//ERASE
 				//SWAP

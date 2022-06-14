@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:53:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 11:08:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,26 @@ int	size_test(void)
 				return (-1);
 		}
 
-		// A tester : size() apres modification des vecteurs
+		//Size apres ajout avec push_back
+		for (int i = 0 ; i < 100 ; i++)
+		{
+			ft_fill.push_back(i);
+			std_fill.push_back(i);
+			if (ft_fill.size() != std_fill.size())
+				return (-1);
+		}
 
+		//Size apres suppression avec pop_back
+		for (int i = 0 ; i < 50 ; i++)
+		{
+			ft_fill.pop_back();
+			std_fill.pop_back();
+			if (ft_fill.size() != std_fill.size())
+				return (-1);
+		}
+
+		// A tester : size() apres modification des vecteurs (insert ...)
+		
 	}
 	return (0);
 
