@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 21:13:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 11:40:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -514,7 +514,7 @@ namespace ft
 		template <class T, class Alloc>
 		bool operator == (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() != rhs.size())
+			if (!(lhs.size() == rhs.size()))
 				return (false);
 			for (size_t i = 0 ; i < lhs.size() ; i++)
 				if (!(lhs[i] == rhs[i]))
@@ -526,8 +526,8 @@ namespace ft
 		template <class T, class Alloc>
 		bool operator != (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() != rhs.size())
-				return (false);
+			if (!(lhs.size() == rhs.size()))
+				return (true);
 			for (size_t i = 0 ; i < lhs.size() ; i++)
 				if (!(lhs[i] == rhs[i]))
 					return (true);
@@ -538,9 +538,7 @@ namespace ft
 		template <class T, class Alloc>
 		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
 		{
-			if (lhs.size() != rhs.size())
-				return (false);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
+			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
 				if ((rhs[i] < lhs[i]) and !(lhs[i] < rhs[i]))
 					return (false);
 			return (true);
@@ -550,34 +548,28 @@ namespace ft
 		template <class T, class Alloc>
 		bool operator <= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() != rhs.size())
-				return (false);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
+			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
 				if (!(rhs[i] < lhs[i]))
-					return (false);
-			return (true);
+					return (true);
+			return (false);
 		};
 
 		//OPERATOR >
 		template <class T, class Alloc>
 		bool operator > (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() != rhs.size())
-				return (false);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
-				if ((lhs[i] < rhs[i]) and !(rhs[i] < lhs[i]))
-					return (false);
-			return (true);
+			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
+				if ((rhs[i] < lhs[i]) and !(lhs[i] < rhs[i]))
+					return (true);
+			return (false);
 		};
 
 		//OPERATOR >=
 		template <class T, class Alloc>
 		bool operator >= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() != rhs.size())
-				return (false);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
-				if (!(lhs[i] < rhs[i]))
+			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
+				if (!(rhs[i] < lhs[i]))
 					return (false);
 			return (true);
 		};
