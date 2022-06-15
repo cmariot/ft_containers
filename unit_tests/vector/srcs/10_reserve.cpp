@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 17:36:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 12:20:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	reserve_test(void)
 		if (ft_foo.capacity() != std_foo.capacity())
 			return (-1);
 	}
-
 
 	ft::vector<int>					ft_bar;
 	std::vector<int>				std_bar;
@@ -54,6 +53,31 @@ int	reserve_test(void)
 		else if (ft_bar.size() != std_bar.size())
 			return (-1);
 	}
+
+	ft_bar.reserve(ft_bar.capacity() - 10);     // this is the only difference with foo above
+	std_bar.reserve(std_bar.capacity() - 10);   // this is the only difference with foo above
+	for (size_t i = 0 ; i < ft_bar.size() || i < std_bar.size() ; ++i)
+	{
+		if (ft_bar.capacity() != std_bar.capacity())
+			return (-1);
+		if (ft_bar[i] != std_bar[i])
+			return (-1);
+		else if (ft_bar.size() != std_bar.size())
+			return (-1);
+	}
+
+	//ft_bar.reserve(ft_bar.max_size() + 100);     // this is the only difference with foo above
+	//std_bar.reserve(std_bar.max_size() + 100);   // this is the only difference with foo above
+	//for (size_t i = 0 ; i < ft_bar.size() || i < std_bar.size() ; ++i)
+	//{
+	//	if (ft_bar.capacity() != std_bar.capacity())
+	//		return (-1);
+	//	if (ft_bar[i] != std_bar[i])
+	//		return (-1);
+	//	else if (ft_bar.size() != std_bar.size())
+	//		return (-1);
+	//}
+
 	return 0;
 
 }

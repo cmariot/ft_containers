@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 11:28:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/14 19:18:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 int	assign_test(void)
 {
+	// A tester : leaks lors de doubles assignations avec iterators
 	return (-1);
 }
