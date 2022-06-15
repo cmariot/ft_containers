@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/15 12:32:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:22:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ namespace ft
 {
 
 	/*
-	 * Vectors are used to store elements in a strict linear sequence.
-	 * Elements can be directly accessed by their position.
-	 * The size of the container can change dynamically when new elements are added.
-	 *
-	 * - T		Type of the element
-	 *
-	 * - Alloc	Type of the allocator used to define the storage allocation model
-	 *			Default to std::allocator<T>
-	 */
+	* Vectors are used to store elements in a strict linear sequence.
+	* Elements can be directly accessed by their position.
+	* The size of the container can change dynamically when new elements are added.
+	*
+	* - T		Type of the element
+	*
+	* - Alloc	Type of the allocator used to define the storage allocation model
+	*			Default to std::allocator<T>
+	*/
 
 	template	< class T, class Allocator = std::allocator<T> >
 	class	vector
@@ -107,11 +107,11 @@ namespace ft
 			};
 
 
-		/* 
-		 * TYPEDEFS :
-		 * Declarations containing the decl-specifier typedef declare identifiers that can
-		 * be used later for naming fundamental or compound types.
-		 */
+		/*
+		* TYPEDEFS :
+		* Declarations containing the decl-specifier typedef declare identifiers that can
+		* be used later for naming fundamental or compound types.
+		*/
 
 		public :
 			typedef T						value_type;
@@ -130,7 +130,7 @@ namespace ft
 
 		//MEMBER TYPES :
 		protected :
-			
+
 			pointer				_elements;
 			size_type			_size;
 			size_type			_capacity;
@@ -168,19 +168,17 @@ namespace ft
 				// Range constructor
 				template <class Inputiterator>
 				vector(Inputiterator first, Inputiterator last,
-						const allocator_type & alloc = allocator_type())
+						const allocator_type & alloc = allocator_type()) :
+					_allocator(alloc)
 				{
-					_allocator = alloc;
 					assign(first, last);
 					return ;
 				};
 
 				// Copy constructor
-				vector(const vector & x)
+				vector(const vector & x) :
+					_size(x.size()), _capacity(x.size()), _allocator(x.get_allocator())
 				{
-					_size = x.size();
-					_capacity = x.size();
-					_allocator = x.get_allocator();
 					if (_size and _size <= max_size())
 					{
 						_elements = get_allocator().allocate(_size);
@@ -205,11 +203,7 @@ namespace ft
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
 				clear();
-				_size = rhs.size();
-				_capacity = rhs.capacity();
-				_elements = get_allocator().allocate(size());
-				for (size_type i = 0 ; i < size() ; i++)
-					get_allocator().construct(&_elements[i], rhs[i]);
+				assign(rhs.begin(), rhs.end());
 				return (*this);
 			};
 
@@ -217,19 +211,19 @@ namespace ft
 				//BEGIN
 				iterator begin(void) const
 				{
-					return (iterator(& _elements[0]));
+					return (iterator(&_elements[0]));
 				}
 				//END
 				iterator end(void) const
 				{
-					return (iterator(& _elements[size()]));
+					return (iterator(&_elements[size()]));
 				}
 				//RBEGIN
 				//REND
 
 
 			//CAPACITY
-				
+
 				//SIZE : return the number of elements in the vector
 				size_type	size(void) const
 				{
@@ -267,8 +261,9 @@ namespace ft
 				//RESERVE
 				void reserve(size_type n)
 				{
-					//exception n > max_size()
-					if (n > capacity())
+					if (n > max_size())
+						throw (std::length_error("Reserve : try to reserve a value sup to max_size."));
+					else if (n > capacity())
 					{
 						pointer		tmp;
 						size_type	size_backup = _size;
@@ -287,7 +282,7 @@ namespace ft
 				//OPERATOR[]
 				reference	operator [] (size_type i)
 				{
-				   return (_elements[i]);
+					return (_elements[i]);
 				};
 				const_reference operator [] (size_type i) const
 				{
@@ -299,7 +294,7 @@ namespace ft
 				{
 					if (i >= size())
 						throw (std::out_of_range("Out of range"));
-				   return (_elements[i]);
+					return (_elements[i]);
 				};
 				const_reference	at(size_type i) const
 				{
@@ -331,7 +326,7 @@ namespace ft
 			//MODIFIERS
 				//ASSIGN
 				template <class Inputiterator>
-				void assign (Inputiterator first, Inputiterator last)
+				void assign(Inputiterator first, Inputiterator last)
 				{
 					_size = std::distance(first, last);
 					_capacity = _size;
@@ -354,12 +349,12 @@ namespace ft
 					clear();
 					_size = n;
 					_elements = get_allocator().allocate(_size);
-					_capacity = _size;
 					while (i < n)
 					{
 						get_allocator().construct(&_elements[i], val);
 						i++;
 					}
+					_capacity = _size;
 				};
 
 				//PUSH_BACK
@@ -400,9 +395,9 @@ namespace ft
 
 				//INSERT
 				iterator	insert(iterator position, const value_type& val);
-				
+
 				void	insert(iterator position, size_type n, const value_type& val);
-			
+
 				template <class Inputiterator>
 				void	insert(iterator position, Inputiterator first, Inputiterator last);
 
@@ -508,7 +503,7 @@ namespace ft
 	};	// end of class ft::vector
 
 
-	//NON-MEMBER RELATIONNAL OPERATORS OVERLOADS
+	//NON-MEMBER RELATIONAL OPERATORS OVERLOADS
 
 		//OPERATOR ==
 		template <class T, class Alloc>
@@ -516,62 +511,42 @@ namespace ft
 		{
 			if (!(lhs.size() == rhs.size()))
 				return (false);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
-				if (!(lhs[i] == rhs[i]))
-					return (false);
-			return (true);
+			return (std::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		};
 
 		//OPERATOR !=
 		template <class T, class Alloc>
 		bool operator != (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (!(lhs.size() == rhs.size()))
-				return (true);
-			for (size_t i = 0 ; i < lhs.size() ; i++)
-				if (!(lhs[i] == rhs[i]))
-					return (true);
-			return (false);
+			return (!(lhs == rhs));
 		};
 
 		//OPERATOR <
 		template <class T, class Alloc>
 		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
 		{
-			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
-				if ((rhs[i] < lhs[i]) and !(lhs[i] < rhs[i]))
-					return (false);
-			return (true);
+			return (std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		};
 
 		//OPERATOR <=
 		template <class T, class Alloc>
 		bool operator <= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
-				if (!(rhs[i] < lhs[i]))
-					return (true);
-			return (false);
+			return !(rhs < lhs);
 		};
 
 		//OPERATOR >
 		template <class T, class Alloc>
 		bool operator > (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
-				if ((rhs[i] < lhs[i]) and !(lhs[i] < rhs[i]))
-					return (true);
-			return (false);
+			return (rhs < lhs);
 		};
 
 		//OPERATOR >=
 		template <class T, class Alloc>
 		bool operator >= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			for (size_t i = 0 ; i < lhs.size() and i < rhs.size() ; i++)
-				if (!(rhs[i] < lhs[i]))
-					return (false);
-			return (true);
+			return !(lhs < rhs);
 		};
 
 	//NON-MEMBER FUNCTION OVERLOADS
@@ -588,4 +563,4 @@ namespace ft
 
 };	// end of namespace ft
 
-#endif
+#endif	// VECTOR_HPP

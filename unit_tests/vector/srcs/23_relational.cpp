@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:17:19 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/15 13:50:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:46:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,60 +51,47 @@ int	relational_test(void)
 		std::vector<int>	std_size(sup_nb, 4);			// != size
 		std::vector<int>	std_size_min(min_nb, 4);		// != size (min)
 	
-		
 		std_min_equal.push_back(4);
 		std_sup_equal.push_back(4);
 
-
 	if ((ft_test == ft_equal) != (std_test == std_equal))
-		return (101);
+		return (-1);
 	if ((ft_test != ft_different) != (std_test != std_different))
-		return (102);
+		return (-1);
 	if ((ft_test < ft_strict_min) != (std_test < std_strict_min))
-		return (103);
+		return (-1);
 	if ((ft_test <= ft_min_equal) != (std_test <= std_min_equal))
-		return (104);
+		return (-1);
 	if ((ft_test > ft_strict_sup) != (std_test > std_strict_sup))
-		return (105);
+		return (-1);
 	if ((ft_test >= ft_sup_equal) != (std_test >= std_sup_equal))
-		return (106);
-
+		return (-1);
 
 	if ((ft_test == ft_size) != (std_test == std_size))
-		return (107);
+		return (-1);
 	if ((ft_test != ft_size) != (std_test != std_size))
-		return (108);
+		return (-1);
 	if ((ft_test < ft_size) != (std_test < std_size))
-		return (109);
+		return (-1);
 	if ((ft_test <= ft_size) != (std_test <= std_size))
-		return (110);
+		return (-1);
 	if ((ft_test > ft_size) != (std_test > std_size))
-		return (111);
+		return (-1);
 	if ((ft_test >= ft_size) != (std_test >= std_size))
-		return (112);
-
-
+		return (-1);
 
 	if ((ft_test == ft_size_min) != (std_test == std_size_min))
-		return (113);
+		return (-1);
 	if ((ft_test != ft_size_min) != (std_test != std_size_min))
-		return (114);
+		return (-1);
 	if ((ft_test < ft_size_min) != (std_test < std_size_min))
-	{
-		std::cout << "MINE : " << (ft_test < ft_size_min) << " vs. STD : " << (std_test < std_size_min) << std::endl;
-		std::cout << "LEN ft_test = " << ft_test.size() << " vs. ft_size_min = " << ft_size_min.size() << std::endl;
-		std::cout << "VALUE ft_test = " << ft_test[0] << " vs. ft_size_min = " << ft_size_min[0] << std::endl;
-		std::cout << "LEN std_test = " << std_test.size() << " vs. std_size_min = " << std_size_min.size() << std::endl;
-		std::cout << "VALUE std_test = " << std_test[0] << " vs. std_size_min = " << std_size_min[0] << std::endl;
-		return (115);
-	}
+		return (-1);
 	if ((ft_test <= ft_size_min) != (std_test <= std_size_min))
-		return (116);
+		return (-1);
 	if ((ft_test > ft_size_min) != (std_test > std_size_min))
-		return (117);
+		return (-1);
 	if ((ft_test >= ft_size_min) != (std_test >= std_size_min))
-		return (118);
-
+		return (-1);
 
 	return (0);
 }

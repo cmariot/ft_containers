@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/15 11:41:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 17:34:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	vector_launcher(void)
 	load_test(&tests, function_name, "Swap", (void *)&swap_test, "");
 	load_test(&tests, function_name, "Clear", (void *)&clear_test, "");
 	load_test(&tests, function_name, "Allocator", (void *)&allocator_test, "");
-	load_test(&tests, function_name, "Relationnal", (void *)&relational_test, "");
+	load_test(&tests, function_name, "Relational", (void *)&relational_test, "");
 	load_test(&tests, function_name, "Swap", (void *)&swap2_test, "");
 	return (launch_tests(&tests));
 }
