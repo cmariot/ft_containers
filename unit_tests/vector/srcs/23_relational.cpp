@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:17:19 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/15 11:26:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:50:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,11 @@ int	relational_test(void)
 		return (114);
 	if ((ft_test < ft_size_min) != (std_test < std_size_min))
 	{
-		std::cout << "MINE : " << (ft_test <= ft_size_min) << " vs. STD : " << (std_test <= std_size_min) << std::endl;
+		std::cout << "MINE : " << (ft_test < ft_size_min) << " vs. STD : " << (std_test < std_size_min) << std::endl;
+		std::cout << "LEN ft_test = " << ft_test.size() << " vs. ft_size_min = " << ft_size_min.size() << std::endl;
+		std::cout << "VALUE ft_test = " << ft_test[0] << " vs. ft_size_min = " << ft_size_min[0] << std::endl;
+		std::cout << "LEN std_test = " << std_test.size() << " vs. std_size_min = " << std_size_min.size() << std::endl;
+		std::cout << "VALUE std_test = " << std_test[0] << " vs. std_size_min = " << std_size_min[0] << std::endl;
 		return (115);
 	}
 	if ((ft_test <= ft_size_min) != (std_test <= std_size_min))
