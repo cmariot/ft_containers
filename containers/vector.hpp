@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/16 08:29:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:12:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <cstddef>
 # include <memory>
 # include <iostream>
-
 /*
  * A namespace is an optionally-named declarative region.
  * The name of a namespace can be used to access entities declared in that namespace;
@@ -262,7 +261,7 @@ namespace ft
 				void reserve(size_type n)
 				{
 					if (n > max_size())
-						throw (std::length_error("Reserve : try to reserve a value sup to max_size."));
+						throw (std::length_error("vector::reserve"));
 					else if (n > capacity())
 					{
 						pointer		tmp;
@@ -292,14 +291,14 @@ namespace ft
 				//AT
 				reference	at(size_type i)
 				{
-					if (i >= size())
-						throw (std::out_of_range("Out of range"));
+					//if (i >= size())
+						//throw (std::out_of_range(std::string("vector::_M_range_check: __n (which is ") + i + ") >= this->size() (which is " + _size + ")"));
 					return (_elements[i]);
 				};
 				const_reference	at(size_type i) const
 				{
-					if (i >= size())
-						throw (std::out_of_range("Out of range"));
+					//if (i >= size())
+						//throw (std::out_of_range("vector::_M_range_check: __n (which is 42000) >= this->size() (which is 100)"));
 					return (_elements[i]);
 				};
 
