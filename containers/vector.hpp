@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/15 18:22:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/16 08:29:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ namespace ft
 				template <class Inputiterator>
 				vector(Inputiterator first, Inputiterator last,
 						const allocator_type & alloc = allocator_type()) :
-					_allocator(alloc)
+					_elements(NULL), _size(0), _capacity(0), _allocator(alloc)
 				{
 					assign(first, last);
 					return ;
@@ -328,6 +328,7 @@ namespace ft
 				template <class Inputiterator>
 				void assign(Inputiterator first, Inputiterator last)
 				{
+					clear();
 					_size = std::distance(first, last);
 					_capacity = _size;
 					if (_size and _size <= max_size())
@@ -348,12 +349,17 @@ namespace ft
 
 					clear();
 					_size = n;
-					_elements = get_allocator().allocate(_size);
-					while (i < n)
+					if (_size and _size <= max_size())
 					{
-						get_allocator().construct(&_elements[i], val);
-						i++;
+						_elements = get_allocator().allocate(_size);
+						while (i < n)
+						{
+							get_allocator().construct(&_elements[i], val);
+							i++;
+						}
 					}
+					else
+						_elements = NULL;
 					_capacity = _size;
 				};
 
