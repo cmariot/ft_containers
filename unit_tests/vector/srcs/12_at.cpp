@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:39 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:06:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:12:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,19 @@ int	at_test(void)
 	{
 		vector.at(42000);
 	}
-	catch (std::out_of_range &exception) {}
+	catch (std::out_of_range &exception)
+	{
+		std::cout << exception.what() << std::endl;
+	}
 
 	try
 	{
 		ft_vector.at(42000);
 	}
-	catch (std::out_of_range &exception) {}
-
+	catch (std::out_of_range &exception)
+	{
+		std::cout << exception.what() << std::endl;
+	}
 
 	return (0);
 }
