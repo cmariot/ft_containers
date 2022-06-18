@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/17 13:36:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:28:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -591,14 +591,11 @@ namespace ft
 				//CLEAR
 				void	clear(void)
 				{
-					if (_elements)
-					{
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-						_elements = NULL;
-						_size = 0;
-					}
+					for (size_type i = 0 ; i < _size ; i++)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+					_elements = NULL;
+					_size = 0;
 				};
 
 			//ALLOCATOR
