@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:39 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/16 16:12:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/16 19:57:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	at_test(void)
 	// Exception when trying to get an element at an out of range index
 	try
 	{
-		vector.at(42000);
+		vector.at(0);
 	}
 	catch (std::out_of_range &exception)
 	{
@@ -36,7 +36,7 @@ int	at_test(void)
 
 	try
 	{
-		ft_vector.at(42000);
+		ft_vector.at(0);
 	}
 	catch (std::out_of_range &exception)
 	{

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/16 16:12:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:28:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@
 
 namespace ft
 {
+
+
+	template <class U>
+	std::string	itoa(U nb)
+	{
+		std::string		str_nb;
+
+		do
+		{
+			str_nb += '0' + (nb % 10);
+			nb /= 10;
+		}
+		while (nb > 0);
+		return (std::string(str_nb.rbegin(), str_nb.rend()));
+	};
 
 	/*
 	* Vectors are used to store elements in a strict linear sequence.
@@ -142,50 +157,51 @@ namespace ft
 			// CONSTRUCTORS :
 
 				// Empty container constructor (default constructor)
-				vector(const allocator_type & alloc = allocator_type()) :
-					_elements(NULL), _size(0), _capacity(0), _allocator(alloc)
+				vector(const allocator_type & alloc = allocator_type())
 				{
+					_size = 0;
+					_capacity = 0;
+					_allocator = alloc;
+					_elements = _allocator.allocate(_capacity);
 					return ;
 				};
 
 				// Fill constructor by size and value
 				explicit vector(size_type n, const_reference value = value_type(),
-						const allocator_type & alloc = allocator_type()) :
-					_size(n), _capacity(n), _allocator(alloc)
+						const allocator_type & alloc = allocator_type())
 				{
-					if (_size and _size <= max_size())
-					{
-						_elements = get_allocator().allocate(_size);
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().construct(&_elements[i], value);
-					}
-					else
-						_elements = NULL;
+					_size = n;
+					_capacity = n;
+					_allocator = alloc;
+					_elements = _allocator.allocate(_capacity);
+					for (size_type i = 0 ; i < _size ; i++)
+						_allocator.construct(&_elements[i], value);
 					return ;
 				};
 
 				// Range constructor
 				template <class Inputiterator>
 				vector(Inputiterator first, Inputiterator last,
-						const allocator_type & alloc = allocator_type()) :
-					_elements(NULL), _size(0), _capacity(0), _allocator(alloc)
+						const allocator_type & alloc = allocator_type())
 				{
-					assign(first, last);
+					_size = std::distance(first, last);
+					_capacity = _size;
+					_allocator = alloc;
+					_elements = _allocator.allocate(_capacity);
+					for (size_type i = 0 ; i < _size ; i++)
+						_allocator.construct(&_elements[i], *(first++));
 					return ;
 				};
 
 				// Copy constructor
-				vector(const vector & x) :
-					_size(x.size()), _capacity(x.size()), _allocator(x.get_allocator())
+				vector(const vector & x)
 				{
-					if (_size and _size <= max_size())
-					{
-						_elements = get_allocator().allocate(_size);
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().construct(&_elements[i], x[i]);
-					}
-					else
-						_elements = NULL;
+					_size = x.size();
+					_capacity = _size;
+					_allocator = x.get_allocator();
+					_elements = _allocator.allocate(_capacity);
+					for (size_type i = 0 ; i < _size ; i++)
+						_allocator.construct(&_elements[i], x[i]);
 					return ;
 				};
 
@@ -205,6 +221,7 @@ namespace ft
 				assign(rhs.begin(), rhs.end());
 				return (*this);
 			};
+
 
 			//ITERATORS
 				//BEGIN
@@ -291,35 +308,47 @@ namespace ft
 				//AT
 				reference	at(size_type i)
 				{
-					//if (i >= size())
-						//throw (std::out_of_range(std::string("vector::_M_range_check: __n (which is ") + i + ") >= this->size() (which is " + _size + ")"));
+					if (i >= size())
+						throw (std::out_of_range(
+									std::string("vector::_M_range_check: __n (which is ")
+									+ itoa<size_t>(i)
+									+ ") >= this->size() (which is "
+									+ ft::itoa<size_t>(_size)
+									+ ")")
+								);
 					return (_elements[i]);
 				};
 				const_reference	at(size_type i) const
 				{
-					//if (i >= size())
-						//throw (std::out_of_range("vector::_M_range_check: __n (which is 42000) >= this->size() (which is 100)"));
+					if (i >= size())
+						throw (std::out_of_range(
+									std::string("vector::_M_range_check: __n (which is ")
+									+ itoa<size_t>(i)
+									+ ") >= this->size() (which is "
+									+ ft::itoa<size_t>(_size)
+									+ ")")
+								);
 					return (_elements[i]);
 				};
 
 				//FRONT
 				reference	front(void)
 				{
-					return (begin());
+					return (_elements[0]);
 				};
 				const_reference	front(void) const
 				{
-					return (begin());
+					return (_elements[0]);
 				};
 
 				//BACK
 				reference	back(void)
 				{
-					return (end());
+					return (_elements[_size - 1]);
 				};
 				const_reference	back(void) const
 				{
-					return (end());
+					return (_elements[_size - 1]);
 				};
 
 			//MODIFIERS
@@ -391,20 +420,95 @@ namespace ft
 				//POP_BACK
 				void	pop_back(void)
 				{
-					if (!empty())
-					{
-						get_allocator().destroy(&_elements[_size]);
-						_size--;
-					}
+					get_allocator().destroy(&_elements[--_size]);
 				};
 
 				//INSERT
-				iterator	insert(iterator position, const value_type& val);
+				iterator	insert(iterator position, const value_type& val)
+				{
+					pointer		tmp;
+					size_t		i = 0;
+					iterator	it = begin();
 
-				void	insert(iterator position, size_type n, const value_type& val);
+					tmp = get_allocator().allocate(_size + 1);
+					while (it != position)
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					get_allocator().construct(&tmp[i++], val);
+					while (it != end())
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					for (size_type i = 0 ; i < _size ; i++)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+					_elements = tmp;
+					_size += 1;
+					return (begin());
+				};
+
+				void	insert(iterator position, size_type n, const value_type& val)
+				{
+					pointer		tmp;
+					size_t		i = 0;
+					size_t		j = 0;
+					iterator	it = begin();
+
+					tmp = get_allocator().allocate(_size + n);
+					while (it != position)
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					while (j < n)
+					{
+						get_allocator().construct(&tmp[i++], val);
+						j++;
+					}
+					while (it != end())
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					for (size_type i = 0 ; i < _size ; i++)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+					_elements = tmp;
+					_size = i;
+				};
 
 				template <class Inputiterator>
-				void	insert(iterator position, Inputiterator first, Inputiterator last);
+				void	insert(iterator position, Inputiterator first, Inputiterator last)
+				{
+					pointer		tmp;
+					size_t		i = 0;
+					iterator	it = begin();
+
+					tmp = get_allocator().allocate(_size + std::distance(first, last));
+					while (it != position)
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					while (first != last)
+					{
+						get_allocator().construct(&tmp[i++], *first);
+						first++;
+					}
+					while (it != end())
+					{
+						get_allocator().construct(&tmp[i++], *it);
+						it++;
+					}
+					for (size_type i = 0 ; i < _size ; i++)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+					_elements = tmp;
+					_size = i;
+				};
 
 				//ERASE
 				iterator	erase(iterator position)
@@ -487,14 +591,11 @@ namespace ft
 				//CLEAR
 				void	clear(void)
 				{
-					if (_elements)
-					{
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-						_elements = NULL;
-						_size = 0;
-					}
+					for (size_type i = 0 ; i < _size ; i++)
+						get_allocator().destroy(&_elements[i]);
+					get_allocator().deallocate(_elements, _size);
+					_elements = NULL;
+					_size = 0;
 				};
 
 			//ALLOCATOR
@@ -565,6 +666,7 @@ namespace ft
 			x = y;
 			y = tmp;
 		};
+
 
 };	// end of namespace ft
 
