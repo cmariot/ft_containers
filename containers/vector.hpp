@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/20 10:07:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:25:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 	// [X] - DESTRUCTOR
 	// [X] - OPERATOR=
 	// [ ] - ITERATORS
-		// [ ] - BEGIN / CONST
-		// [ ] - END / CONST
+		// [X] - BEGIN / CONST
+		// [X] - END / CONST
 		// [ ] - RBEGIN / CONST
 		// [ ] - REND / CONST
 	// [X] - CAPACITY
@@ -37,15 +37,15 @@
 	// [ ] - MODIFIERS
 		// [ ] - ASSIGN
 		// [ ] - PUSH_BACK
-		// [ ] - POP_BACK
+		// [X] - POP_BACK
 		// [ ] - INSERT
-		// [ ] - ERASE
-		// [ ] - SWAP / CAPACITY ?
+		// [ ] - ERASE / RETURN VALUE ?
+		// [ ] - SWAP / ALLOCATOR SWAP ?
 		// [X] - CLEAR
 	// [X] - ALLOCATOR
 		// [X] - GET_ALLOCATOR
 	// [X} - NON-MEMBER RELATIONAL OPERATORS OVERLOADS
-		// [ ] - EQUAL AND LEXICOGRAPHICAL_COMPARE
+		// [X] - EQUAL AND LEXICOGRAPHICAL_COMPARE
 		// [X] - OPERATOR ==
 		// [X] - OPERATOR !=
 		// [X] - OPERATOR <
@@ -61,6 +61,8 @@
 # include <cstddef>
 # include <memory>
 # include <iostream>
+# include "iterators.hpp"
+
 
 /*
  * A namespace is an optionally-named declarative region.
@@ -93,6 +95,34 @@ namespace ft
 		while (nb > 0);
 		return (std::string(str_nb.rbegin(), str_nb.rend()));
 	};
+
+	template <class InputIterator1, class InputIterator2>
+	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || *first2 < *first1)
+				return (false);
+			else if (*first1 < *first2)
+				return (true);
+			++first1;
+			++first2;
+		}
+		return (first2 != last2);
+	};
+
+	template <class InputIterator1, class InputIterator2>
+	bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
+	{
+		while (first1 != last1)
+		{
+			if (!(*first1 == *first2))
+				return (false);
+			++first1;
+			++first2;
+		}
+		return (true);
+	}
 
 	/*
 	* Vectors are used to store elements in a strict linear sequence.
@@ -281,15 +311,23 @@ namespace ft
 
 			//ITERATORS
 				//BEGIN
-				iterator begin(void) const
+				iterator begin(void)
 				{
 					return (iterator(&_elements[0]));
-				}
+				};
+				const_iterator begin(void) const
+				{
+					return (iterator(&_elements[0]));
+				};
 				//END
-				iterator end(void) const
+				iterator end(void)
 				{
 					return (iterator(&_elements[size()]));
-				}
+				};
+				const_iterator end(void) const
+				{
+					return (iterator(&_elements[size()]));
+				};
 				//RBEGIN
 				//REND
 
@@ -428,7 +466,7 @@ namespace ft
 					_capacity = _size;
 					if (_size and _size <= max_size())
 					{
-						_elements = get_allocator().allocate(_size);
+						_elements = get_allocator().allocate(_capacity);
 						for (size_type i = 0 ; i < _size ; i++)
 						{
 							get_allocator().construct(&_elements[i], *first);
@@ -440,25 +478,18 @@ namespace ft
 				};
 				void	assign(size_type n, const value_type& val)
 				{
-					size_type	i = 0;
-
 					if (_size)
 					{
 						clear();
 						get_allocator().deallocate(_elements, _size);
 					}
-					_size = n;
-					if (_size and _size <= max_size())
+					if (n)
 					{
+						_size = n;
 						_elements = get_allocator().allocate(_size);
-						while (i < n)
-						{
+						for (size_type i = 0 ; i < n ; i++)
 							get_allocator().construct(&_elements[i], val);
-							i++;
-						}
 					}
-					else
-						_elements = NULL;
 					_capacity = _size;
 				};
 
@@ -584,12 +615,14 @@ namespace ft
 				//ERASE
 				iterator	erase(iterator position)
 				{
-					pointer	tmp;
-
 					if (position == end())
+					{
 						pop_back();
+						return (end());
+					}
 					else
 					{
+						pointer		tmp;
 						int			i = 0;
 						iterator	it = begin();
 
@@ -600,6 +633,7 @@ namespace ft
 							it++;
 						}
 						it++;
+						iterator ret = it;
 						while (it != end())
 						{
 							get_allocator().construct(&tmp[i++], *it);
@@ -610,32 +644,34 @@ namespace ft
 						get_allocator().deallocate(_elements, _size);
 						_elements = tmp;
 						_size--;
+						return (ret);
 					}
-					return (begin());
 				};
 
 				iterator	erase(iterator first, iterator last)
 				{
-					pointer	tmp;
-
 					if (last == end())
 					{
 						while (first++ != end())
 							pop_back();
+						return (end());
 					}
 					else
 					{
+						pointer		tmp;
 						int			i = 0;
 						iterator	it = begin();
+						size_type	distance;
 
-						tmp = get_allocator().allocate(_size - std::distance(first, last));
+						distance = std::distance(first, last);
+						tmp = get_allocator().allocate(_size - distance);
 						while (it != first)
 						{
 							get_allocator().construct(&tmp[i++], *it);
 							it++;
 						}
-						it += std::distance(first, last);
-						i += std::distance(first, last) - 1;
+						it += distance;
+						iterator ret = it;
 						while (it != end())
 						{
 							get_allocator().construct(&tmp[i++], *it);
@@ -645,9 +681,9 @@ namespace ft
 							get_allocator().destroy(&_elements[i]);
 						get_allocator().deallocate(_elements, _size);
 						_elements = tmp;
-						_size -= std::distance(first, last);
+						_size -= distance;
+						return (ret);
 					}
-					return (begin());
 				};
 
 				//SWAP
@@ -686,7 +722,7 @@ namespace ft
 		{
 			if (!(lhs.size() == rhs.size()))
 				return (false);
-			return (std::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		};
 
 		//OPERATOR !=
@@ -700,7 +736,7 @@ namespace ft
 		template <class T, class Alloc>
 		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
 		{
-			return (std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		};
 
 		//OPERATOR <=
