@@ -6,9 +6,54 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/18 12:28:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/20 10:07:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// CHECKLIST : 
+
+	// [ ] - ITERATORS
+	// [ ] - REVERSE ITERATORS
+	// [X] - CONSTRUCTORS
+	// [X] - DESTRUCTOR
+	// [X] - OPERATOR=
+	// [ ] - ITERATORS
+		// [ ] - BEGIN / CONST
+		// [ ] - END / CONST
+		// [ ] - RBEGIN / CONST
+		// [ ] - REND / CONST
+	// [X] - CAPACITY
+		// [X] - SIZE
+		// [X] - MAX_SIZE : OK UBUNTU
+		// [X] - RESIZE
+		// [X] - CAPACITY
+		// [X] - EMPTY
+		// [X] - RESERVE
+	// [X] - ELEMENT ACCESS
+		// [X] - OPERATOR[]
+		// [X] - AT
+		// [X] - FRONT
+		// [X] - BACK
+	// [ ] - MODIFIERS
+		// [ ] - ASSIGN
+		// [ ] - PUSH_BACK
+		// [ ] - POP_BACK
+		// [ ] - INSERT
+		// [ ] - ERASE
+		// [ ] - SWAP / CAPACITY ?
+		// [X] - CLEAR
+	// [X] - ALLOCATOR
+		// [X] - GET_ALLOCATOR
+	// [X} - NON-MEMBER RELATIONAL OPERATORS OVERLOADS
+		// [ ] - EQUAL AND LEXICOGRAPHICAL_COMPARE
+		// [X] - OPERATOR ==
+		// [X] - OPERATOR !=
+		// [X] - OPERATOR <
+		// [X] - OPERATOR <=
+		// [X] - OPERATOR >
+		// [X] - OPERATOR >=
+	// [X] - NON-MEMBER FUNCTION OVERLOADS
+		// [X] - SWAP
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
@@ -16,6 +61,7 @@
 # include <cstddef>
 # include <memory>
 # include <iostream>
+
 /*
  * A namespace is an optionally-named declarative region.
  * The name of a namespace can be used to access entities declared in that namespace;
@@ -25,6 +71,14 @@
 namespace ft
 {
 
+	template <class T>
+	void swap(T elem1, T elem2)
+	{
+		T	tmp = elem1;
+
+		elem1 = elem2;
+		elem2 = tmp;
+	};
 
 	template <class U>
 	std::string	itoa(U nb)
@@ -162,7 +216,7 @@ namespace ft
 					_size = 0;
 					_capacity = 0;
 					_allocator = alloc;
-					_elements = _allocator.allocate(_capacity);
+					_elements = NULL;
 					return ;
 				};
 
@@ -174,7 +228,7 @@ namespace ft
 					_capacity = n;
 					_allocator = alloc;
 					_elements = _allocator.allocate(_capacity);
-					for (size_type i = 0 ; i < _size ; i++)
+					for (size_type i = 0 ; i < n ; i++)
 						_allocator.construct(&_elements[i], value);
 					return ;
 				};
@@ -210,6 +264,7 @@ namespace ft
 			~vector(void)
 			{
 				clear();
+				get_allocator().deallocate(_elements, _size);
 				return ;
 			};
 
@@ -218,6 +273,7 @@ namespace ft
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
 				clear();
+				get_allocator().deallocate(_elements, _size);
 				assign(rhs.begin(), rhs.end());
 				return (*this);
 			};
@@ -256,10 +312,16 @@ namespace ft
 				//RESIZE
 				void resize(size_type n, value_type val = value_type())
 				{
-					while (size() > n)
-						pop_back();
-					while (size() < n)
-						push_back(val);
+					if (n < _size)
+					{
+						while (size() > n)
+							pop_back();
+					}
+					else if (n > _size)
+					{
+						while (size() < n)
+							push_back(val);
+					}
 				};
 
 				//CAPACITY : return the storage space currently allocated
@@ -288,6 +350,7 @@ namespace ft
 						for (size_type i = 0 ; i < _size ; i++)
 							get_allocator().construct(&tmp[i], _elements[i]);
 						clear();
+						get_allocator().deallocate(_elements, _size);
 						_capacity = n;
 						_size = size_backup;
 						_elements = tmp;
@@ -313,7 +376,7 @@ namespace ft
 									std::string("vector::_M_range_check: __n (which is ")
 									+ itoa<size_t>(i)
 									+ ") >= this->size() (which is "
-									+ ft::itoa<size_t>(_size)
+									+ itoa<size_t>(_size)
 									+ ")")
 								);
 					return (_elements[i]);
@@ -325,7 +388,7 @@ namespace ft
 									std::string("vector::_M_range_check: __n (which is ")
 									+ itoa<size_t>(i)
 									+ ") >= this->size() (which is "
-									+ ft::itoa<size_t>(_size)
+									+ itoa<size_t>(_size)
 									+ ")")
 								);
 					return (_elements[i]);
@@ -356,7 +419,11 @@ namespace ft
 				template <class Inputiterator>
 				void assign(Inputiterator first, Inputiterator last)
 				{
-					clear();
+					if (_size)
+					{
+						clear();
+						get_allocator().deallocate(_elements, _size);
+					}
 					_size = std::distance(first, last);
 					_capacity = _size;
 					if (_size and _size <= max_size())
@@ -375,7 +442,11 @@ namespace ft
 				{
 					size_type	i = 0;
 
-					clear();
+					if (_size)
+					{
+						clear();
+						get_allocator().deallocate(_elements, _size);
+					}
 					_size = n;
 					if (_size and _size <= max_size())
 					{
@@ -593,8 +664,6 @@ namespace ft
 				{
 					for (size_type i = 0 ; i < _size ; i++)
 						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-					_elements = NULL;
 					_size = 0;
 				};
 

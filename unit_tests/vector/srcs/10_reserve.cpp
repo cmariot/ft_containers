@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/16 15:55:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/20 09:40:09 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	reserve_test(void)
 	ft::vector<int>					ft_bar;
 	std::vector<int>				std_bar;
 
-	ft_bar.reserve(100);    // this is the only difference with foo above
-	std_bar.reserve(100);   // this is the only difference with foo above
+	ft_bar.reserve(100);
+	std_bar.reserve(100);
 	for (int i = 0 ; i < 100 ; ++i)
 	{
 		ft_bar.push_back(i);
@@ -42,8 +42,8 @@ int	reserve_test(void)
 			return (-1);
 	}
 
-	ft_bar.reserve(ft_bar.capacity());     // this is the only difference with foo above
-	std_bar.reserve(std_bar.capacity());   // this is the only difference with foo above
+	ft_bar.reserve(ft_bar.capacity());
+	std_bar.reserve(std_bar.capacity());
 	for (size_t i = 0 ; i < ft_bar.size() || i < std_bar.size() ; ++i)
 	{
 		if (ft_bar.capacity() != std_bar.capacity())
@@ -54,8 +54,8 @@ int	reserve_test(void)
 			return (-1);
 	}
 
-	ft_bar.reserve(ft_bar.capacity() - 10);     // this is the only difference with foo above
-	std_bar.reserve(std_bar.capacity() - 10);   // this is the only difference with foo above
+	ft_bar.reserve(ft_bar.capacity() - 10);
+	std_bar.reserve(std_bar.capacity() - 10);
 	for (size_t i = 0 ; i < ft_bar.size() || i < std_bar.size() ; ++i)
 	{
 		if (ft_bar.capacity() != std_bar.capacity())
@@ -68,7 +68,7 @@ int	reserve_test(void)
 
 	try
 	{
-		//ft_bar.reserve(ft_bar.max_size() + 1);
+		ft_bar.reserve(ft_bar.max_size() + 1);
 	}
 	catch (std::length_error & exception)
 	{
@@ -77,7 +77,7 @@ int	reserve_test(void)
 
 	try
 	{
-		//std_bar.reserve(std_bar.max_size() + 1);
+		std_bar.reserve(std_bar.max_size() + 1);
 	}
 	catch (std::length_error & exception)
 	{
