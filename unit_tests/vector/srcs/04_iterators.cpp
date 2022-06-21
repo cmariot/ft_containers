@@ -6,11 +6,15 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 18:54:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 10:20:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
+#include <iostream>     // std::cout
+#include <iterator>     // std::iterator, std::input_iterator_tag
+
+
 
 int	iterators_test(void)
 {
@@ -35,6 +39,9 @@ int	iterators_test(void)
 
 	// Reverse iterator
 	// + Const ?
+	//
+	//
+
 
 	return (-1);
 }

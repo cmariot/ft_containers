@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/06/14 20:18:53 by cmariot          ###   ########.fr        #
+#    Updated: 2022/06/21 11:43:36 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ CPPFLAGS		 = -Wall -Wextra -Werror -std=c++98 -pthread -g3
 INCLUDES		 = -I includes
 INCLUDES		+= -I ../framework/includes
 INCLUDES		+= -I ../../containers
+INCLUDES		+= -I ../../iterators
 
 
 LIBRARY			 = -L ../framework -lunit
