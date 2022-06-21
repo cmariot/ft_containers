@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/20 09:40:09 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:17:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	reserve_test(void)
 	}
 	catch (std::length_error & exception)
 	{
-		std::cerr << exception.what() << std::endl;
+		//std::cerr << exception.what() << std::endl;
 	};
 
 	try
@@ -81,7 +81,7 @@ int	reserve_test(void)
 	}
 	catch (std::length_error & exception)
 	{
-		std::cerr << exception.what() << std::endl;
+		//std::cerr << exception.what() << std::endl;
 	};
 
 	for (size_t i = 0 ; i < ft_bar.size() || i < std_bar.size() ; ++i)

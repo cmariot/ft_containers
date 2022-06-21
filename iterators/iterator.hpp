@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 15:35:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:42:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 namespace	ft
 {
+
+	// Iterators are a generalization of pointers that allow a C++ program to work with
+	// different data structures (containers) in a uniform manner.
 
 	// ITERATOR CATEGORIES :
 	// Empty types to identify the category of an iterator
@@ -117,22 +120,18 @@ namespace	ft
 
 	// INPUT ITERATOR
 	template <class T>
-	class input_iterator : ft::iterator<ft::input_iterator_tag, T>
+	class input_iterator
 	{
 
 		public :
 
-			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::iterator_category		iterator_category;
-			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::value_type				value_type;
-			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::difference_type			difference_type;
-			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::pointer					pointer;
-			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::reference				reference;
+			typedef ft::iterator_traits<iterator<input_iterator_tag, T> >	traits;
 
-			// DEFAULT CONSTRUCTOR
-			input_iterator(void)
-			{
-				return ;
-			};
+			typedef typename traits::iterator_category		iterator_category;
+			typedef typename traits::value_type				value_type;
+			typedef typename traits::difference_type		difference_type;
+			typedef typename traits::pointer				pointer;
+			typedef typename traits::reference				reference;
 
 			// COPY CONSTRUCTOR
 			input_iterator(pointer ptr) :
@@ -142,6 +141,11 @@ namespace	ft
 			};
 
 			// COPY ASSIGNATION (=)
+			reference operator = (input_iterator x)
+			{
+				this->m_ptr = x->m_ptr;
+				return (*this);
+			};
 
 			// DESTRUCTOR
 			~input_iterator(void)
@@ -196,52 +200,18 @@ namespace	ft
 
 	// OUTPUT ITERATOR
 	template <class T>
-	class output_iterator : ft::iterator<ft::output_iterator_tag, T>
+	class output_iterator
 	{
 
 		public :
 
-			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::iterator_category		iterator_category;
-			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::value_type				value_type;
-			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::difference_type		difference_type;
-			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::pointer				pointer;
-			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::reference				reference;
+			typedef ft::iterator_traits<iterator<output_iterator_tag, T> >	traits;
 
-			// DEFAULT CONSTRUCTOR
-			output_iterator(void)
-			{
-				return ;
-			};
-
-			// COPY CONSTRUCTOR
-			output_iterator(pointer ptr) :
-				m_ptr(ptr)
-			{
-				return ;
-			};
-
-			// COPY ASSIGNATION (=)
-
-			// DESTRUCTOR
-			~output_iterator(void)
-			{
-				return ;
-			};
-
-			// PREFIX INCREMENTATION
-			output_iterator & operator ++ (void)
-			{
-				m_ptr++;
-				return (*this);
-			}
-
-			// SUFIX INCREMENTATION
-			output_iterator operator ++ (int)
-			{
-				output_iterator tmp(*this);
-				++(*this);
-				return (tmp);
-			}
+			typedef typename traits::iterator_category		iterator_category;
+			typedef typename traits::value_type				value_type;
+			typedef typename traits::difference_type		difference_type;
+			typedef typename traits::pointer				pointer;
+			typedef typename traits::reference				reference;
 
 		private :
 
@@ -251,52 +221,18 @@ namespace	ft
 
 	// FORWARD ITERATOR
 	template <class T>
-	class forward_iterator : ft::input_iterator<T>, ft::output_iterator<T>
+	class forward_iterator
 	{
 
 		public :
 
-			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::iterator_category		iterator_category;
-			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::value_type			value_type;
-			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::difference_type		difference_type;
-			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::pointer				pointer;
-			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::reference				reference;
+			typedef ft::iterator_traits<iterator<forward_iterator_tag, T> >	traits;
 
-			// DEFAULT CONSTRUCTOR
-			forward_iterator(void)
-			{
-				return ;
-			};
-
-			// COPY CONSTRUCTOR
-			forward_iterator(pointer ptr) :
-				m_ptr(ptr)
-			{
-				return ;
-			};
-
-			// COPY ASSIGNATION (=)
-
-			// DESTRUCTOR
-			~forward_iterator(void)
-			{
-				return ;
-			};
-
-			// PREFIX INCREMENTATION
-			forward_iterator & operator ++ (void)
-			{
-				m_ptr++;
-				return (*this);
-			}
-
-			// SUFIX INCREMENTATION
-			forward_iterator operator ++ (int)
-			{
-				forward_iterator tmp(*this);
-				++(*this);
-				return (tmp);
-			}
+			typedef typename traits::iterator_category		iterator_category;
+			typedef typename traits::value_type				value_type;
+			typedef typename traits::difference_type		difference_type;
+			typedef typename traits::pointer				pointer;
+			typedef typename traits::reference				reference;
 
 		private :
 
@@ -306,52 +242,18 @@ namespace	ft
 
 	// BIDIRECTIONAL ITERATOR
 	template <class T>
-	class bidirectional_iterator : ft::forward_iterator<T>
+	class bidirectional_iterator
 	{
 
 		public :
 
-			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::iterator_category	iterator_category;
-			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::value_type			value_type;
-			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::difference_type		difference_type;
-			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::pointer				pointer;
-			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::reference			reference;
+			typedef ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >	traits;
 
-			// DEFAULT CONSTRUCTOR
-			bidirectional_iterator(void)
-			{
-				return ;
-			};
-
-			// COPY CONSTRUCTOR
-			bidirectional_iterator(pointer ptr) :
-				m_ptr(ptr)
-			{
-				return ;
-			};
-
-			// COPY ASSIGNATION (=)
-
-			// DESTRUCTOR
-			~bidirectional_iterator(void)
-			{
-				return ;
-			};
-
-			// PREFIX INCREMENTATION
-			bidirectional_iterator & operator ++ (void)
-			{
-				m_ptr++;
-				return (*this);
-			}
-
-			// SUFIX INCREMENTATION
-			bidirectional_iterator operator ++ (int)
-			{
-				bidirectional_iterator tmp(*this);
-				++(*this);
-				return (tmp);
-			}
+			typedef typename traits::iterator_category		iterator_category;
+			typedef typename traits::value_type				value_type;
+			typedef typename traits::difference_type		difference_type;
+			typedef typename traits::pointer				pointer;
+			typedef typename traits::reference				reference;
 
 		private :
 
@@ -361,52 +263,18 @@ namespace	ft
 
 	// RANDOM ACCESS ITERATOR
 	template <class T>
-	class random_access_iterator : ft::bidirectional_iterator<T>
+	class random_access_iterator
 	{
 
 		public :
 
-			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::iterator_category	iterator_category;
-			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::value_type			value_type;
-			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::difference_type		difference_type;
-			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::pointer				pointer;
-			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::reference			reference;
+			typedef ft::iterator_traits<iterator<random_access_iterator_tag, T> >	traits;
 
-			// DEFAULT CONSTRUCTOR
-			random_access_iterator(void)
-			{
-				return ;
-			};
-
-			// COPY CONSTRUCTOR
-			random_access_iterator(pointer ptr) :
-				m_ptr(ptr)
-			{
-				return ;
-			};
-
-			// COPY ASSIGNATION (=)
-
-			// DESTRUCTOR
-			~random_access_iterator(void)
-			{
-				return ;
-			};
-
-			// PREFIX INCREMENTATION
-			random_access_iterator & operator ++ (void)
-			{
-				m_ptr++;
-				return (*this);
-			}
-
-			// SUFIX INCREMENTATION
-			random_access_iterator operator ++ (int)
-			{
-				random_access_iterator tmp(*this);
-				++(*this);
-				return (tmp);
-			}
+			typedef typename traits::iterator_category		iterator_category;
+			typedef typename traits::value_type				value_type;
+			typedef typename traits::difference_type		difference_type;
+			typedef typename traits::pointer				pointer;
+			typedef typename traits::reference				reference;
 
 		private :
 
