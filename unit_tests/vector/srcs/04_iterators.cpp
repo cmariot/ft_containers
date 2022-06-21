@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 12:19:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 15:24:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
 
 int	iterators_test(void)
 {
-//	typedef ft::iterator_traits<int*>	traits;
+	typedef ft::iterator_traits<const int *>	traits;
 
-//	if (typeid(traits::iterator_category) == typeid (ft::random_access_iterator_tag))
-//		std::cout << "int* is a random-access iterator";
-	return (-1);
+	if (typeid (traits::iterator_category) != typeid (ft::random_access_iterator_tag))
+		return (-1);
+
+	std::vector<int> vect(4, 42);
+	ft::random_access_iterator<int> a(&vect[0]);
+
+	
+	return (0);
 }

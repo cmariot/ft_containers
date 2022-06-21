@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 12:19:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 15:35:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,36 @@
 # define ITERATOR_HPP
 
 # include <cstddef>
+# include <iostream>
 
 namespace	ft
 {
 
 	// ITERATOR CATEGORIES :
-	// Empty classes to identify the category of an iterator
+	// Empty types to identify the category of an iterator
 
 		// InputIterator
 		struct input_iterator_tag
 		{
 		};
 
+		// OutputIterator
+		struct output_iterator_tag
+		{
+		};
+
 		// ForwardIterator
-		struct forward_iterator_tag
+		struct forward_iterator_tag : public input_iterator_tag
 		{
 		};
 
 		// BidirectionalIterator
-		struct bidirectional_iterator_tag
+		struct bidirectional_iterator_tag : public forward_iterator_tag
 		{
 		};
 
 		// RandomAccessIterator
-		struct random_access_iterator_tag
-		{
-		};
-
-		// OutputIterator
-		struct output_iterator_tag
+		struct random_access_iterator_tag : public bidirectional_iterator_tag
 		{
 		};
 
@@ -75,14 +76,42 @@ namespace	ft
 	template <class Iterator>
 	class iterator_traits
 	{
+		public :
+
+			typedef typename Iterator::iterator_category	iterator_category;
+			typedef typename Iterator::value_type			value_type;
+			typedef typename Iterator::difference_type		difference_type;
+			typedef typename Iterator::pointer				pointer;
+			typedef typename Iterator::reference			reference;
+
 	};
+	
 	template <class T>
 	class iterator_traits<T*>
 	{
+
+		public :
+
+			typedef random_access_iterator_tag				iterator_category;
+			typedef T										value_type;
+			typedef ptrdiff_t								difference_type;
+			typedef T*										pointer;
+			typedef T&										reference;
+
 	};
+	
 	template <class T>
 	class iterator_traits<const T*>
 	{
+
+		public :
+
+			typedef random_access_iterator_tag				iterator_category;
+			typedef T										value_type;
+			typedef ptrdiff_t								difference_type;
+			typedef const T*								pointer;
+			typedef const T&								reference;
+
 	};
 
 
@@ -93,14 +122,75 @@ namespace	ft
 
 		public :
 
-			typedef ft::input_iterator_tag		iterator_category;
-			typedef std::ptrdiff_t				difference_type;
-			typedef T							value_type;
-			typedef T *							pointer;
-			typedef T &							reference;
-			typedef const T &					const_reference;
+			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::iterator_category		iterator_category;
+			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::value_type				value_type;
+			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::difference_type			difference_type;
+			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::pointer					pointer;
+			typedef typename ft::iterator_traits<iterator<input_iterator_tag, T> >::reference				reference;
+
+			// DEFAULT CONSTRUCTOR
+			input_iterator(void)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			input_iterator(pointer ptr) :
+				m_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+
+			// DESTRUCTOR
+			~input_iterator(void)
+			{
+				return ;
+			};
+
+			// OPERATOR ==
+			friend bool operator == (const input_iterator & a, const input_iterator & b)
+			{
+				return (a.m_ptr == b.m_ptr);
+			};
+
+			// OPERATOR !=
+			friend bool operator != (const input_iterator & a, const input_iterator & b)
+			{
+				return (a.m_ptr != b.m_ptr);
+			};
+			
+			// DEREFERENCE
+			reference operator * (void) const
+			{
+				return (*m_ptr);
+			}
+
+			// DEREFERENCE
+			pointer operator -> (void)
+			{
+				return (m_ptr);
+			}
+
+			// PREFIX INCREMENTATION
+			input_iterator & operator ++ (void)
+			{
+				m_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			input_iterator operator ++ (int)
+			{
+				input_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
 
 		private :
+
+			pointer		m_ptr;
 
 	};
 
@@ -111,14 +201,51 @@ namespace	ft
 
 		public :
 
-			typedef ft::output_iterator_tag			iterator_category;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T								value_type;
-			typedef T *								pointer;
-			typedef T &								reference;
-			typedef const T &						const_reference;
+			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::iterator_category		iterator_category;
+			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::value_type				value_type;
+			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::difference_type		difference_type;
+			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::pointer				pointer;
+			typedef typename ft::iterator_traits<iterator<output_iterator_tag, T> >::reference				reference;
+
+			// DEFAULT CONSTRUCTOR
+			output_iterator(void)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			output_iterator(pointer ptr) :
+				m_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+
+			// DESTRUCTOR
+			~output_iterator(void)
+			{
+				return ;
+			};
+
+			// PREFIX INCREMENTATION
+			output_iterator & operator ++ (void)
+			{
+				m_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			output_iterator operator ++ (int)
+			{
+				output_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
 
 		private :
+
+			pointer		m_ptr;
 
 	};
 
@@ -129,14 +256,51 @@ namespace	ft
 
 		public :
 
-			typedef ft::forward_iterator_tag		iterator_category;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T								value_type;
-			typedef T *								pointer;
-			typedef T &								reference;
-			typedef const T &						const_reference;
+			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::iterator_category		iterator_category;
+			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::value_type			value_type;
+			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::difference_type		difference_type;
+			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::pointer				pointer;
+			typedef typename ft::iterator_traits<iterator<forward_iterator_tag, T> >::reference				reference;
+
+			// DEFAULT CONSTRUCTOR
+			forward_iterator(void)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			forward_iterator(pointer ptr) :
+				m_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+
+			// DESTRUCTOR
+			~forward_iterator(void)
+			{
+				return ;
+			};
+
+			// PREFIX INCREMENTATION
+			forward_iterator & operator ++ (void)
+			{
+				m_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			forward_iterator operator ++ (int)
+			{
+				forward_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
 
 		private :
+
+			pointer		m_ptr;
 
 	};
 
@@ -147,14 +311,51 @@ namespace	ft
 
 		public :
 
-			typedef ft::bidirectional_iterator_tag	iterator_category;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T								value_type;
-			typedef T *								pointer;
-			typedef T &								reference;
-			typedef const T &						const_reference;
+			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::iterator_category	iterator_category;
+			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::value_type			value_type;
+			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::difference_type		difference_type;
+			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::pointer				pointer;
+			typedef typename ft::iterator_traits<iterator<bidirectional_iterator_tag, T> >::reference			reference;
+
+			// DEFAULT CONSTRUCTOR
+			bidirectional_iterator(void)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			bidirectional_iterator(pointer ptr) :
+				m_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+
+			// DESTRUCTOR
+			~bidirectional_iterator(void)
+			{
+				return ;
+			};
+
+			// PREFIX INCREMENTATION
+			bidirectional_iterator & operator ++ (void)
+			{
+				m_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			bidirectional_iterator operator ++ (int)
+			{
+				bidirectional_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
 
 		private :
+
+			pointer		m_ptr;
 
 	};
 
@@ -165,86 +366,53 @@ namespace	ft
 
 		public :
 
-			typedef ft::random_access_iterator_tag	iterator_category;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T								value_type;
-			typedef T *								pointer;
-			typedef T &								reference;
-			typedef const T &						const_reference;
+			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::iterator_category	iterator_category;
+			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::value_type			value_type;
+			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::difference_type		difference_type;
+			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::pointer				pointer;
+			typedef typename ft::iterator_traits<iterator<random_access_iterator_tag, T> >::reference			reference;
+
+			// DEFAULT CONSTRUCTOR
+			random_access_iterator(void)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			random_access_iterator(pointer ptr) :
+				m_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+
+			// DESTRUCTOR
+			~random_access_iterator(void)
+			{
+				return ;
+			};
+
+			// PREFIX INCREMENTATION
+			random_access_iterator & operator ++ (void)
+			{
+				m_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			random_access_iterator operator ++ (int)
+			{
+				random_access_iterator tmp(*this);
+				++(*this);
+				return (tmp);
+			}
 
 		private :
 
+			pointer		m_ptr;
+
 	};
-
-
-//	template <class T>
-//	class random_access_iterator : ft::iterator<std::random_access_iterator_tag, T>
-//	{
-//
-//		public :
-//
-//			//ITERATORS
-//				typedef std::forward_iterator_tag	iterator_category;
-//				typedef std::ptrdiff_t				difference_type;
-//				typedef T							value_type;
-//				typedef T *							pointer;
-//				typedef T &							reference;
-//				typedef const T &					const_reference;
-//
-//				// CONSTRUCTOR
-//				iterator(pointer ptr) :
-//					m_ptr(ptr)
-//				{
-//					return ;
-//				};
-//
-//				// DEREFERENCE
-//				reference operator * (void) const
-//				{
-//					return (*m_ptr);
-//				}
-//
-//				// DEREFERENCE
-//				pointer operator -> (void)
-//				{
-//					return (m_ptr);
-//				}
-//
-//				// PREFIX INCREMENTATION
-//				iterator & operator ++ (void)
-//				{
-//					m_ptr++;
-//					return (*this);
-//				}
-//
-//				// SUFIX INCREMENTATION
-//				iterator operator ++ (int)
-//				{
-//					iterator tmp(*this);
-//					++(*this);
-//					return (tmp);
-//				}
-//
-//				// COMPARAISON ==
-//				friend bool operator == (const iterator & a, const iterator & b)
-//				{
-//					return (a.m_ptr == b.m_ptr);
-//				};
-//
-//				// COMPARAISON !=
-//				friend bool operator != (const iterator & a, const iterator & b)
-//				{
-//					return (a.m_ptr != b.m_ptr);
-//				};
-//
-//
-//				private :
-//
-//					pointer		m_ptr;
-//
-//			};
-//	};
-
 };
 
 #endif
