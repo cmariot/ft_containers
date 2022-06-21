@@ -6,9 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 10:28:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 12:16:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ITERATOR_HPP
+# define ITERATOR_HPP
+
+# include <cstddef>
 
 namespace	ft
 {
@@ -42,85 +47,130 @@ namespace	ft
 		};
 
 
-
-		iterator {
-			iterator(const iterator&);
-			~iterator();
-			iterator& operator = (const iterator&);
-			iterator& operator ++ (); //prefix increment
-			reference operator*() const;
-			friend void swap(iterator& lhs, iterator& rhs); //C++11 I think
-		};
-
-
-		input_iterator : public virtual iterator {
-			iterator operator++(int); //postfix increment
-			value_type operator*() const;
-			pointer operator->() const;
-			friend bool operator==(const iterator&, const iterator&);
-			friend bool operator!=(const iterator&, const iterator&); 
-		};
-		
-
-		//once an input iterator has been dereferenced, it is 
-		//undefined to dereference one before that.
-		output_iterator : public virtual iterator {
-			reference operator*() const;
-			iterator operator++(int); //postfix increment
-		};
-		
-
-		//dereferences may only be on the left side of an assignment
-		//once an output iterator has been dereferenced, it is 
-		//undefined to dereference one before that.
-		forward_iterator : input_iterator, output_iterator {
-			forward_iterator();
-		};
-
-		//multiple passes allowed
-		bidirectional_iterator : forward_iterator {
-			iterator& operator--(); //prefix decrement
-			iterator operator--(int); //postfix decrement
-		};
-
-
-		random_access_iterator : bidirectional_iterator {
-			friend bool operator<(const iterator&, const iterator&);
-			friend bool operator>(const iterator&, const iterator&);
-			friend bool operator<=(const iterator&, const iterator&);
-			friend bool operator>=(const iterator&, const iterator&);
-			
-			iterator& operator+=(size_type);
-			friend iterator operator+(const iterator&, size_type);
-			friend iterator operator+(size_type, const iterator&);
-			iterator& operator-=(size_type);  
-			friend iterator operator-(const iterator&, size_type);
-			friend difference_type operator-(iterator, iterator);
-			
-			reference operator[](size_type) const;
-		};
-
 	// ITERATOR BASE CLASS
+	// This is a base class template that can be used to derive iterator classes from it.
+	// It is not an iterator class and does not provide any of the functionality an iterator is expected to have.
+	
+	// This base class only provides some member types,
+	// which in fact are not required to be present in any iterator type (iterator types have no specific member requirements),
+	// but they might be useful, since they define the members needed for the default iterator_traits class template
+	// to generate the appropriate instantiation automatically (and such instantiation is required to be valid for all iterator types).
+
 	template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference =  T&>
-	class iterator
+	struct iterator
 	{
 
-		public :
-
-			typedef Category  iterator_category;
-			typedef T         value_type;
-			typedef Distance  difference_type;
-			typedef Pointer   pointer;
-			typedef Reference reference;
+		typedef Category  iterator_category;
+		typedef T         value_type;
+		typedef Distance  difference_type;
+		typedef Pointer   pointer;
+		typedef Reference reference;
 
 	};
 
 
-	// RANDOM ACCESS ITERATOR
-	class random_access_iterator
+	// ITERATOR TRAITS
+	// Traits class defining properties of iterators.
+	// For every iterator type, a corresponding specialization of iterator_traits class template shall be defined
+	template <class Iterator>
+	class iterator_traits
+	{
+	};
+	template <class T>
+	class iterator_traits<T*>
+	{
+	};
+	template <class T>
+	class iterator_traits<const T*>
+	{
+	};
+
+
+	// INPUT ITERATOR
+	template <class T>
+	class input_iterator : ft::iterator<ft::input_iterator_tag, T>
 	{
 
 		public :
+
+			typedef ft::input_iterator_tag		iterator_category;
+			typedef std::ptrdiff_t				difference_type;
+			typedef T							value_type;
+			typedef T *							pointer;
+			typedef T &							reference;
+			typedef const T &					const_reference;
+
+		private :
+
+	};
+
+	// OUTPUT ITERATOR
+	template <class T>
+	class output_iterator : ft::iterator<ft::output_iterator_tag, T>
+	{
+
+		public :
+
+			typedef ft::output_iterator_tag			iterator_category;
+			typedef std::ptrdiff_t					difference_type;
+			typedef T								value_type;
+			typedef T *								pointer;
+			typedef T &								reference;
+			typedef const T &						const_reference;
+
+		private :
+
+	};
+
+	// FORWARD ITERATOR
+	template <class T>
+	class forward_iterator : ft::input_iterator<T>, ft::output_iterator<T>
+	{
+
+		public :
+
+			typedef ft::forward_iterator_tag		iterator_category;
+			typedef std::ptrdiff_t					difference_type;
+			typedef T								value_type;
+			typedef T *								pointer;
+			typedef T &								reference;
+			typedef const T &						const_reference;
+
+		private :
+
+	};
+
+	// BIDIRECTIONAL ITERATOR
+	template <class T>
+	class bidirectional_iterator : ft::forward_iterator<T>
+	{
+
+		public :
+
+			typedef ft::bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					difference_type;
+			typedef T								value_type;
+			typedef T *								pointer;
+			typedef T &								reference;
+			typedef const T &						const_reference;
+
+		private :
+
+	};
+
+	// RANDOM ACCESS ITERATOR
+	template <class T>
+	class random_access_iterator : ft::bidirectional_iterator<T>
+	{
+
+		public :
+
+			typedef ft::random_access_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					difference_type;
+			typedef T								value_type;
+			typedef T *								pointer;
+			typedef T &								reference;
+			typedef const T &						const_reference;
 
 		private :
 
@@ -196,3 +246,5 @@ namespace	ft
 //	};
 
 };
+
+#endif
