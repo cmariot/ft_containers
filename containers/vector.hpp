@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 11:23:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:04:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,72 +139,6 @@ namespace ft
 	class	vector
 	{
 
-		public :
-
-			//ITERATORS
-			struct iterator
-			{
-				typedef std::forward_iterator_tag	iterator_category;
-				typedef std::ptrdiff_t				difference_type;
-				typedef T							value_type;
-				typedef T *							pointer;
-				typedef T &							reference;
-				typedef const T &					const_reference;
-
-				// CONSTRUCTOR
-				iterator(pointer ptr) :
-					m_ptr(ptr)
-				{
-					return ;
-				};
-
-				// DEREFERENCE
-				reference operator * (void) const
-				{
-					return (*m_ptr);
-				}
-
-				// DEREFERENCE
-				pointer operator -> (void)
-				{
-					return (m_ptr);
-				}
-
-				// PREFIX INCREMENTATION
-				iterator & operator ++ (void)
-				{
-					m_ptr++;
-					return (*this);
-				}
-
-				// SUFIX INCREMENTATION
-				iterator operator ++ (int)
-				{
-					iterator tmp(*this);
-					++(*this);
-					return (tmp);
-				}
-
-				// COMPARAISON ==
-				friend bool operator == (const iterator & a, const iterator & b)
-				{
-					return (a.m_ptr == b.m_ptr);
-				};
-
-				// COMPARAISON !=
-				friend bool operator != (const iterator & a, const iterator & b)
-				{
-					return (a.m_ptr != b.m_ptr);
-				};
-
-
-				private :
-
-					pointer		m_ptr;
-
-			};
-
-
 		/*
 		* TYPEDEFS :
 		* Declarations containing the decl-specifier typedef declare identifiers that can
@@ -220,8 +154,8 @@ namespace ft
 			typedef const T &				const_reference;
 			typedef T *						pointer;
 			typedef const T *				const_pointer;
-			typedef vector::iterator		iterator;
-			typedef const vector::iterator	const_iterator;
+			typedef ft::bidirectional_iterator<T>		iterator;
+			typedef const ft::bidirectional_iterator<T>	const_iterator;
 			//typedef 		reverse_iterator;
 			//typedef 		const_reverse_iterator;
 

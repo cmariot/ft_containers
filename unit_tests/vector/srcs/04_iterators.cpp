@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/21 16:43:00 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/21 19:34:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	iterators_test(void)
 	ft::vector<int>		vect;
 	for (int i = 0 ; i < 10 ; i++)
 		vect.push_back(i);
+
 
 	//INPUT_ITERATOR
 	{
@@ -55,6 +56,29 @@ int	iterators_test(void)
 		*a++;
 		if (*a != 3)
 			return (-1);
+
+	}
+
+	//OUTPUT_ITERATOR
+	{
+		ft::output_iterator<int> a(&vect[0]);
+		ft::output_iterator<int> b = a;
+
+		if (*a != 0)
+			return (-1);
+		
+		++a;
+		if (*a != 1)
+			return (-1);
+		
+		(void)a++;
+		if (*a != 2)
+			return (-1);
+		
+		*a++;
+		if (*a != 3)
+			return (-1);
+
 	}
 
 	return (0);
