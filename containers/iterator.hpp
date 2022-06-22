@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/22 13:03:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:32:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ namespace	ft
 
 			// COPY CONSTRUCTOR
 			input_iterator(pointer ptr) :
-				m_ptr(ptr)
+				_ptr(ptr)
 			{
 				return ;
 			};
@@ -136,7 +136,7 @@ namespace	ft
 			// COPY ASSIGNATION (=)
 			reference operator = (input_iterator x)
 			{
-				this->m_ptr = x->m_ptr;
+				this->_ptr = x->_ptr;
 				return (*this);
 			};
 
@@ -149,31 +149,31 @@ namespace	ft
 			// OPERATOR ==
 			friend bool operator == (const input_iterator & a, const input_iterator & b)
 			{
-				return (a.m_ptr == b.m_ptr);
+				return (a._ptr == b._ptr);
 			};
 
 			// OPERATOR !=
 			friend bool operator != (const input_iterator & a, const input_iterator & b)
 			{
-				return (a.m_ptr != b.m_ptr);
+				return (a._ptr != b._ptr);
 			};
 			
 			// DEREFERENCE
 			reference operator * (void) const
 			{
-				return (*m_ptr);
+				return (*_ptr);
 			}
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
-				return (m_ptr);
+				return (_ptr);
 			}
 
 			// PREFIX INCREMENTATION
 			input_iterator & operator ++ (void)
 			{
-				m_ptr++;
+				_ptr++;
 				return (*this);
 			}
 
@@ -187,7 +187,7 @@ namespace	ft
 
 		private :
 
-			pointer		m_ptr;
+			pointer		_ptr;
 
 	};
 
@@ -208,7 +208,7 @@ namespace	ft
 
 			// COPY CONSTRUCTOR
 			output_iterator(pointer ptr) :
-				m_ptr(ptr)
+				_ptr(ptr)
 			{
 				return ;
 			};
@@ -216,7 +216,7 @@ namespace	ft
 			// COPY ASSIGNATION (=)
 			reference operator = (output_iterator x)
 			{
-				this->m_ptr = x->m_ptr;
+				this->_ptr = x->_ptr;
 				return (*this);
 			};
 
@@ -229,13 +229,13 @@ namespace	ft
 			// DEREFERENCE
 			reference operator * (void) const
 			{
-				return (*m_ptr);
+				return (*_ptr);
 			}
 
 			// PREFIX INCREMENTATION
 			output_iterator & operator ++ (void)
 			{
-				m_ptr++;
+				_ptr++;
 				return (*this);
 			}
 
@@ -249,7 +249,7 @@ namespace	ft
 
 		private :
 
-			pointer		m_ptr;
+			pointer		_ptr;
 
 	};
 
@@ -270,14 +270,14 @@ namespace	ft
 
 			// DEFAULT CONSTRUCTOR
 			forward_iterator(void) :
-				m_ptr(NULL)
+				_ptr(NULL)
 			{
 				return ;
 			};
 
 			// COPY CONSTRUCTOR
 			forward_iterator(pointer ptr) :
-				m_ptr(ptr)
+				_ptr(ptr)
 			{
 				return ;
 			};
@@ -285,7 +285,7 @@ namespace	ft
 			// COPY ASSIGNATION (=)
 			reference operator = (forward_iterator x)
 			{
-				this->m_ptr = x->m_ptr;
+				this->_ptr = x->_ptr;
 				return (*this);
 			};
 
@@ -298,19 +298,19 @@ namespace	ft
 			// DEREFERENCE
 			reference operator * (void) const
 			{
-				return (*m_ptr);
+				return (*_ptr);
 			}
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
-				return (m_ptr);
+				return (_ptr);
 			}
 
 			// PREFIX INCREMENTATION
 			forward_iterator & operator ++ (void)
 			{
-				m_ptr++;
+				_ptr++;
 				return (*this);
 			}
 
@@ -325,18 +325,18 @@ namespace	ft
 			// OPERATOR ==
 			friend bool operator == (const forward_iterator & a, const forward_iterator & b)
 			{
-				return (a.m_ptr == b.m_ptr);
+				return (a._ptr == b._ptr);
 			};
 
 			// OPERATOR !=
 			friend bool operator != (const forward_iterator & a, const forward_iterator & b)
 			{
-				return (a.m_ptr != b.m_ptr);
+				return (a._ptr != b._ptr);
 			};
 
 		private :
 
-			pointer		m_ptr;
+			pointer		_ptr;
 
 	};
 
@@ -357,14 +357,14 @@ namespace	ft
 
 			// DEFAULT CONSTRUCTOR
 			bidirectional_iterator(void) :
-				m_ptr(NULL)
+				_ptr(NULL)
 			{
 				return ;
 			};
 
 			// COPY CONSTRUCTOR
 			bidirectional_iterator(pointer ptr) :
-				m_ptr(ptr)
+				_ptr(ptr)
 			{
 				return ;
 			};
@@ -372,7 +372,7 @@ namespace	ft
 			// COPY ASSIGNATION (=)
 			reference operator = (bidirectional_iterator x)
 			{
-				this->m_ptr = x->m_ptr;
+				this->_ptr = x->_ptr;
 				return (*this);
 			};
 
@@ -385,19 +385,19 @@ namespace	ft
 			// DEREFERENCE
 			reference operator * (void) const
 			{
-				return (*m_ptr);
+				return (*_ptr);
 			}
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
-				return (m_ptr);
+				return (_ptr);
 			}
 
 			// PREFIX INCREMENTATION
 			bidirectional_iterator & operator ++ (void)
 			{
-				m_ptr++;
+				_ptr++;
 				return (*this);
 			}
 
@@ -412,7 +412,7 @@ namespace	ft
 			// PREFIX DECREMENTATION
 			bidirectional_iterator & operator -- (void)
 			{
-				m_ptr--;
+				_ptr--;
 				return (*this);
 			}
 
@@ -427,18 +427,18 @@ namespace	ft
 			// OPERATOR ==
 			friend bool operator == (const bidirectional_iterator & a, const bidirectional_iterator & b)
 			{
-				return (a.m_ptr == b.m_ptr);
+				return (a._ptr == b._ptr);
 			};
 
 			// OPERATOR !=
 			friend bool operator != (const bidirectional_iterator & a, const bidirectional_iterator & b)
 			{
-				return (a.m_ptr != b.m_ptr);
+				return (a._ptr != b._ptr);
 			};
 
 		private :
 
-			pointer		m_ptr;
+			pointer		_ptr;
 
 	};
 
@@ -457,9 +457,137 @@ namespace	ft
 			typedef typename traits::pointer				pointer;
 			typedef typename traits::reference				reference;
 
+			// DEFAULT CONSTRUCTOR
+			random_access_iterator(void) :
+				_ptr(NULL)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			random_access_iterator(pointer ptr) :
+				_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+			reference operator = (random_access_iterator x)
+			{
+				this->_ptr = x->_ptr;
+				return (*this);
+			};
+
+			// DESTRUCTOR
+			~random_access_iterator(void)
+			{
+				return ;
+			};
+
+			// DEREFERENCE
+			reference operator * (void) const
+			{
+				return (*_ptr);
+			}
+
+			// DEREFERENCE
+			pointer operator -> (void)
+			{
+				return (&(this->operator*()));
+			}
+
+			// PREFIX INCREMENTATION
+			random_access_iterator & operator ++ (void)
+			{
+				_ptr++;
+				return (*this);
+			}
+
+			// SUFIX INCREMENTATION
+			random_access_iterator operator ++ (int)
+			{
+				random_access_iterator	tmp(*this);
+
+				++(*this);
+				return (tmp);
+			}
+
+			// PREFIX DECREMENTATION
+			random_access_iterator & operator -- (void)
+			{
+				_ptr--;
+				return (*this);
+			}
+
+			// SUFIX DECREMENTATION
+			random_access_iterator operator -- (int)
+			{
+				random_access_iterator	tmp(*this);
+
+				--(*this);
+				return (tmp);
+			}
+
+			// OPERATOR ==
+			friend bool operator == (const random_access_iterator & a, const random_access_iterator & b)
+			{
+				return (a._ptr == b._ptr);
+			};
+
+			// OPERATOR !=
+			friend bool operator != (const random_access_iterator & a, const random_access_iterator & b)
+			{
+				return (a._ptr != b._ptr);
+			};
+
+			//ARITHMETIC OPERATOR - (this - n)
+			random_access_iterator operator - (difference_type n) const
+			{
+				return (_ptr - n);
+			};
+
+			//ARITHMETIC OPERATOR + (this + n)
+			random_access_iterator operator + (difference_type n) const
+			{
+				return (_ptr + n);
+			};
+
+			//ARITHMETIC OPERATOR - (n - this)
+			difference_type operator - (random_access_iterator rhs) const
+			{
+				difference_type	ret = rhs._ptr - _ptr;
+
+				return (ret);
+			};
+
+			//ARITHMETIC OPERATOR + (n + this)
+			difference_type operator + (random_access_iterator rhs) const
+			{
+				difference_type	ret = rhs._ptr + _ptr;
+
+				return (ret);
+			};
+
+			random_access_iterator operator += (difference_type const &x)
+			{
+				_ptr += x;
+				return (*this);
+			};
+
+			random_access_iterator operator -= (difference_type const &x)
+			{
+				_ptr -= x;
+				return (*this);
+			};
+
+			reference operator [] (difference_type n)
+			{
+				return (*(operator+(n)));
+			};
+
 		private :
 
-			pointer		m_ptr;
+			pointer		_ptr;
 
 	};
 };

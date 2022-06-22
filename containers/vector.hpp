@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/22 13:04:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:34:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,18 @@ namespace ft
 		*/
 
 		public :
-			typedef T						value_type;
-			typedef Allocator				allocator_type;
-			typedef size_t					size_type;
-			typedef ptrdiff_t				difference_type;
-			typedef T &						reference;
-			typedef const T &				const_reference;
-			typedef T *						pointer;
-			typedef const T *				const_pointer;
+			typedef T									value_type;
+			typedef Allocator							allocator_type;
+			typedef size_t								size_type;
+			typedef ptrdiff_t							difference_type;
+			typedef T &									reference;
+			typedef const T &							const_reference;
+			typedef T *									pointer;
+			typedef const T *							const_pointer;
 			typedef ft::bidirectional_iterator<T>		iterator;
 			typedef const ft::bidirectional_iterator<T>	const_iterator;
-			//typedef 		reverse_iterator;
-			//typedef 		const_reverse_iterator;
+			//typedef ft::random_access_iterator<T>		reverse_iterator;
+			//typedef const ft::random_access_iterator<T>	reverse_const_iterator;
 
 
 		//MEMBER TYPES :
