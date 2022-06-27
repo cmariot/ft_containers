@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 12:36:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:20:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ namespace	ft
 	template <class Iterator>
 	struct iterator_traits
 	{
+
 		typedef typename Iterator::iterator_category	iterator_category;
 		typedef typename Iterator::value_type			value_type;
 		typedef typename Iterator::difference_type		difference_type;
@@ -118,7 +119,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::input_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<ft::input_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category	iterator_category;
 			typedef typename traits::value_type			value_type;
@@ -162,20 +163,20 @@ namespace	ft
 			reference operator * (void) const
 			{
 				return (*_ptr);
-			}
+			};
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
 				return (_ptr);
-			}
+			};
 
 			// PREFIX INCREMENTATION
 			input_iterator & operator ++ (void)
 			{
 				_ptr++;
 				return (*this);
-			}
+			};
 
 			// SUFIX INCREMENTATION
 			input_iterator operator ++ (int)
@@ -183,7 +184,7 @@ namespace	ft
 				input_iterator tmp(*this);
 				++(*this);
 				return (tmp);
-			}
+			};
 
 		private :
 
@@ -198,7 +199,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::output_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<ft::output_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -230,14 +231,14 @@ namespace	ft
 			reference operator * (void) const
 			{
 				return (*_ptr);
-			}
+			};
 
 			// PREFIX INCREMENTATION
 			output_iterator & operator ++ (void)
 			{
 				_ptr++;
 				return (*this);
-			}
+			};
 
 			// SUFIX INCREMENTATION
 			output_iterator operator ++ (int)
@@ -245,7 +246,7 @@ namespace	ft
 				output_iterator tmp(*this);
 				++(*this);
 				return (tmp);
-			}
+			};
 
 		private :
 
@@ -260,7 +261,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::forward_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<ft::forward_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -299,20 +300,20 @@ namespace	ft
 			reference operator * (void) const
 			{
 				return (*_ptr);
-			}
+			};
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
 				return (_ptr);
-			}
+			};
 
 			// PREFIX INCREMENTATION
 			forward_iterator & operator ++ (void)
 			{
 				_ptr++;
 				return (*this);
-			}
+			};
 
 			// SUFIX INCREMENTATION
 			forward_iterator operator ++ (int)
@@ -320,7 +321,7 @@ namespace	ft
 				forward_iterator tmp(*this);
 				++(*this);
 				return (tmp);
-			}
+			};
 
 			// OPERATOR ==
 			friend bool operator == (const forward_iterator & a, const forward_iterator & b)
@@ -347,7 +348,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<ft::bidirectional_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -386,20 +387,20 @@ namespace	ft
 			reference operator * (void) const
 			{
 				return (*_ptr);
-			}
+			};
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
 				return (_ptr);
-			}
+			};
 
 			// PREFIX INCREMENTATION
 			bidirectional_iterator & operator ++ (void)
 			{
 				_ptr++;
 				return (*this);
-			}
+			};
 
 			// SUFIX INCREMENTATION
 			bidirectional_iterator operator ++ (int)
@@ -407,14 +408,14 @@ namespace	ft
 				bidirectional_iterator tmp(*this);
 				++(*this);
 				return (tmp);
-			}
+			};
 
 			// PREFIX DECREMENTATION
 			bidirectional_iterator & operator -- (void)
 			{
 				_ptr--;
 				return (*this);
-			}
+			};
 
 			// SUFIX DECREMENTATION
 			bidirectional_iterator operator -- (int)
@@ -422,7 +423,7 @@ namespace	ft
 				bidirectional_iterator tmp(*this);
 				--(*this);
 				return (tmp);
-			}
+			};
 
 			// OPERATOR ==
 			friend bool operator == (const bidirectional_iterator & a, const bidirectional_iterator & b)
@@ -449,7 +450,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::random_access_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<ft::random_access_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -488,20 +489,20 @@ namespace	ft
 			reference operator * (void) const
 			{
 				return (*_ptr);
-			}
+			};
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
 				return (&(this->operator*()));
-			}
+			};
 
 			// PREFIX INCREMENTATION
 			random_access_iterator & operator ++ (void)
 			{
 				_ptr++;
 				return (*this);
-			}
+			};
 
 			// SUFIX INCREMENTATION
 			random_access_iterator operator ++ (int)
@@ -510,14 +511,14 @@ namespace	ft
 
 				++(*this);
 				return (tmp);
-			}
+			};
 
 			// PREFIX DECREMENTATION
 			random_access_iterator & operator -- (void)
 			{
 				_ptr--;
 				return (*this);
-			}
+			};
 
 			// SUFIX DECREMENTATION
 			random_access_iterator operator -- (int)
@@ -526,7 +527,7 @@ namespace	ft
 
 				--(*this);
 				return (tmp);
-			}
+			};
 
 			// OPERATOR ==
 			friend bool operator == (const random_access_iterator & a, const random_access_iterator & b)
@@ -543,13 +544,15 @@ namespace	ft
 			//ARITHMETIC OPERATOR - (this - n)
 			random_access_iterator operator - (difference_type n) const
 			{
-				return (_ptr - n);
+				random_access_iterator tmp = *this;
+				return (tmp -= n);
 			};
 
 			//ARITHMETIC OPERATOR + (this + n)
-			random_access_iterator operator + (difference_type n) const
+			random_access_iterator operator + (difference_type n)
 			{
-				return (_ptr + n);
+				random_access_iterator tmp = *this;
+				return (tmp += n);
 			};
 
 			//ARITHMETIC OPERATOR - (n - this)
@@ -568,21 +571,52 @@ namespace	ft
 				return (ret);
 			};
 
+			//OPERATOR +=
 			random_access_iterator operator += (difference_type const &x)
 			{
 				_ptr += x;
 				return (*this);
 			};
 
+			//OPERATOR -=
 			random_access_iterator operator -= (difference_type const &x)
 			{
 				_ptr -= x;
 				return (*this);
 			};
 
+			//OPERATOR []
 			reference operator [] (difference_type n)
 			{
-				return (_ptr + n);
+				return *(_ptr + n);
+			};
+
+			// OPERATOR <
+			bool operator < (const random_access_iterator & rhs)
+			{
+				return (**this < *rhs);
+			};
+
+			// OPERATOR >
+			bool operator > (const random_access_iterator & rhs)
+			{
+				return (*rhs < **this);
+			};
+
+			// OPERATOR <=
+			bool operator <= (const random_access_iterator & rhs)
+			{
+				if (*this < rhs || *this == rhs)
+					return (true);
+				return (false);
+			};
+
+			// OPERATOR >=
+			bool operator >= (const random_access_iterator & rhs)
+			{
+				if (*this < rhs || !(*this == rhs))
+					return (false);
+				return (true);
 			};
 
 		private :

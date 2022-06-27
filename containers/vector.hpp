@@ -6,13 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 08:57:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 14:29:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // CHECKLIST : 
 
-	// [ ] - ITERATORS
+	// [X] - ITERATORS
 	// [ ] - REVERSE ITERATORS
 	// [X] - CONSTRUCTORS
 	// [X] - DESTRUCTOR
