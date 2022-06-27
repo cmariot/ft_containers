@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:49:23 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/13 18:50:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:49:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	constructor_test(void)
 			std::vector<int>	std_range(std_fill.begin(), std_fill.end());
 
 			if (ft_range.size() != std_range.size())
-				return (-1);
+				return (101);
 			if (ft_range.capacity() != std_range.capacity())
-				return (-1);
+				return (102);
 			if (ft_range.empty() != std_range.empty())
-				return (-1);
+				return (103);
 			for (size_t i = 0 ; i < ft_range.size() ; i++)
 				if (ft_range[i] != std_range[i])
-					return (-1);
+					return (104);
 		}
 	}
 	return (0);

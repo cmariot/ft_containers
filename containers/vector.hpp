@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/22 17:34:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 08:57:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ namespace ft
 			typedef const T &							const_reference;
 			typedef T *									pointer;
 			typedef const T *							const_pointer;
-			typedef ft::bidirectional_iterator<T>		iterator;
-			typedef const ft::bidirectional_iterator<T>	const_iterator;
+			typedef ft::random_access_iterator<T>		iterator;
+			typedef const ft::random_access_iterator<T>	const_iterator;
 			//typedef ft::random_access_iterator<T>		reverse_iterator;
 			//typedef const ft::random_access_iterator<T>	reverse_const_iterator;
 
@@ -202,7 +202,14 @@ namespace ft
 				vector(Inputiterator first, Inputiterator last,
 						const allocator_type & alloc = allocator_type())
 				{
-					_size = std::distance(first, last);
+					Inputiterator	tmp = first;
+
+					_size = 0;
+					while (tmp != last)
+					{
+						_size++;
+						tmp++;
+					}
 					_capacity = _size;
 					_allocator = alloc;
 					_elements = _allocator.allocate(_capacity);
@@ -396,7 +403,12 @@ namespace ft
 						clear();
 						get_allocator().deallocate(_elements, _size);
 					}
-					_size = std::distance(first, last);
+					Inputiterator tmp = first;
+					while (tmp != last)
+					{
+						_size++;
+						tmp++;
+					}
 					_capacity = _size;
 					if (_size and _size <= max_size())
 					{
@@ -522,8 +534,11 @@ namespace ft
 					pointer		tmp;
 					size_t		i = 0;
 					iterator	it = begin();
+					size_type	distance = 0;
 
-					tmp = get_allocator().allocate(_size + std::distance(first, last));
+					for (Inputiterator tmp = first ; tmp != last ; tmp++)
+						distance++;
+					tmp = get_allocator().allocate(_size + distance);
 					while (it != position)
 					{
 						get_allocator().construct(&tmp[i++], *it);
@@ -595,9 +610,10 @@ namespace ft
 						pointer		tmp;
 						int			i = 0;
 						iterator	it = begin();
-						size_type	distance;
+						size_type	distance = 0;
 
-						distance = std::distance(first, last);
+						for (iterator tmp = first ; tmp != last ; tmp++)
+							distance++;
 						tmp = get_allocator().allocate(_size - distance);
 						while (it != first)
 						{

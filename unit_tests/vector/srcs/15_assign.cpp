@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:15:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/16 08:22:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 09:02:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ int	assign_test(void)
 
 	// Assign by iterators test
 	{
-		ft::vector<int>		tmp(static_cast<size_t>(444), 42);
+		ft::vector<int>			ft_tmp(static_cast<size_t>(444), 42);
+		std::vector<int>		std_tmp(static_cast<size_t>(444), 42);
 
-		ft_test.assign(tmp.begin(), tmp.end());
-		std_test.assign(tmp.begin(), tmp.end());
+		ft_test.assign(ft_tmp.begin(), ft_tmp.end());
+		std_test.assign(std_tmp.begin(), std_tmp.end());
 		if (ft_test.size() != std_test.size())
-			return (101);
+			return (-1);
 		for (size_t i = 0 ; i < ft_test.size() ; i++)
 			if (ft_test[i] != std_test[i])
-				return (102);
+				return (-1);
 		
 		//Additionally, in the range version (1), if InputIterator is not at least of a forward iterator category
 		//(i.e., it is just an input iterator) the new capacity cannot be determined beforehand and the operation

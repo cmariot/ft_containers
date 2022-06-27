@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 12:57:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 08:59:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	operator_equal_test(void)
 				return (-1);
 	}
 
+
 	// Operator = on fill constructor
 	{
 		size_t	n		= 5;
@@ -50,6 +51,8 @@ int	operator_equal_test(void)
 
 		std_fill_equal = std_fill;
 
+		if (ft_fill.size() != std_fill.size())
+			return (-1);
 		if (ft_fill_equal.size() != std_fill_equal.size())
 			return (-1);
 		if (ft_fill_equal.capacity() != std_fill_equal.capacity())
@@ -57,6 +60,8 @@ int	operator_equal_test(void)
 		for (size_t i = 0 ; i < ft_fill_equal.size() ; i++)
 			if (ft_fill_equal[i] != std_fill_equal[i])
 				return (-1);
+
+
 
 
 		// Operator = on copy constructor
@@ -80,6 +85,8 @@ int	operator_equal_test(void)
 					return (-1);
 		}
 
+
+
 		// Range constructor
 		{
 			ft::vector<int>			ft_range(ft_fill.begin(), ft_fill.end());
@@ -100,6 +107,7 @@ int	operator_equal_test(void)
 				if (ft_range_equal[i] != std_range_equal[i])
 					return (-1);
 		}
+
 
 		// Leaks tests
 		ft::vector<int>	ft_leaks_1;

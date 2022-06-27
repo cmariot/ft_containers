@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/22 17:32:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:36:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,7 @@ namespace	ft
 
 	// BIDIRECTIONAL ITERATOR
 	template <class T>
-	class bidirectional_iterator : public forward_iterator<T>
+	class bidirectional_iterator
 	{
 
 		public :
@@ -372,7 +372,7 @@ namespace	ft
 			// COPY ASSIGNATION (=)
 			reference operator = (bidirectional_iterator x)
 			{
-				this->_ptr = x->_ptr;
+				this->_ptr = x._ptr;
 				return (*this);
 			};
 
@@ -444,7 +444,7 @@ namespace	ft
 
 	// RANDOM ACCESS ITERATOR
 	template <class T>
-	class random_access_iterator : public bidirectional_iterator<T>
+	class random_access_iterator
 	{
 
 		public :
@@ -582,7 +582,7 @@ namespace	ft
 
 			reference operator [] (difference_type n)
 			{
-				return (*(operator+(n)));
+				return (_ptr + n);
 			};
 
 		private :
