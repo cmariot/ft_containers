@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 16:58:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:02:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,9 +473,9 @@ namespace	ft
 			};
 
 			// COPY ASSIGNATION (=)
-			reference operator = (random_access_iterator x)
+			random_access_iterator operator = (random_access_iterator x)
 			{
-				this->_ptr = x->_ptr;
+				this->_ptr = x._ptr;
 				return (*this);
 			};
 

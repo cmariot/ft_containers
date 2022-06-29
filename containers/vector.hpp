@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 16:44:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 19:20:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # include <cstddef>
 # include <memory>
 # include <iostream>
+
 # include "iterator.hpp"
 # include "reverse_iterator.hpp"
 # include "enable_if.hpp"
@@ -160,9 +161,9 @@ namespace ft
 			typedef T *									pointer;
 			typedef const T *							const_pointer;
 			typedef ft::random_access_iterator<T>		iterator;
-			typedef const ft::random_access_iterator<T>	const_iterator;
+			typedef ft::random_access_iterator<T>		const_iterator;
 			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
-			typedef const reverse_iterator				const_reverse_iterator;
+			typedef reverse_iterator					const_reverse_iterator;
 
 
 		//MEMBER TYPES :
@@ -204,7 +205,8 @@ namespace ft
 
 				// Range constructor
 				template <class Inputiterator>
-				vector(Inputiterator first, Inputiterator last,
+				vector(Inputiterator first,
+						typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last,
 						const allocator_type & alloc = allocator_type())
 				{
 					Inputiterator	tmp = first;
@@ -417,7 +419,8 @@ namespace ft
 			//MODIFIERS
 				//ASSIGN
 				template <class Inputiterator>
-				void assign(Inputiterator first, Inputiterator last)
+				void assign(Inputiterator first,
+				typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
 				{
 					if (_size)
 					{
@@ -550,7 +553,8 @@ namespace ft
 				};
 
 				template <class Inputiterator>
-				void	insert(iterator position, Inputiterator first, Inputiterator last)
+				void	insert(iterator position, Inputiterator first,
+				typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
 				{
 					pointer		tmp;
 					size_t		i = 0;
