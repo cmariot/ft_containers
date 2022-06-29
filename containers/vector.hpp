@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 16:55:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 10:42:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+#include <vector>
 # include <cstddef>
 # include <memory>
 # include <iostream>
@@ -135,6 +136,7 @@ namespace ft
 	*			Default to std::allocator<T>
 	*/
 
+
 	template	< class T, class Allocator = std::allocator<T> >
 	class	vector
 	{
@@ -156,8 +158,8 @@ namespace ft
 			typedef const T *							const_pointer;
 			typedef ft::random_access_iterator<T>		iterator;
 			typedef const ft::random_access_iterator<T>	const_iterator;
-			//typedef ft::random_access_iterator<T>		reverse_iterator;
-			//typedef const ft::random_access_iterator<T>	reverse_const_iterator;
+			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
+			typedef const reverse_iterator				const_reverse_iterator;
 
 
 		//MEMBER TYPES :
