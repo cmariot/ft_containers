@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 15:20:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:58:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<ft::input_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::input_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category	iterator_category;
 			typedef typename traits::value_type			value_type;
@@ -199,7 +199,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<ft::output_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::output_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -261,7 +261,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<ft::forward_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::forward_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -348,7 +348,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<ft::bidirectional_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -450,7 +450,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<ft::random_access_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::random_access_iterator_tag, T> >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
