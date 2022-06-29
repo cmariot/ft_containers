@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:25:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 11:41:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 14:46:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ namespace ft
 		typedef T type;
 	};
 
-	//IS_INTEGRAL FOR ALL OTHER TYPES -> FALSE
+	//IS_INTEGRAL
 	template <class T>
 	struct is_integral
 	{
 		static const bool value = false;
 	};
-	//IS_INTEGRAL FOR INTEGRAL TYPES -> TRUE
 	template <>
 	struct is_integral <bool>
 	{
@@ -42,16 +41,6 @@ namespace ft
 	{
 		static const bool value = true;
 	};
-//	template <>
-//	struct is_integral <char16_t>
-//	{
-//		static const bool value = true;
-//	};
-//	template <>
-//	struct is_integral <char32_t>
-//	{
-//		static const bool value = true;
-//	};
 	template <>
 	struct is_integral <wchar_t>
 	{

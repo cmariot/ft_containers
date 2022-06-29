@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/28 08:26:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:15:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace	ft
 		public :
 
 			
-			typedef ft::iterator_traits<iterator<ft::input_iterator_tag, Iter> >	traits;
+			typedef ft::iterator_traits<iterator<ft::bidirectional_iterator_tag, Iter> >	traits;
 
 			//MEMBER TYPES
 				typedef  Iter								iterator_type;
@@ -38,69 +38,163 @@ namespace	ft
 				typedef typename traits::reference			reference;
 
 			//MEMBER FUNCTIONS
-				//CONSTRUCTOR
-				constexpr explicit reverse_iterator(Iter itr): current(itr)
+
+				// COPY CONSTRUCTOR
+				reverse_iterator(iterator_type itr) :
+					current(itr)
 				{
 					return ;
 				};
-				//OPERATOR =
+
+				// COPY ASSIGNATION
 				reverse_iterator operator = (reverse_iterator & rhs)
 				{
-					reverse_iterator	tmp;
+					current = rhs->current;
+					return (*this);
+				};
 
-					tmp.current = this->current;
+				//BASE
+				iterator_type base(void) const
+				{
+					return (&*(this + 1));
+				};
+
+				// DEREFERENCE WITH OPERATOR *
+				reverse_iterator & operator * (void)
+				{
+					return (*current);
+				};
+
+				// DEREFERENCE WITH OPERATOR ->
+				reverse_iterator & operator -> (void)
+				{
+					return (&(this->operator*()));
+				};
+
+				//OPERATOR []
+				reference operator [] (difference_type n)
+				{
+					return *(current + n);
+				};
+
+				// PREFIX INCREMENTATION
+				reverse_iterator& operator ++ (void)
+				{
+					--current;
+					return *this;
+				};
+
+				// SUFIX INCREMENTATION
+				reverse_iterator& operator ++ (int)
+				{
+					reverse_iterator tmp(*this);
+
+					--(*this);
 					return (tmp);
 				};
-				//BASE
-				//OPERATOR *
-				constexpr auto & operator * (void)
-				{
-					return *std::prev(current); // <== returns the content of prev
-				};
-				//OPERATOR ->
-				//OPERATOR []
-				//OPERATOR ++
-				constexpr auto& operator ++ (void)
-				{
-					--current;
-					return *this;
-				};
-				//OPERATOR ++ (INT)
-				constexpr auto& operator ++ (int)
-				{
-					--current;
-					return *this;
-				};
+
 				//OPERATOR +=
+				reverse_iterator operator += (difference_type const &x)
+				{
+					current -= x;
+					return (*this);
+				};
+
 				//OPERATOR +
-				//OPERATOR --
-				constexpr auto& operator -- (void)
+				reverse_iterator operator + (difference_type n) const
 				{
-					--current;
-					return *this;
+					reverse_iterator tmp = *this;
+					return (tmp += n);
 				};
-				//OPERATOR -- (INT)
-				constexpr auto& operator -- (int)
+
+				// PREFIX DECREMENTATION
+				reverse_iterator& operator -- (void)
 				{
-					--current;
-					return *this;
+					++current;
+					return (*this);
 				};
+
+				// SUFIX DECREMENTATION
+				reverse_iterator& operator -- (int)
+				{
+					reverse_iterator tmp(*this);
+
+					++(*this);
+					return (tmp);
+				};
+
 				//OPERATOR -=
+				reverse_iterator operator -= (difference_type const &x)
+				{
+					current += x;
+					return (*this);
+				};
+
 				//OPERATOR -
+				reverse_iterator operator - (difference_type n) const
+				{
+					reverse_iterator tmp = *this;
+					return (tmp -= n);
+				};
 
 			//NON MEMBER FUNCTIONS
+
 				//OPERATOR ==
+				friend bool operator == (reverse_iterator<Iter> a, reverse_iterator<Iter> b)
+				{
+					return a.current == b.current;
+				};
+
 				//OPERATOR !=
-				constexpr friend bool operator != (reverse_iterator<Iter> a, reverse_iterator<Iter> b)
+				friend bool operator != (reverse_iterator<Iter> a, reverse_iterator<Iter> b)
 				{
 					return a.current != b.current;
 				};
+
 				//OPERATOR <
+				bool operator < (const reverse_iterator & rhs)
+				{
+					return (**this < *rhs);
+				};
+
 				//OPERATOR <=
+				bool operator <= (const reverse_iterator & rhs)
+				{
+					if (*this < rhs || *this == rhs)
+						return (true);
+					return (false);
+				};
+
 				//OPERATOR >
+				bool operator > (const reverse_iterator & rhs)
+				{
+					return (*rhs < **this);
+				};
+
 				//OPERATOR >=
+				bool operator >= (const reverse_iterator & rhs)
+				{
+					if (*this < rhs || !(*this == rhs))
+						return (false);
+					return (true);
+				};
+
 				//OPERATOR +
+				difference_type operator + (reverse_iterator rhs) const
+				{
+					difference_type	ret = rhs._ptr - current;
+
+					return (ret);
+				};
+
 				//OPERATOR -
+				difference_type operator - (reverse_iterator rhs) const
+				{
+					difference_type	ret = rhs._ptr + current;
+
+					return (ret);
+				};
+
 	};
 
 };
