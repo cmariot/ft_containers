@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 14:53:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:58:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,16 @@ int	iterators_test(void)
 		if (!(c <= b))
 			return (-1);
 	}
+
+	//IS_INTEGRAL
+	if (ft::is_integral<char>::value != true
+		|| ft::is_integral<int>::value != true
+		|| ft::is_integral<long int>::value != true
+		|| ft::is_integral<bool>::value != true
+		|| ft::is_integral<unsigned int>::value != true
+		|| ft::is_integral<long long int>::value != true
+		|| ft::is_integral<unsigned long int>::value != true)
+		return (-1);
 
 	return (0);
 }

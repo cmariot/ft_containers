@@ -6,12 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 19:58:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 12:00:37 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // CHECKLIST : 
 
+	// [ ] - ENABLE_IF / SFINAE
+	// [X] - IS_INTEGRAL
 	// [X] - ITERATORS
 	// [ ] - REVERSE ITERATORS
 	// [X] - CONSTRUCTORS
@@ -63,7 +65,8 @@
 # include <memory>
 # include <iostream>
 # include "iterator.hpp"
-
+# include "reverse_iterator.hpp"
+# include "enable_if.hpp"
 
 /*
  * A namespace is an optionally-named declarative region.
