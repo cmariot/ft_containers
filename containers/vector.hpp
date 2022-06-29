@@ -6,16 +6,16 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 12:00:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 16:44:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // CHECKLIST : 
 
-	// [ ] - ENABLE_IF / SFINAE
-	// [X] - IS_INTEGRAL
-	// [X] - ITERATORS
-	// [ ] - REVERSE ITERATORS
+	// [/] - ENABLE_IF / SFINAE
+	// [/] - IS_INTEGRAL
+	// [/] - ITERATORS
+	// [/] - REVERSE ITERATORS
 	// [X] - CONSTRUCTORS
 	// [X] - DESTRUCTOR
 	// [X] - OPERATOR=
@@ -275,7 +275,23 @@ namespace ft
 					return (iterator(&_elements[size()]));
 				};
 				//RBEGIN
+				iterator rbegin(void)
+				{
+					return (reverse_iterator(&_elements[0]));
+				};
+				const_iterator rbegin(void) const
+				{
+					return (reverse_iterator(&_elements[0]));
+				};
 				//REND
+				iterator rend(void)
+				{
+					return (reverse_iterator(&_elements[size()]));
+				};
+				const_iterator rend(void) const
+				{
+					return (reverse_iterator(&_elements[size()]));
+				};
 
 
 			//CAPACITY
