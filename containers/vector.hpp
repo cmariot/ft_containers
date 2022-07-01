@@ -6,24 +6,26 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 19:20:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/01 08:55:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // CHECKLIST : 
 
-	// [/] - ENABLE_IF / SFINAE
-	// [/] - IS_INTEGRAL
-	// [/] - ITERATORS
-	// [/] - REVERSE ITERATORS
+	// [X] - ENABLE_IF / SFINAE
+	// [X] - IS_INTEGRAL
+	// [ ] - BIDIRECTIONAL ITERATORS
+	// [ ] - ITERATORS
+	// [ ] - REVERSE ITERATORS
+
 	// [X] - CONSTRUCTORS
 	// [X] - DESTRUCTOR
 	// [X] - OPERATOR=
-	// [ ] - ITERATORS
+	// [X] - ITERATORS
 		// [X] - BEGIN / CONST
 		// [X] - END / CONST
-		// [ ] - RBEGIN / CONST
-		// [ ] - REND / CONST
+		// [X] - RBEGIN / CONST
+		// [X] - REND / CONST
 	// [X] - CAPACITY
 		// [X] - SIZE
 		// [X] - MAX_SIZE : OK UBUNTU
@@ -37,12 +39,12 @@
 		// [X] - FRONT
 		// [X] - BACK
 	// [ ] - MODIFIERS
-		// [ ] - ASSIGN
-		// [ ] - PUSH_BACK
+		// [X] - ASSIGN
+		// [X] - PUSH_BACK
 		// [X] - POP_BACK
 		// [ ] - INSERT
-		// [ ] - ERASE / RETURN VALUE ?
-		// [ ] - SWAP / ALLOCATOR SWAP ?
+		// [ ] - ERASE BY ITERATORS
+		// [ ] - SWAP / ITERATOR VALIDITY
 		// [X] - CLEAR
 	// [X] - ALLOCATOR
 		// [X] - GET_ALLOCATOR
@@ -279,20 +281,20 @@ namespace ft
 				//RBEGIN
 				iterator rbegin(void)
 				{
-					return (reverse_iterator(&_elements[0]));
+					return (reverse_iterator(end()));
 				};
 				const_iterator rbegin(void) const
 				{
-					return (reverse_iterator(&_elements[0]));
+					return (reverse_iterator(end()));
 				};
 				//REND
 				iterator rend(void)
 				{
-					return (reverse_iterator(&_elements[size()]));
+					return (reverse_iterator(begin()));
 				};
 				const_iterator rend(void) const
 				{
-					return (reverse_iterator(&_elements[size()]));
+					return (reverse_iterator(begin()));
 				};
 
 
@@ -484,6 +486,12 @@ namespace ft
 						get_allocator().construct(&tmp[_size], val);
 						_elements = tmp;
 					}
+					else if (capacity() == 0)
+					{
+						_capacity = 1;
+						_elements = get_allocator().allocate(_capacity);
+						get_allocator().construct(&_elements[_size], val);
+					}
 					else
 						get_allocator().construct(&_elements[_size], val);
 					_size = _size + 1;
@@ -589,76 +597,53 @@ namespace ft
 				//ERASE
 				iterator	erase(iterator position)
 				{
-					if (position == end())
-					{
-						pop_back();
-						return (end());
-					}
-					else
-					{
-						pointer		tmp;
-						int			i = 0;
-						iterator	it = begin();
+					iterator it = begin();
 
-						tmp = get_allocator().allocate(_size - 1);
-						while (it != position)
+					for (size_t i = 0 ; i < size() ; i++)
+					{
+						if (it == position)
 						{
-							get_allocator().construct(&tmp[i++], *it);
-							it++;
+							get_allocator().destroy(&_elements[i]);
+							for (size_t j = i ; j < size() - 1 ; j++)
+							{
+								get_allocator().construct(&_elements[j], _elements[j + 1]);
+								get_allocator().destroy(&_elements[j + 1]);
+							}
+							_size--;
+							return (iterator(&_elements[i]));
 						}
 						it++;
-						iterator ret = it;
-						while (it != end())
-						{
-							get_allocator().construct(&tmp[i++], *it);
-							it++;
-						}
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-						_elements = tmp;
-						_size--;
-						return (ret);
 					}
+					return (position);
 				};
 
 				iterator	erase(iterator first, iterator last)
 				{
-					if (last == end())
-					{
-						while (first++ != end())
-							pop_back();
-						return (end());
-					}
-					else
-					{
-						pointer		tmp;
-						int			i = 0;
-						iterator	it = begin();
-						size_type	distance = 0;
+					iterator it = begin();
+					size_type	distance = 0;
 
-						for (iterator tmp = first ; tmp != last ; tmp++)
-							distance++;
-						tmp = get_allocator().allocate(_size - distance);
-						while (it != first)
+					for (size_t i = 0 ; i < size() ; i++)
+					{
+						if (it == first)
 						{
-							get_allocator().construct(&tmp[i++], *it);
-							it++;
+							distance = 0;
+							while (it + 1 != last)
+							{
+								get_allocator().destroy(&_elements[i + distance]);
+								it++;
+								distance++;
+							}
+							for (size_t j = i ; j < size() - 1 ; j++)
+							{
+								get_allocator().construct(&_elements[j], _elements[j + distance + 1]);
+								get_allocator().destroy(&_elements[j + distance + 1]);
+							}
+								_size -= distance + 1;
+							return (iterator(&_elements[i]));
 						}
-						it += distance;
-						iterator ret = it;
-						while (it != end())
-						{
-							get_allocator().construct(&tmp[i++], *it);
-							it++;
-						}
-						for (size_type i = 0 ; i < _size ; i++)
-							get_allocator().destroy(&_elements[i]);
-						get_allocator().deallocate(_elements, _size);
-						_elements = tmp;
-						_size -= distance;
-						return (ret);
+						it++;
 					}
+					return (last);
 				};
 
 				//SWAP

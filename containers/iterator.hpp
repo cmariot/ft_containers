@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 19:02:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:57:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -443,6 +443,18 @@ namespace	ft
 
 	};
 
+
+	// [ ] DEFAULT CONSTRUCTOR
+	// [ ] COPY CONSTRUCTOR
+	// [ ] COPY ASSIGNABLE
+	// [ ] DESTRUCTOR
+	// [ ] PREFIX INCREMENTATION
+	// [ ] SUFIX INCREMENTATION
+	// [ ] == !=
+	// [ ] DEREFERENCE * ->
+	// [ ] MULTI PASS
+	// [ ] PREFIX / SUFIX DECREMENTATION
+	//
 	// RANDOM ACCESS ITERATOR
 	template <class T>
 	class random_access_iterator
@@ -473,8 +485,10 @@ namespace	ft
 			};
 
 			// COPY ASSIGNATION (=)
-			random_access_iterator operator = (random_access_iterator x)
+			random_access_iterator operator = (const random_access_iterator & x)
 			{
+				if (this == &x)
+					return (*this);
 				this->_ptr = x._ptr;
 				return (*this);
 			};
@@ -544,31 +558,13 @@ namespace	ft
 			//ARITHMETIC OPERATOR - (this - n)
 			random_access_iterator operator - (difference_type n) const
 			{
-				random_access_iterator tmp = *this;
-				return (tmp -= n);
+				return (_ptr - n);
 			};
 
 			//ARITHMETIC OPERATOR + (this + n)
 			random_access_iterator operator + (difference_type n)
 			{
-				random_access_iterator tmp = *this;
-				return (tmp += n);
-			};
-
-			//ARITHMETIC OPERATOR - (n - this)
-			difference_type operator - (random_access_iterator rhs) const
-			{
-				difference_type	ret = rhs._ptr - _ptr;
-
-				return (ret);
-			};
-
-			//ARITHMETIC OPERATOR + (n + this)
-			difference_type operator + (random_access_iterator rhs) const
-			{
-				difference_type	ret = rhs._ptr + _ptr;
-
-				return (ret);
+				return (_ptr + n);
 			};
 
 			//OPERATOR +=
@@ -591,39 +587,65 @@ namespace	ft
 				return *(_ptr + n);
 			};
 
-			// OPERATOR <
-			bool operator < (const random_access_iterator & rhs)
+			pointer base(void) const
 			{
-				return (**this < *rhs);
+				return (_ptr);
 			};
-
-			// OPERATOR >
-			bool operator > (const random_access_iterator & rhs)
-			{
-				return (*rhs < **this);
-			};
-
-			// OPERATOR <=
-			bool operator <= (const random_access_iterator & rhs)
-			{
-				if (*this < rhs || *this == rhs)
-					return (true);
-				return (false);
-			};
-
-			// OPERATOR >=
-			bool operator >= (const random_access_iterator & rhs)
-			{
-				if (*this < rhs || !(*this == rhs))
-					return (false);
-				return (true);
-			};
+			//operator random_access_iterator<const T> (void) const
+			//{
+			//	return (random_access_iterator<const T>(this->_ptr)); 
+			//};
 
 		private :
 
 			pointer		_ptr;
 
 	};
+
+		// OPERATOR <
+		template <typename T>
+		bool operator < (const random_access_iterator<T> & a, const random_access_iterator<T> & b)
+		{
+			return (*a < *b);
+		};
+
+		// OPERATOR >
+		template <typename T>
+		bool operator > (const random_access_iterator<T> & a, const random_access_iterator<T> & b)
+		{
+			return !(*a < *b);
+		};
+
+		// OPERATOR <=
+		template <typename T>
+		bool operator <= (const random_access_iterator<T> & a, const random_access_iterator<T> & b)
+		{
+			if (*a < *b || *a == *b)
+				return (true);
+			return (false);
+		};
+
+		// OPERATOR >=
+		template <typename T>
+		bool operator >= (const random_access_iterator<T> & a, const random_access_iterator<T> & b)
+		{
+			if (*a < *b || !(*a == *b))
+				return (false);
+			return (true);
+		};
+		
+		template<typename T>
+		ft::random_access_iterator<T> operator + (typename ft::random_access_iterator<T>::difference_type n, typename ft::random_access_iterator<T>& rhs)
+		{
+			return (&(*rhs) + n);
+		};
+
+		template <typename T>
+		typename ft::random_access_iterator<T>::difference_type operator - (const ft::random_access_iterator<T> lhs, const ft::random_access_iterator<T> rhs)
+		{
+			return (lhs.base() - rhs.base());
+		}
+
 };
 
 #endif

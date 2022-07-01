@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 15:15:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:49:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,30 +151,30 @@ namespace	ft
 					return a.current != b.current;
 				};
 
-				//OPERATOR <
-				bool operator < (const reverse_iterator & rhs)
+				// OPERATOR <
+				friend bool operator < (const reverse_iterator & a, const reverse_iterator & b)
 				{
-					return (**this < *rhs);
+					return (*a < *b);
 				};
 
-				//OPERATOR <=
-				bool operator <= (const reverse_iterator & rhs)
+				// OPERATOR >
+				friend bool operator > (const reverse_iterator & a, const reverse_iterator & b)
 				{
-					if (*this < rhs || *this == rhs)
+					return !(*a < *b);
+				};
+
+				// OPERATOR <=
+				friend bool operator <= (const reverse_iterator & a, const reverse_iterator & b)
+				{
+					if (*a < *b || *a == *b)
 						return (true);
 					return (false);
 				};
 
-				//OPERATOR >
-				bool operator > (const reverse_iterator & rhs)
+				// OPERATOR >=
+				friend bool operator >= (const reverse_iterator & a, const reverse_iterator & b)
 				{
-					return (*rhs < **this);
-				};
-
-				//OPERATOR >=
-				bool operator >= (const reverse_iterator & rhs)
-				{
-					if (*this < rhs || !(*this == rhs))
+					if (*a < *b || !(*a == *b))
 						return (false);
 					return (true);
 				};
