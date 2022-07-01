@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:45 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/01 08:57:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/01 09:00:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	erase_test(void)
 
 	vct.push_back("Hello");
 	vct.push_back("Hi there");
-	std::cout << *(vct.end() - 1) << std::endl;
 	vct.erase(vct.end() - 3, vct.end());
 
 	vct.push_back("ONE");
