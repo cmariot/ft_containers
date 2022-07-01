@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:36 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/01 09:16:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/01 11:46:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_test.size() ; i++)
 		if (ft_test[i] != std_test[i])
 			return (-1);
+	if (ft_test.capacity() < ft_test.size())
+		return (-1);
+	if (std_test.capacity() < std_test.size())
+		return (-1);
+
+	std::cout << "0" << std::endl;
 
 	size_t	len = 6;
 	ft_test.insert(ft_test.begin(), len, 6);
@@ -33,10 +39,14 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_test.size() ; i++)
 		if (ft_test[i] != std_test[i])
 			return (-1);
+	std::cout << "CAPACITY = " << ft_test.capacity() << " SIZE = " << ft_test.size() << std::endl;	
+	if (ft_test.capacity() < ft_test.size())
+		return (101);
+	if (std_test.capacity() < std_test.size())
+		return (102);
 
 	ft::vector<int> ft_vct(10);
 	ft::vector<int> ft_vct2;
-
 	std::vector<int> std_vct(10);
 	std::vector<int> std_vct2;
 
@@ -55,6 +65,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct2.size() ; i++)
 		if (ft_vct2[i] != std_vct2[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
+
+	std::cout << "1" << std::endl;
 
 	ft_vct2.insert(ft_vct2.end() - 2, 42);
 	std_vct2.insert(std_vct2.end() - 2, 42);
@@ -63,6 +79,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct2.size() ; i++)
 		if (ft_vct2[i] != std_vct2[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
+
+	std::cout << "2" << std::endl;
 
 	ft_vct2.insert(ft_vct2.end(), 2, 84);
 	std_vct2.insert(std_vct2.end(), 2, 84);
@@ -71,6 +93,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct2.size() ; i++)
 		if (ft_vct2[i] != std_vct2[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
+
+	std::cout << "3" << std::endl;
 
 	ft_vct2.resize(4);
 	std_vct2.resize(4);
@@ -79,6 +107,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct2.size() ; i++)
 		if (ft_vct2[i] != std_vct2[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
+
+	std::cout << "4" << std::endl;
 
 	ft_vct2.insert(ft_vct2.begin() + 2, ft_vct.begin(), ft_vct.end());
 	std_vct2.insert(std_vct2.begin() + 2, std_vct.begin(), std_vct.end());
@@ -87,6 +121,12 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct2.size() ; i++)
 		if (ft_vct2[i] != std_vct2[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
+
+	std::cout << "5" << std::endl;
 
 	ft_vct.clear();
 	std_vct.clear();
@@ -95,11 +135,10 @@ int	insert_test(void)
 	for (size_t i = 0 ; i < ft_vct.size() ; i++)
 		if (ft_vct[i] != std_vct[i])
 			return (-1);
+	if (ft_vct.capacity() < ft_vct.size())
+		return (-1);
+	if (ft_vct2.capacity() < ft_vct2.size())
+		return (-1);
 
-//	if (ft_test.capacity() != std_test.capacity())
-//	{
-//		std::cout << "Capacity : ft = " << ft_test.capacity() << " std = " << std_test.capacity() << std::endl;
-//		return (103);
-//	}
 	return (0);
 }

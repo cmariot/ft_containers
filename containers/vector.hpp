@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/01 08:55:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/01 12:16:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 		// [X] - REND / CONST
 	// [X] - CAPACITY
 		// [X] - SIZE
-		// [X] - MAX_SIZE : OK UBUNTU
+		// [X] - MAX_SIZE
 		// [X] - RESIZE
 		// [X] - CAPACITY
 		// [X] - EMPTY
@@ -43,7 +43,7 @@
 		// [X] - PUSH_BACK
 		// [X] - POP_BACK
 		// [ ] - INSERT
-		// [ ] - ERASE BY ITERATORS
+		// [X] - ERASE
 		// [ ] - SWAP / ITERATOR VALIDITY
 		// [X] - CLEAR
 	// [X] - ALLOCATOR
@@ -506,92 +506,43 @@ namespace ft
 				//INSERT
 				iterator	insert(iterator position, const value_type& val)
 				{
-					pointer		tmp;
-					size_t		i = 0;
 					iterator	it = begin();
 
-					tmp = get_allocator().allocate(_size + 1);
-					while (it != position)
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
-					}
-					get_allocator().construct(&tmp[i++], val);
-					while (it != end())
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
-					}
-					for (size_type i = 0 ; i < _size ; i++)
-						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-					_elements = tmp;
-					_size += 1;
+					std::cout << "BEFORE : size = " << size() << " capacity = " << capacity() << std::endl;
+					if (_size + 1 > _capacity)
+						reserve(_size + 1);
+					(void)position;
+					(void)val;
+					_size++;
+					std::cout << "AFTER : size = " << size() << " capacity = " << capacity() << std::endl;
 					return (begin());
 				};
 
 				void	insert(iterator position, size_type n, const value_type& val)
 				{
-					pointer		tmp;
-					size_t		i = 0;
-					size_t		j = 0;
-					iterator	it = begin();
-
-					tmp = get_allocator().allocate(_size + n);
-					while (it != position)
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
-					}
-					while (j < n)
-					{
-						get_allocator().construct(&tmp[i++], val);
-						j++;
-					}
-					while (it != end())
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
-					}
-					for (size_type i = 0 ; i < _size ; i++)
-						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-					_elements = tmp;
-					_size = i;
+					if (_size + n > _capacity)
+						reserve(_size + n);
+					(void)position;
+					(void)val;
+					_size += n;
 				};
 
 				template <class Inputiterator>
 				void	insert(iterator position, Inputiterator first,
 				typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
 				{
-					pointer		tmp;
-					size_t		i = 0;
-					iterator	it = begin();
 					size_type	distance = 0;
+					iterator	it = first;
 
-					for (Inputiterator tmp = first ; tmp != last ; tmp++)
+					while (it != last)
+					{
+						it++;
 						distance++;
-					tmp = get_allocator().allocate(_size + distance);
-					while (it != position)
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
 					}
-					while (first != last)
-					{
-						get_allocator().construct(&tmp[i++], *first);
-						first++;
-					}
-					while (it != end())
-					{
-						get_allocator().construct(&tmp[i++], *it);
-						it++;
-					}
-					for (size_type i = 0 ; i < _size ; i++)
-						get_allocator().destroy(&_elements[i]);
-					get_allocator().deallocate(_elements, _size);
-					_elements = tmp;
-					_size = i;
+					if (_size + distance > _capacity)
+						reserve(_size + distance);
+					(void)position;
+					_size += distance;
 				};
 
 				//ERASE
