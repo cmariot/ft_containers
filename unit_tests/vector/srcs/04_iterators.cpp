@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 11:58:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 16:25:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,22 @@ int	iterators_test(void)
 		|| ft::is_integral<long long int>::value != true
 		|| ft::is_integral<unsigned long int>::value != true)
 		return (-1);
+
+	const int size = 5;
+	
+	ft::vector<int> vct(size);
+	ft::vector<int>::iterator it = vct.begin();
+	ft::vector<int>::const_iterator ite = vct.begin();
+
+	for (int i = 0; i < size; ++i)
+		it[i] = i;
+
+	*ite = 42; // < -- error
+
+
+
+	return (0);
+
 
 	return (0);
 }

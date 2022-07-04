@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 20:49:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:00:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace	ft
 			typedef ft::iterator_traits<iterator<ft::bidirectional_iterator_tag, Iter> >	traits;
 
 			//MEMBER TYPES
-				typedef  Iter								iterator_type;
+				typedef Iter								iterator_type;
 				typedef typename traits::iterator_category	iterator_category;
 				typedef typename traits::value_type			value_type;
 				typedef typename traits::difference_type	difference_type;

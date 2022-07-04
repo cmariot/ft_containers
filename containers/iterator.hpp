@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/30 12:57:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:40:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,7 +506,7 @@ namespace	ft
 			};
 
 			// DEREFERENCE
-			pointer operator -> (void)
+			pointer operator -> (void) const
 			{
 				return (&(this->operator*()));
 			};
@@ -591,10 +591,6 @@ namespace	ft
 			{
 				return (_ptr);
 			};
-			//operator random_access_iterator<const T> (void) const
-			//{
-			//	return (random_access_iterator<const T>(this->_ptr)); 
-			//};
 
 		private :
 
@@ -602,6 +598,147 @@ namespace	ft
 
 	};
 
+	template <class T>
+	class const_random_access_iterator
+	{
+
+		public :
+
+			typedef ft::iterator_traits<iterator<std::random_access_iterator_tag, T> >	traits;
+
+			typedef const typename traits::iterator_category		iterator_category;
+			typedef const typename traits::value_type				value_type;
+			typedef const typename traits::difference_type		difference_type;
+			typedef const typename traits::pointer				pointer;
+			typedef const typename traits::reference				reference;
+
+			// DEFAULT CONSTRUCTOR
+			const_random_access_iterator(void) :
+				_ptr(NULL)
+			{
+				return ;
+			};
+
+			// COPY CONSTRUCTOR
+			const_random_access_iterator(pointer ptr) :
+				_ptr(ptr)
+			{
+				return ;
+			};
+
+			// COPY ASSIGNATION (=)
+			const_random_access_iterator operator = (const const_random_access_iterator & x)
+			{
+				if (this == &x)
+					return (*this);
+				this->_ptr = x._ptr;
+				return (*this);
+			};
+
+			// DESTRUCTOR
+			~const_random_access_iterator(void)
+			{
+				return ;
+			};
+
+			// DEREFERENCE
+			reference operator * (void) const
+			{
+				return (*_ptr);
+			};
+
+			// DEREFERENCE
+			pointer operator -> (void) const
+			{
+				return (&(this->operator*()));
+			};
+
+			// PREFIX INCREMENTATION
+			const_random_access_iterator & operator ++ (void)
+			{
+				_ptr++;
+				return (*this);
+			};
+
+			// SUFIX INCREMENTATION
+			const_random_access_iterator operator ++ (int)
+			{
+				const_random_access_iterator	tmp(*this);
+
+				++(*this);
+				return (tmp);
+			};
+
+			// PREFIX DECREMENTATION
+			const_random_access_iterator & operator -- (void)
+			{
+				_ptr--;
+				return (*this);
+			};
+
+			// SUFIX DECREMENTATION
+			const_random_access_iterator operator -- (int)
+			{
+				const_random_access_iterator	tmp(*this);
+
+				--(*this);
+				return (tmp);
+			};
+
+			// OPERATOR ==
+			friend bool operator == (const const_random_access_iterator & a, const const_random_access_iterator & b)
+			{
+				return (a._ptr == b._ptr);
+			};
+
+			// OPERATOR !=
+			friend bool operator != (const const_random_access_iterator & a, const const_random_access_iterator & b)
+			{
+				return (a._ptr != b._ptr);
+			};
+
+			//ARITHMETIC OPERATOR - (this - n)
+			const_random_access_iterator operator - (difference_type n) const
+			{
+				return (_ptr - n);
+			};
+
+			//ARITHMETIC OPERATOR + (this + n)
+			const_random_access_iterator operator + (difference_type n)
+			{
+				return (_ptr + n);
+			};
+
+			//OPERATOR +=
+			const_random_access_iterator operator += (difference_type const &x)
+			{
+				_ptr += x;
+				return (*this);
+			};
+
+			//OPERATOR -=
+			const_random_access_iterator operator -= (difference_type const &x)
+			{
+				_ptr -= x;
+				return (*this);
+			};
+
+			//OPERATOR []
+			reference operator [] (difference_type n)
+			{
+				return *(_ptr + n);
+			};
+
+			pointer base(void) const
+			{
+				return (_ptr);
+			};
+
+		private :
+
+			const T*		_ptr;
+
+	};
 		// OPERATOR <
 		template <typename T>
 		bool operator < (const random_access_iterator<T> & a, const random_access_iterator<T> & b)

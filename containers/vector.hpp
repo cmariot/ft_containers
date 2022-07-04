@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 15:40:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:43:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 	// [X] - ENABLE_IF / SFINAE
 	// [X] - IS_INTEGRAL
-	// [ ] - BIDIRECTIONAL ITERATORS
-	// [ ] - ITERATORS
+	// [X] - BIDIRECTIONAL ITERATORS
+	// [ ] - ITERATORS / CONST
 	// [ ] - REVERSE ITERATORS
 
 	// [X] - CONSTRUCTORS
@@ -42,7 +42,7 @@
 		// [X] - ASSIGN
 		// [X] - PUSH_BACK
 		// [X] - POP_BACK
-		// [ ] - INSERT
+		// [X] - INSERT
 		// [X] - ERASE
 		// [ ] - SWAP / ITERATOR VALIDITY
 		// [X] - CLEAR
@@ -153,18 +153,18 @@ namespace ft
 		*/
 
 		public :
-			typedef T									value_type;
-			typedef Allocator							allocator_type;
-			typedef size_t								size_type;
-			typedef ptrdiff_t							difference_type;
-			typedef T &									reference;
-			typedef const T &							const_reference;
-			typedef T *									pointer;
-			typedef const T *							const_pointer;
-			typedef ft::random_access_iterator<T>		iterator;
-			typedef ft::random_access_iterator<T>		const_iterator;
+			typedef T											value_type;
+			typedef Allocator									allocator_type;
+			typedef size_t										size_type;
+			typedef ptrdiff_t									difference_type;
+			typedef T &											reference;
+			typedef const T &									const_reference;
+			typedef T *											pointer;
+			typedef const T *									const_pointer;
+			typedef ft::random_access_iterator<T>				iterator;
+			typedef ft::random_access_iterator<T>			const_iterator;
 			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
-			typedef reverse_iterator					const_reverse_iterator;
+			typedef const reverse_iterator						const_reverse_iterator;
 
 
 		//MEMBER TYPES :
@@ -517,6 +517,7 @@ namespace ft
 						i++;
 					}
 					size_type backup = i;
+					size_type new_pos = i;
 					while (i < _size)
 					{
 						get_allocator().construct(&_elements[_size + 1 - j], _elements[_size - j]);
@@ -525,7 +526,7 @@ namespace ft
 					}
 					get_allocator().construct(&_elements[backup], val);
 					_size += 1;
-					return (begin());
+					return (begin() + new_pos);
 				};
 
 				void	insert(iterator position, size_type n, const value_type& val)
