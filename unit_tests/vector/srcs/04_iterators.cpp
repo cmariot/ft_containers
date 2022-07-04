@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 16:25:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 21:52:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,16 +178,13 @@ int	iterators_test(void)
 	
 	ft::vector<int> vct(size);
 	ft::vector<int>::iterator it = vct.begin();
-	ft::vector<int>::const_iterator ite = vct.begin();
+	//ft::vector<int>::const_iterator ite = vct.begin();
 
 	for (int i = 0; i < size; ++i)
 		it[i] = i;
 
-	*ite = 42; // < -- error
+	//*ite = 42; // < -- error
 
-
-
-	return (0);
 
 
 	return (0);

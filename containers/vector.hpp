@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 17:43:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 22:14:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 	// [X] - ENABLE_IF / SFINAE
 	// [X] - IS_INTEGRAL
 	// [X] - BIDIRECTIONAL ITERATORS
-	// [ ] - ITERATORS / CONST
+	// [X] - ITERATORS / CONST
 	// [ ] - REVERSE ITERATORS
 
 	// [X] - CONSTRUCTORS
@@ -38,13 +38,13 @@
 		// [X] - AT
 		// [X] - FRONT
 		// [X] - BACK
-	// [ ] - MODIFIERS
+	// [X] - MODIFIERS
 		// [X] - ASSIGN
 		// [X] - PUSH_BACK
 		// [X] - POP_BACK
 		// [X] - INSERT
 		// [X] - ERASE
-		// [ ] - SWAP / ITERATOR VALIDITY
+		// [X] - SWAP / ITERATOR VALIDITY
 		// [X] - CLEAR
 	// [X] - ALLOCATOR
 		// [X] - GET_ALLOCATOR
@@ -161,8 +161,8 @@ namespace ft
 			typedef const T &									const_reference;
 			typedef T *											pointer;
 			typedef const T *									const_pointer;
-			typedef ft::random_access_iterator<T>				iterator;
-			typedef ft::random_access_iterator<T>			const_iterator;
+			typedef T*											iterator;
+			typedef const T*									const_iterator;
 			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
 			typedef const reverse_iterator						const_reverse_iterator;
 
@@ -266,7 +266,7 @@ namespace ft
 				};
 				const_iterator begin(void) const
 				{
-					return (iterator(&_elements[0]));
+					return (const_iterator(&_elements[0]));
 				};
 				//END
 				iterator end(void)
@@ -275,7 +275,7 @@ namespace ft
 				};
 				const_iterator end(void) const
 				{
-					return (iterator(&_elements[size()]));
+					return (const_iterator(&_elements[size()]));
 				};
 				//RBEGIN
 				iterator rbegin(void)
@@ -420,8 +420,12 @@ namespace ft
 			//MODIFIERS
 				//ASSIGN
 				template <class Inputiterator>
-				void assign(Inputiterator first,
-				typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
+				void assign
+					(
+						Inputiterator first,
+						typename ft::enable_if<!ft::is_integral<Inputiterator>::value,
+						Inputiterator>::type last
+					)
 				{
 					if (_size)
 					{
@@ -560,10 +564,12 @@ namespace ft
 				};
 
 				template <class Inputiterator>
-				void	insert(
-						iterator position,
-						Inputiterator first,
-						typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
+				void	insert
+						(
+							iterator position,
+							Inputiterator first,
+							typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last
+						)
 				{
 					iterator	it = begin();
 					size_type	distance = std::distance(first, last);
@@ -651,10 +657,20 @@ namespace ft
 				//SWAP
 				void	swap(vector & x)
 				{
-					vector	tmp(*this);
+					pointer			tmp_elements = x._elements;
+					size_type		tmp_size = x._size;
+					size_type		tmp_capacity = x._capacity;
+					allocator_type	tmp_allocator = x._allocator;
 
-					*this = x;
-					x = tmp;
+					x._elements = _elements;
+					x._size = _size;
+					x._capacity = _capacity;
+					x._allocator = _allocator;
+
+					_elements = tmp_elements;
+					_size = tmp_size;
+					_capacity = tmp_capacity;
+					_allocator = tmp_allocator;
 				};
 
 				//CLEAR
@@ -728,10 +744,7 @@ namespace ft
 		template <class U, class Alloc>
 		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
 		{
-			vector<U, Alloc>	tmp(x);
-
-			x = y;
-			y = tmp;
+			x.swap(y);
 		};
 
 

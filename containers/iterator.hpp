@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 17:40:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 21:43:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -627,6 +627,13 @@ namespace	ft
 			};
 
 			// COPY ASSIGNATION (=)
+			const_random_access_iterator operator = (const random_access_iterator<T> & x)
+			{
+				if (this == &x)
+					return (*this);
+				this->_ptr = x._ptr;
+				return (*this);
+			};
 			const_random_access_iterator operator = (const const_random_access_iterator & x)
 			{
 				if (this == &x)
@@ -686,15 +693,23 @@ namespace	ft
 			};
 
 			// OPERATOR ==
-			friend bool operator == (const const_random_access_iterator & a, const const_random_access_iterator & b)
+			bool operator == (const const_random_access_iterator & b)
 			{
-				return (a._ptr == b._ptr);
+				return (_ptr == b._ptr);
+			};
+			bool operator == (const random_access_iterator<T> & b)
+			{
+				return (_ptr == b._ptr);
 			};
 
 			// OPERATOR !=
-			friend bool operator != (const const_random_access_iterator & a, const const_random_access_iterator & b)
+			bool operator != (const const_random_access_iterator & b)
 			{
-				return (a._ptr != b._ptr);
+				return (_ptr != b._ptr);
+			};
+			bool operator != (const random_access_iterator<T> & b)
+			{
+				return (_ptr != b._ptr);
 			};
 
 			//ARITHMETIC OPERATOR - (this - n)
