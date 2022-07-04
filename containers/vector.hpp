@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/01 12:16:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/04 15:40:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ namespace ft
 		{
 			str_nb += '0' + (nb % 10);
 			nb /= 10;
-		}
-		while (nb > 0);
+		} while (nb > 0);
 		return (std::string(str_nb.rbegin(), str_nb.rend()));
 	};
 
@@ -504,46 +503,97 @@ namespace ft
 				};
 
 				//INSERT
-				iterator	insert(iterator position, const value_type& val)
+				iterator	insert(iterator position, const value_type & val)
 				{
 					iterator	it = begin();
+					size_type	i = 0;
+					size_type	j = 1;
 
-					std::cout << "BEFORE : size = " << size() << " capacity = " << capacity() << std::endl;
 					if (_size + 1 > _capacity)
 						reserve(_size + 1);
-					(void)position;
-					(void)val;
-					_size++;
-					std::cout << "AFTER : size = " << size() << " capacity = " << capacity() << std::endl;
+					while (it != position)
+					{
+						it++;
+						i++;
+					}
+					size_type backup = i;
+					while (i < _size)
+					{
+						get_allocator().construct(&_elements[_size + 1 - j], _elements[_size - j]);
+						j++;
+						i++;
+					}
+					get_allocator().construct(&_elements[backup], val);
+					_size += 1;
 					return (begin());
 				};
 
 				void	insert(iterator position, size_type n, const value_type& val)
 				{
+					iterator	it = begin();
+					size_type	i = 0;
+					size_type	j = 1;
+					size_type	k = 0;
+
 					if (_size + n > _capacity)
 						reserve(_size + n);
-					(void)position;
-					(void)val;
+					while (it != position)
+					{
+						it++;
+						i++;
+					}
+					size_type backup = i;
+					while (i < _size)
+					{
+						get_allocator().construct(&_elements[_size + n - j], _elements[_size - j]);
+						j++;
+						i++;
+					}
+					while (k < n)
+					{
+						get_allocator().construct(&_elements[backup], val);
+						backup++;
+						k++;
+					}
 					_size += n;
 				};
 
 				template <class Inputiterator>
-				void	insert(iterator position, Inputiterator first,
-				typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
+				void	insert(
+						iterator position,
+						Inputiterator first,
+						typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last)
 				{
-					size_type	distance = 0;
-					iterator	it = first;
+					iterator	it = begin();
+					size_type	distance = std::distance(first, last);
+					size_type	i = 0;
+					size_type	j = 1;
+					size_type	k = 0;
 
-					while (it != last)
-					{
-						it++;
-						distance++;
-					}
 					if (_size + distance > _capacity)
 						reserve(_size + distance);
-					(void)position;
+					while (it != position)
+					{
+						it++;
+						i++;
+					}
+					size_type backup = i;
+					while (i < _size)
+					{
+						get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
+						j++;
+						i++;
+					}
+					while (k < distance)
+					{
+						get_allocator().construct(&_elements[backup], *first);
+						first++;
+						k++;
+						backup++;
+					}
 					_size += distance;
 				};
+
 
 				//ERASE
 				iterator	erase(iterator position)
