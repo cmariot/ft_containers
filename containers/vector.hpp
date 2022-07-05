@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 22:14:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:18:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,97 +62,41 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include <vector>
+
 # include <cstddef>
 # include <memory>
 # include <iostream>
 
-# include "iterator.hpp"
-# include "reverse_iterator.hpp"
-# include "enable_if.hpp"
+# include "../utils/enable_if.hpp"
+# include "../utils/utils.hpp"
+# include "../iterators/iterator.hpp"
+# include "../iterators/reverse_iterator.hpp"
 
-/*
- * A namespace is an optionally-named declarative region.
- * The name of a namespace can be used to access entities declared in that namespace;
- * That are the members of the namespace.
- */
+# include <vector>
 
+
+// A namespace is an optionally-named declarative region.
+// The name of a namespace can be used to access entities declared in that namespace;
+// That are the members of the namespace.
 namespace ft
 {
 
-	template <class T>
-	void swap(T elem1, T elem2)
-	{
-		T	tmp = elem1;
-
-		elem1 = elem2;
-		elem2 = tmp;
-	};
-
-	template <class U>
-	std::string	itoa(U nb)
-	{
-		std::string		str_nb;
-
-		do
-		{
-			str_nb += '0' + (nb % 10);
-			nb /= 10;
-		} while (nb > 0);
-		return (std::string(str_nb.rbegin(), str_nb.rend()));
-	};
-
-	template <class InputIterator1, class InputIterator2>
-	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
-	{
-		while (first1 != last1)
-		{
-			if (first2 == last2 || *first2 < *first1)
-				return (false);
-			else if (*first1 < *first2)
-				return (true);
-			++first1;
-			++first2;
-		}
-		return (first2 != last2);
-	};
-
-	template <class InputIterator1, class InputIterator2>
-	bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
-	{
-		while (first1 != last1)
-		{
-			if (!(*first1 == *first2))
-				return (false);
-			++first1;
-			++first2;
-		}
-		return (true);
-	}
-
-	/*
-	* Vectors are used to store elements in a strict linear sequence.
-	* Elements can be directly accessed by their position.
-	* The size of the container can change dynamically when new elements are added.
-	*
-	* - T		Type of the element
-	*
-	* - Alloc	Type of the allocator used to define the storage allocation model
-	*			Default to std::allocator<T>
-	*/
-
-
+	// Vectors are used to store elements in a strict linear sequence.
+	// Elements can be directly accessed by their position.
+	// The size of the container can change dynamically when new elements are added.
+	//
+	// - T		Type of the element
+	// - Alloc	Type of the allocator used to define the storage allocation model
+	//			Default is std::allocator<T>
 	template	< class T, class Allocator = std::allocator<T> >
 	class	vector
 	{
 
-		/*
-		* TYPEDEFS :
-		* Declarations containing the decl-specifier typedef declare identifiers that can
-		* be used later for naming fundamental or compound types.
-		*/
-
+		// TYPEDEFS :
+		// Declarations containing the decl-specifier typedef declare identifiers that can
+		// be used later for naming fundamental or compound types.
 		public :
+
 			typedef T											value_type;
 			typedef Allocator									allocator_type;
 			typedef size_t										size_type;
@@ -161,43 +105,43 @@ namespace ft
 			typedef const T &									const_reference;
 			typedef T *											pointer;
 			typedef const T *									const_pointer;
-			typedef T*											iterator;
-			typedef const T*									const_iterator;
+			typedef T *											iterator;
+			typedef const T *									const_iterator;
 			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
 			typedef const reverse_iterator						const_reverse_iterator;
 
 
-		//MEMBER TYPES :
+		// MEMBER TYPES :
 		protected :
 
-			pointer				_elements;
 			size_type			_size;
 			size_type			_capacity;
 			allocator_type		_allocator;
+			pointer				_elements;
 
 
-		//MEMBER FUNCTIONS :
+		// MEMBER FUNCTIONS :
 		public :
 
 			// CONSTRUCTORS :
 
 				// Empty container constructor (default constructor)
-				vector(const allocator_type & alloc = allocator_type())
+				vector(const allocator_type & alloc = allocator_type()) :
+					_size(0),
+					_capacity(0),
+					_allocator(alloc),
+					_elements(NULL)
 				{
-					_size = 0;
-					_capacity = 0;
-					_allocator = alloc;
-					_elements = NULL;
 					return ;
 				};
 
 				// Fill constructor by size and value
 				explicit vector(size_type n, const_reference value = value_type(),
-						const allocator_type & alloc = allocator_type())
+						const allocator_type & alloc = allocator_type()) :
+					_size(n),
+					_capacity(n),
+					_allocator(alloc)
 				{
-					_size = n;
-					_capacity = n;
-					_allocator = alloc;
 					_elements = _allocator.allocate(_capacity);
 					for (size_type i = 0 ; i < n ; i++)
 						_allocator.construct(&_elements[i], value);
@@ -205,21 +149,16 @@ namespace ft
 				};
 
 				// Range constructor
-				template <class Inputiterator>
-				vector(Inputiterator first,
-						typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last,
-						const allocator_type & alloc = allocator_type())
+				template <class InputIterator>
+				vector(InputIterator first,
+						typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last,
+						const allocator_type & alloc = allocator_type()) :
+					_allocator(alloc)
 				{
-					Inputiterator	tmp = first;
-
 					_size = 0;
-					while (tmp != last)
-					{
+					for (InputIterator tmp = first ; tmp != last ; tmp++)
 						_size++;
-						tmp++;
-					}
 					_capacity = _size;
-					_allocator = alloc;
 					_elements = _allocator.allocate(_capacity);
 					for (size_type i = 0 ; i < _size ; i++)
 						_allocator.construct(&_elements[i], *(first++));
@@ -239,7 +178,7 @@ namespace ft
 				};
 
 
-			//DESTRUCTOR
+			// DESTRUCTOR
 			~vector(void)
 			{
 				clear();
@@ -248,7 +187,7 @@ namespace ft
 			};
 
 
-			//OPERATOR=
+			// OPERATOR =
 			vector const &	operator = (const vector<T, Allocator> & rhs)
 			{
 				clear();
@@ -258,8 +197,8 @@ namespace ft
 			};
 
 
-			//ITERATORS
-				//BEGIN
+			// ITERATORS
+				// BEGIN : return an iterator at the begining of the array
 				iterator begin(void)
 				{
 					return (iterator(&_elements[0]));
@@ -268,7 +207,7 @@ namespace ft
 				{
 					return (const_iterator(&_elements[0]));
 				};
-				//END
+				// END : return an iterator at the end of the array
 				iterator end(void)
 				{
 					return (iterator(&_elements[size()]));
@@ -277,42 +216,42 @@ namespace ft
 				{
 					return (const_iterator(&_elements[size()]));
 				};
-				//RBEGIN
+				// RBEGIN : return a reverse iterator at the 'begining' (i.e. the last index) of the array
 				iterator rbegin(void)
 				{
 					return (reverse_iterator(end()));
 				};
 				const_iterator rbegin(void) const
 				{
-					return (reverse_iterator(end()));
+					return (const_reverse_iterator(end()));
 				};
-				//REND
+				// REND : return a reverse iterator at the 'end' (i.e. the first index) of the array
 				iterator rend(void)
 				{
 					return (reverse_iterator(begin()));
 				};
 				const_iterator rend(void) const
 				{
-					return (reverse_iterator(begin()));
+					return (const_reverse_iterator(begin()));
 				};
 
 
-			//CAPACITY
+			// CAPACITY
 
-				//SIZE : return the number of elements in the vector
+				// SIZE : return the number of elements in the vector
 				size_type	size(void) const
 				{
 					return (_size);
 				};
 
-				//MAX_SIZE : return the number of elements that might be
-				//allocated as maximum by a call to member allocate.
+				// MAX_SIZE : return the number of elements that might be
+				// allocated as maximum by a call to member allocate.
 				size_type	max_size(void) const
 				{
 					return (get_allocator().max_size());
 				};
 
-				//RESIZE
+				// RESIZE : resize the array at the new size n
 				void resize(size_type n, value_type val = value_type())
 				{
 					if (n < _size)
@@ -327,19 +266,19 @@ namespace ft
 					}
 				};
 
-				//CAPACITY : return the storage space currently allocated
+				// CAPACITY : return the storage space currently allocated
 				size_type	capacity(void) const
 				{
 					return (_capacity);
 				};
 
-				//EMPTY : return true if the size is 0
+				// EMPTY : return true if the size is 0
 				bool	empty(void) const
 				{
 					return (_size == 0);
 				};
 
-				//RESERVE
+				// RESERVE : allocate memory for the new capacity n
 				void reserve(size_type n)
 				{
 					if (n > max_size())
@@ -360,8 +299,8 @@ namespace ft
 					}
 				};
 
-			//ELEMENT ACCESS
-				//OPERATOR[]
+			// ELEMENT ACCESS
+				// OPERATOR[] : access the value at the index i
 				reference	operator [] (size_type i)
 				{
 					return (_elements[i]);
@@ -371,15 +310,15 @@ namespace ft
 					return (_elements[i]);
 				};
 
-				//AT
+				// AT : access the value at the index i
 				reference	at(size_type i)
 				{
 					if (i >= size())
 						throw (std::out_of_range(
 									std::string("vector::_M_range_check: __n (which is ")
-									+ itoa<size_t>(i)
+									+ ft::itoa<size_t>(i)
 									+ ") >= this->size() (which is "
-									+ itoa<size_t>(_size)
+									+ ft::itoa<size_t>(_size)
 									+ ")")
 								);
 					return (_elements[i]);
@@ -389,15 +328,15 @@ namespace ft
 					if (i >= size())
 						throw (std::out_of_range(
 									std::string("vector::_M_range_check: __n (which is ")
-									+ itoa<size_t>(i)
+									+ ft::itoa<size_t>(i)
 									+ ") >= this->size() (which is "
-									+ itoa<size_t>(_size)
+									+ ft::itoa<size_t>(_size)
 									+ ")")
 								);
 					return (_elements[i]);
 				};
 
-				//FRONT
+				// FRONT : access the value of the first element
 				reference	front(void)
 				{
 					return (_elements[0]);
@@ -407,7 +346,7 @@ namespace ft
 					return (_elements[0]);
 				};
 
-				//BACK
+				//BACK : access the value of the last element
 				reference	back(void)
 				{
 					return (_elements[_size - 1]);
@@ -417,14 +356,14 @@ namespace ft
 					return (_elements[_size - 1]);
 				};
 
-			//MODIFIERS
-				//ASSIGN
-				template <class Inputiterator>
+			// MODIFIERS
+				// ASSIGN : change the array elements
+				template <class InputIterator>
 				void assign
 					(
-						Inputiterator first,
-						typename ft::enable_if<!ft::is_integral<Inputiterator>::value,
-						Inputiterator>::type last
+						InputIterator first,
+						typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+						InputIterator>::type last
 					)
 				{
 					if (_size)
@@ -432,7 +371,7 @@ namespace ft
 						clear();
 						get_allocator().deallocate(_elements, _size);
 					}
-					Inputiterator tmp = first;
+					InputIterator tmp = first;
 					while (tmp != last)
 					{
 						_size++;
@@ -468,7 +407,7 @@ namespace ft
 					_capacity = _size;
 				};
 
-				//PUSH_BACK
+				// PUSH_BACK : add an element at the end of the array
 				void	push_back(const value_type & val)
 				{
 					pointer		tmp;
@@ -500,13 +439,13 @@ namespace ft
 					_size = _size + 1;
 				};
 
-				//POP_BACK
+				// POP_BACK : remove the last element of the array
 				void	pop_back(void)
 				{
 					get_allocator().destroy(&_elements[--_size]);
 				};
 
-				//INSERT
+				// INSERT : add elements to the array
 				iterator	insert(iterator position, const value_type & val)
 				{
 					iterator	it = begin();
@@ -563,12 +502,12 @@ namespace ft
 					_size += n;
 				};
 
-				template <class Inputiterator>
+				template <class InputIterator>
 				void	insert
 						(
 							iterator position,
-							Inputiterator first,
-							typename ft::enable_if<!ft::is_integral<Inputiterator>::value, Inputiterator>::type last
+							InputIterator first,
+							typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
 						)
 				{
 					iterator	it = begin();
@@ -601,8 +540,7 @@ namespace ft
 					_size += distance;
 				};
 
-
-				//ERASE
+				// ERASE : remove elements in the array
 				iterator	erase(iterator position)
 				{
 					iterator it = begin();
@@ -654,7 +592,7 @@ namespace ft
 					return (last);
 				};
 
-				//SWAP
+				// SWAP : swap 2 vectors
 				void	swap(vector & x)
 				{
 					pointer			tmp_elements = x._elements;
@@ -673,7 +611,7 @@ namespace ft
 					_allocator = tmp_allocator;
 				};
 
-				//CLEAR
+				// CLEAR : destroy the array elements
 				void	clear(void)
 				{
 					for (size_type i = 0 ; i < _size ; i++)
@@ -681,8 +619,8 @@ namespace ft
 					_size = 0;
 				};
 
-			//ALLOCATOR
-				//GET_ALLOCATOR
+			// ALLOCATOR
+				// GET_ALLOCATOR : return the allocator
 				allocator_type	get_allocator(void) const
 				{
 					return (_allocator);
@@ -692,9 +630,9 @@ namespace ft
 	};	// end of class ft::vector
 
 
-	//NON-MEMBER RELATIONAL OPERATORS OVERLOADS
+	// NON-MEMBER RELATIONAL OPERATORS OVERLOADS
 
-		//OPERATOR ==
+		// OPERATOR == : check the size and if all elements are equal
 		template <class T, class Alloc>
 		bool operator == (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
@@ -703,14 +641,14 @@ namespace ft
 			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		};
 
-		//OPERATOR !=
+		// OPERATOR !=
 		template <class T, class Alloc>
 		bool operator != (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			return (!(lhs == rhs));
 		};
 
-		//OPERATOR <
+		//OPERATOR < : check all the elements of the first array, if one is sup to the second, return false
 		template <class T, class Alloc>
 		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
 		{
@@ -740,7 +678,7 @@ namespace ft
 
 	//NON-MEMBER FUNCTION OVERLOADS
 
-		//SWAP
+		// SWAP
 		template <class U, class Alloc>
 		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
 		{

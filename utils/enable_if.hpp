@@ -6,14 +6,20 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:25:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/29 14:46:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:28:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ENABLE_IF
+# define ENABLE_IF
 
 namespace ft
 {
 
-	//ENABLE_IF
+
+	// ENABLE_IF : Utile pour que des fonctions puissent compiler seulement si
+	// la condition Cond est vraie.
+	// ft::enable_if<ft::is_integral<int>::value
 	template <bool Cond, class T = void>
 	struct enable_if
 	{
@@ -25,7 +31,10 @@ namespace ft
 		typedef T type;
 	};
 
-	//IS_INTEGRAL
+
+	// IS_INTEGRAL :
+	// structure dont la seule valeur est true si le template est de type integral
+	// (bool, int, char ...), false dans les autres cas
 	template <class T>
 	struct is_integral
 	{
@@ -98,3 +107,5 @@ namespace ft
 	};
 
 };
+
+#endif

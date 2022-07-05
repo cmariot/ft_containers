@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 21:43:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:29:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,17 +444,6 @@ namespace	ft
 	};
 
 
-	// [ ] DEFAULT CONSTRUCTOR
-	// [ ] COPY CONSTRUCTOR
-	// [ ] COPY ASSIGNABLE
-	// [ ] DESTRUCTOR
-	// [ ] PREFIX INCREMENTATION
-	// [ ] SUFIX INCREMENTATION
-	// [ ] == !=
-	// [ ] DEREFERENCE * ->
-	// [ ] MULTI PASS
-	// [ ] PREFIX / SUFIX DECREMENTATION
-	//
 	// RANDOM ACCESS ITERATOR
 	template <class T>
 	class random_access_iterator
