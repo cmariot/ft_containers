@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/05 13:18:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:38:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,18 @@ namespace ft
 		// be used later for naming fundamental or compound types.
 		public :
 
-			typedef T											value_type;
-			typedef Allocator									allocator_type;
-			typedef size_t										size_type;
-			typedef ptrdiff_t									difference_type;
-			typedef T &											reference;
-			typedef const T &									const_reference;
-			typedef T *											pointer;
-			typedef const T *									const_pointer;
-			typedef T *											iterator;
-			typedef const T *									const_iterator;
-			typedef typename std::vector<T>::reverse_iterator	reverse_iterator;
-			typedef const reverse_iterator						const_reverse_iterator;
+			typedef T												value_type;
+			typedef Allocator										allocator_type;
+			typedef size_t											size_type;
+			typedef ptrdiff_t										difference_type;
+			typedef T &												reference;
+			typedef const T &										const_reference;
+			typedef T *												pointer;
+			typedef const T *										const_pointer;
+			typedef typename ft::random_access_iterator<T>			iterator;
+			typedef typename ft::const_random_access_iterator<T>	const_iterator;
+			typedef typename ft::reverse_iterator<T>				reverse_iterator;
+			typedef typename ft::const_reverse_iterator<T>			const_reverse_iterator;
 
 
 		// MEMBER TYPES :
