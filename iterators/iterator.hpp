@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/07 16:52:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/08 13:23:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -467,6 +467,42 @@ namespace	ft
 
 			// OPERATOR <=
 			bool operator <= (const const_random_access_iterator & rhs) const
+			{
+				return (_ptr <= rhs._ptr);
+			};
+
+			// OPERATOR ==
+			bool operator == (const random_access_iterator<T> & rhs) const
+			{
+				return (_ptr == rhs._ptr);
+			};
+
+			// OPERATOR !=
+			bool operator != (const random_access_iterator<T> & rhs) const
+			{
+				return (_ptr != rhs._ptr);
+			};
+			
+			// OPERATOR >
+			bool operator > (const random_access_iterator<T> & rhs) const
+			{
+				return (_ptr > rhs._ptr);
+			};
+
+			// OPERATOR >=
+			bool operator >= (const random_access_iterator<T> & rhs) const
+			{
+				return (_ptr >= rhs._ptr);
+			};
+
+			// OPERATOR <
+			bool operator < (const random_access_iterator<T> & rhs) const
+			{
+				return (_ptr < rhs._ptr);
+			};
+
+			// OPERATOR <=
+			bool operator <= (const random_access_iterator<T> & rhs) const
 			{
 				return (_ptr <= rhs._ptr);
 			};

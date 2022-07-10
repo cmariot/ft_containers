@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/07 15:38:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/10 13:55:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ namespace ft
 			typedef const T *										const_pointer;
 			typedef typename ft::random_access_iterator<T>			iterator;
 			typedef typename ft::const_random_access_iterator<T>	const_iterator;
-			typedef typename ft::reverse_iterator<T>				reverse_iterator;
-			typedef typename ft::const_reverse_iterator<T>			const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 
 		// MEMBER TYPES :
@@ -217,20 +217,20 @@ namespace ft
 					return (const_iterator(&_elements[size()]));
 				};
 				// RBEGIN : return a reverse iterator at the 'begining' (i.e. the last index) of the array
-				iterator rbegin(void)
+				reverse_iterator rbegin(void)
 				{
 					return (reverse_iterator(end()));
 				};
-				const_iterator rbegin(void) const
+				const_reverse_iterator rbegin(void) const
 				{
 					return (const_reverse_iterator(end()));
 				};
 				// REND : return a reverse iterator at the 'end' (i.e. the first index) of the array
-				iterator rend(void)
+				reverse_iterator rend(void)
 				{
 					return (reverse_iterator(begin()));
 				};
-				const_iterator rend(void) const
+				const_reverse_iterator rend(void) const
 				{
 					return (const_reverse_iterator(begin()));
 				};
