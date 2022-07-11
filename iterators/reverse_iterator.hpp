@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/11 11:15:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:35:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace	ft
 			// DEFAULT CONSTRUCTOR
 			reverse_iterator(void)
 			{
+				current = iterator_type();
 				return ;
 			};
 
@@ -51,7 +52,7 @@ namespace	ft
 			template <class Iter>
 			reverse_iterator(const reverse_iterator<Iter>& rev_it)
 			{
-				current = rev_it.base();
+				*this = rev_it;
 				return ;
 			};
 
@@ -85,15 +86,13 @@ namespace	ft
 			//OPERATOR []
 			reference operator [] (difference_type n) const
 			{
-				return *(base() - n);
+				return (base()[-n-1]);
 			};
 
 			// OPERATOR +
 			reverse_iterator operator + (difference_type n) const
 			{
-				reverse_iterator tmp(*this);
-				tmp -= n;
-				return (tmp);
+				return ((base() - n));
 			};
 
 			// OPERATOR ++
@@ -106,9 +105,8 @@ namespace	ft
 			// OPERATOR ++
 			reverse_iterator operator ++ (int)
 			{
-				reverse_iterator	tmp(*this);
-
-				operator++();
+				reverse_iterator	tmp = *this;
+				++(*this);
 				return (tmp);
 			};
 
@@ -122,9 +120,7 @@ namespace	ft
 			// OPERATOR -
 			reverse_iterator operator - (difference_type n) const
 			{
-				reverse_iterator tmp(*this);
-				tmp -= n;
-				return (tmp);
+				return ((base() + n));
 			};
 
 			// OPERATOR --
@@ -137,9 +133,8 @@ namespace	ft
 			// OPERATOR --
 			reverse_iterator operator -- (int)
 			{
-				reverse_iterator	tmp(*this);
-
-				operator--();
+				reverse_iterator	tmp = *this;
+				--(*this);
 				return (tmp);
 			};
 			
@@ -150,7 +145,7 @@ namespace	ft
 				return (*this);
 			};
 
-		public :
+		protected :
 
 			Iterator		current;
 
@@ -206,6 +201,7 @@ namespace	ft
 	{
 		return (*rhs - *lhs);
 	};
+
 
 };	// END OF FT NAMESPACE
 
