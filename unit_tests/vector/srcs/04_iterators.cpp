@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/10 13:49:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/11 11:10:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,16 +236,35 @@ int	iterators_test(void)
 			const int size = 5;
 			ft::vector<int> vct(size);
 			ft::vector<int>::reverse_iterator it = vct.rbegin();
-			//std::vector<int>::const_reverse_iterator ite = vct.rbegin();
+			ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
+
+			std::vector<int> std_vct(size);
+			std::vector<int>::reverse_iterator std_it = std_vct.rbegin();
+			//std::vector<int>::const_reverse_iterator std_ite = std_vct.rbegin();
 
 			for (int i = 0; i < size; ++i)
+			{
 				it[i] = (size - i) * 5;
+				std_it[i] = (size - i) * 5;
+			}
+			
+			it = it + 5;
+			std_it = std_it + 5;
+			if (*it != *std_it)
+				return (-1);
 
-			//it = it + 5;
-			//it = 1 + it;
-			//it = it - 4;
-			//std::cout << *(it += 2) << std::endl;
-			//std::cout << *(it -= 1) << std::endl;
+			it = 1 + it;
+			std_it = 1 + std_it;
+			if (*it != *std_it)
+				return (101);
+			
+			it = it - 4;
+			std_it = std_it - 4;
+			if (*it != *std_it)
+				return (102);
+			
+			std::cout << *(it += 2) << std::endl;
+			std::cout << *(it -= 1) << std::endl;
 
 			//*(it -= 2) = 42;
 			//*(it += 2) = 21;

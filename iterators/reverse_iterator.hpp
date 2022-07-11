@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/10 14:06:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/11 11:15:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ namespace	ft
 			//OPERATOR []
 			reference operator [] (difference_type n) const
 			{
-				return *(current + n);
+				return *(base() - n);
 			};
 
 			// OPERATOR +
-			reverse_iterator operator+ (difference_type n) const
+			reverse_iterator operator + (difference_type n) const
 			{
 				reverse_iterator tmp(*this);
 				tmp -= n;
@@ -154,7 +154,7 @@ namespace	ft
 
 			Iterator		current;
 
-	};
+	}; // END OF REVERSE_ITERATOR CLASS
 
 	// NON MEMBER
 	template <class Iterator1, class Iterator2>
@@ -201,12 +201,12 @@ namespace	ft
 	};
 
 	// OPERATOR -
-	template <class Iterator>
-	typename reverse_iterator<Iterator>::difference_type operator - (const reverse_iterator<Iterator> & lhs, const reverse_iterator<Iterator> & rhs)
+	template <class Iterator1, class Iterator2>
+	typename reverse_iterator<Iterator1>::difference_type operator - (const reverse_iterator<Iterator1> & lhs, const reverse_iterator<Iterator2> & rhs)
 	{
-		return (rhs.base() - lhs.base());
+		return (*rhs - *lhs);
 	};
 
-};
+};	// END OF FT NAMESPACE
 
 #endif
