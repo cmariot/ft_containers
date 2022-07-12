@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:26:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/11 16:35:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:36:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,11 @@ namespace	ft
 			{
 				return _ptr - rhs._ptr;
 			}
+			difference_type operator - (const_random_access_iterator<T> rhs)
+			{
+				return _ptr - rhs._ptr;
+			}
+
 
 			//OPERATOR +=
 			random_access_iterator operator += (difference_type n)
@@ -532,7 +537,7 @@ namespace	ft
 			// ARITHMETIC OPERATOR : a - b
 			difference_type operator - (const_random_access_iterator rhs) const
 			{
-				return _ptr - rhs._ptr;
+				return (_ptr - rhs._ptr);
 			}
 
 			//OPERATOR +=

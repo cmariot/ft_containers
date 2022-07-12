@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/11 17:35:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/12 14:51:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,13 +245,17 @@ int	iterators_test(void)
 				iter_type from (myvector.begin());
 				iter_type until (myvector.end());
 				
-				std::reverse_iterator<iter_type> rev_until (from);
-				std::reverse_iterator<iter_type> rev_from (until);
+				ft::reverse_iterator<iter_type> rev_until (from);
+				ft::reverse_iterator<iter_type> rev_from (until);
 				
-				std::cout << "Constructor : " << std::endl;
+				std::reverse_iterator<iter_type> std_rev_until (from);
+				std::reverse_iterator<iter_type> std_rev_from (until);
+				
 				while (rev_from != rev_until)
-					std::cout << ' ' << *rev_from++;
-				std::cout << std::endl;
+				{
+					if (*rev_from++ != *std_rev_from++)
+						return (-1);
+				}
 			}
 			// BASE
 			{
@@ -264,7 +268,11 @@ int	iterators_test(void)
 				ft::reverse_iterator<iter_type> rev_end(myvector.begin());
 				ft::reverse_iterator<iter_type> rev_begin (myvector.end());
 
-				std::cout << "Base : " << std::endl;
+				if (rev_end.base() != myvector.begin())
+					return (-1);
+				if (rev_begin.base() != myvector.end())
+					return (-1);
+
 				for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
 					std::cout << ' ' << *it;
 				std::cout << std::endl;
@@ -337,6 +345,16 @@ int	iterators_test(void)
 				ft::vector<int> myvector;
 				for (int i=0; i<10; i++)
 					myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+				std::cout << "RBEGIN = " << *(myvector.rbegin()) << std::endl;
+				std::cout << "REND = " << *(myvector.rend()) << std::endl;
+				
+				std::vector<int> myvector2;
+				for (int i=0; i<10; i++)
+					myvector2.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+
+				std::cout << "RBEGIN = " << *(myvector2.rbegin()) << std::endl;
+				std::cout << "REND = " << *(myvector2.rend()) << std::endl;
 
 				typedef ft::vector<int>::iterator iter_type;
 
@@ -429,6 +447,7 @@ int	iterators_test(void)
 			// OPERATOR -
 			{
 				ft::vector<int> myvector;
+				
 				for (int i=0; i<10; i++)
 					myvector.push_back(i);
 
@@ -438,58 +457,57 @@ int	iterators_test(void)
 				until = myvector.rend();
 
 				std::cout << "myvector has " << (until-from) << " elements.\n";
-				return (-1);
 				// Expected output : myvector has 10 elements.
 			}
 
 
-//			const int size = 5;
-//			ft::vector<int> vct(size);
-//			ft::vector<int>::reverse_iterator it = vct.rbegin();
-//			ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
-//
-//			std::vector<int> std_vct(size);
-//			std::vector<int>::reverse_iterator std_it = std_vct.rbegin();
-//			//std::vector<int>::const_reverse_iterator std_ite = std_vct.rbegin();
-//
-//			for (int i = 0; i < size; ++i)
-//			{
-//				it[i] = (size - i) * 5;
-//				std_it[i] = (size - i) * 5;
-//			}
-//			
-//			it = it + 5;
-//			std_it = std_it + 5;
-//			if (*it.base() != *std_it.base())
-//				return (-1);
-//
-//			it = 1 + it;
-//			std_it = 1 + std_it;
-//			if (it[0] != std_it[0])
-//				return (-1);
-//		
-//			for (size_t i = 0 ; i < size ; i++)
-//				if (*(it - i).base() != *(std_it - i).base())
-//					return (-1);
-//			it = it - 4;
-//			std_it = std_it - 4;
-//			if (*it != *std_it)
-//				return (102);
-//			
-//			if (*(it += 2) != *(std_it += 2))
-//				return (-1);
-//			if (*(it -= 1) != *(std_it -= 1))
-//				return (-1);
-//
-//			*(it -= 2) = 42;
-//			*(std_it -= 2) = 42;
-//			*(it += 2) = 21;
-//			*(std_it += 2) = 21;
-//
-//			for (size_t i = 0 ; i < size ; i++)
-//				if (*(it - i) != *(std_it - i))
-//					return (-1);
-//
+			const int size = 5;
+			ft::vector<int> vct(size);
+			ft::vector<int>::reverse_iterator it = vct.rbegin();
+			ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
+
+			std::vector<int> std_vct(size);
+			std::vector<int>::reverse_iterator std_it = std_vct.rbegin();
+			//std::vector<int>::const_reverse_iterator std_ite = std_vct.rbegin();
+
+			for (int i = 0; i < size; ++i)
+			{
+				it[i] = (size - i) * 5;
+				std_it[i] = (size - i) * 5;
+			}
+			
+			it = it + 5;
+			std_it = std_it + 5;
+			if (*it.base() != *std_it.base())
+				return (-1);
+
+			it = 1 + it;
+			std_it = 1 + std_it;
+			if (it[0] != std_it[0])
+				return (-1);
+		
+			for (size_t i = 0 ; i < size ; i++)
+				if (*(it - i).base() != *(std_it - i).base())
+					return (-1);
+			it = it - 4;
+			std_it = std_it - 4;
+			if (*it != *std_it)
+				return (102);
+			
+			if (*(it += 2) != *(std_it += 2))
+				return (-1);
+			if (*(it -= 1) != *(std_it -= 1))
+				return (-1);
+
+			*(it -= 2) = 42;
+			*(std_it -= 2) = 42;
+			*(it += 2) = 21;
+			*(std_it += 2) = 21;
+
+			for (size_t i = 0 ; i < size ; i++)
+				if (*(it - i) != *(std_it - i))
+					return (-1);
+
 
 			//std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
 

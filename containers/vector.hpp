@@ -6,58 +6,9 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/11 16:56:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:14:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// CHECKLIST : 
-
-	// [X] - ENABLE_IF / SFINAE
-	// [X] - IS_INTEGRAL
-	// [X] - BIDIRECTIONAL ITERATORS
-	// [X] - ITERATORS / CONST
-	// [ ] - REVERSE ITERATORS
-
-	// [X] - CONSTRUCTORS
-	// [X] - DESTRUCTOR
-	// [X] - OPERATOR=
-	// [X] - ITERATORS
-		// [X] - BEGIN / CONST
-		// [X] - END / CONST
-		// [X] - RBEGIN / CONST
-		// [X] - REND / CONST
-	// [X] - CAPACITY
-		// [X] - SIZE
-		// [X] - MAX_SIZE
-		// [X] - RESIZE
-		// [X] - CAPACITY
-		// [X] - EMPTY
-		// [X] - RESERVE
-	// [X] - ELEMENT ACCESS
-		// [X] - OPERATOR[]
-		// [X] - AT
-		// [X] - FRONT
-		// [X] - BACK
-	// [X] - MODIFIERS
-		// [X] - ASSIGN
-		// [X] - PUSH_BACK
-		// [X] - POP_BACK
-		// [X] - INSERT
-		// [X] - ERASE
-		// [X] - SWAP / ITERATOR VALIDITY
-		// [X] - CLEAR
-	// [X] - ALLOCATOR
-		// [X] - GET_ALLOCATOR
-	// [X} - NON-MEMBER RELATIONAL OPERATORS OVERLOADS
-		// [X] - EQUAL AND LEXICOGRAPHICAL_COMPARE
-		// [X] - OPERATOR ==
-		// [X] - OPERATOR !=
-		// [X] - OPERATOR <
-		// [X] - OPERATOR <=
-		// [X] - OPERATOR >
-		// [X] - OPERATOR >=
-	// [X] - NON-MEMBER FUNCTION OVERLOADS
-		// [X] - SWAP
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
@@ -684,7 +635,6 @@ namespace ft
 		{
 			x.swap(y);
 		};
-
 
 };	// end of namespace ft
 
