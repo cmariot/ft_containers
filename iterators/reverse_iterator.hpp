@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/12 15:40:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/13 11:57:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <iostream>
 # include "iterator.hpp"
-# include "../containers/vector.hpp"
 
 namespace	ft
 {

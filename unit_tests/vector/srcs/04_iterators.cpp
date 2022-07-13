@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/12 14:51:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/13 13:15:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,9 +273,10 @@ int	iterators_test(void)
 				if (rev_begin.base() != myvector.end())
 					return (-1);
 
+				int i = 0;
 				for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
-					std::cout << ' ' << *it;
-				std::cout << std::endl;
+					if (*it != i++)
+						return (-1);
 			}
 
 			// OPERATOR *
@@ -294,10 +295,10 @@ int	iterators_test(void)
 																		//         <------
 				ft::reverse_iterator<iter_type> rev_from (until);		//                     ^
 
-				std::cout << "Operator * : " << std::endl;
+				int i = 1;
 				while (rev_from != rev_until)
-					std::cout << ' ' << *rev_from++;
-				std::cout << std::endl;
+					if (*rev_from++ != *(myvector.end() - i++))
+						return (-1);
 			}
 
 			// OPERATOR +
@@ -312,7 +313,9 @@ int	iterators_test(void)
 
 				rev_it = myvector.rbegin() + 3;
 
-				std::cout << "The fourth element from the end is: " << *rev_it << '\n';
+				//std::cout << "The fourth element from the end is: " << *rev_it << '\n';
+				if (*rev_it != 6)
+					return (-1);
 
 			}
 
@@ -331,13 +334,14 @@ int	iterators_test(void)
 				std::reverse_iterator<iter_type> rev_until (from);		// ^
 																		//         <------
 				std::reverse_iterator<iter_type> rev_from (until);		//                     ^
-
-				std::cout << "Operator ++:";
+				
+				int i = 9;
 				while (rev_from != rev_until) {
-					std::cout << ' ' << *rev_from;
+					if (*rev_from != i)
+						return (-1);
 					++rev_from;
+					i--;
 				}
-				std::cout << '\n';
 			}
 
 			// OPERATOR +=
@@ -346,15 +350,9 @@ int	iterators_test(void)
 				for (int i=0; i<10; i++)
 					myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
 
-				std::cout << "RBEGIN = " << *(myvector.rbegin()) << std::endl;
-				std::cout << "REND = " << *(myvector.rend()) << std::endl;
-				
 				std::vector<int> myvector2;
 				for (int i=0; i<10; i++)
 					myvector2.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
-
-				std::cout << "RBEGIN = " << *(myvector2.rbegin()) << std::endl;
-				std::cout << "REND = " << *(myvector2.rend()) << std::endl;
 
 				typedef ft::vector<int>::iterator iter_type;
 
@@ -362,7 +360,9 @@ int	iterators_test(void)
 
 				rev_iterator += 2;
 
-				std::cout << "The third element from the end is: " << *rev_iterator << '\n';
+				//std::cout << "The third element from the end is: " << *rev_iterator << '\n';
+				if (*rev_iterator != 7)
+					return -1;
 			}
 
 			// OPERATOR -
@@ -376,7 +376,11 @@ int	iterators_test(void)
 
 				rev_iterator = myvector.rend() - 3;
 
-				std::cout << "myvector.rend()-3 points to: " << *rev_iterator << '\n';
+				//std::cout << "myvector.rend()-3 points to: " << *rev_iterator << '\n';
+				if (*rev_iterator != 2)
+				{
+					return (-1);
+				}
 			}
 
 			// OPERATOR -=
@@ -391,13 +395,20 @@ int	iterators_test(void)
 				ft::reverse_iterator<iter_type> rev_end (myvector.begin());
 
 				ft::reverse_iterator<iter_type> rev_iterator = rev_begin;
+				
+				int i = 9;
 				while ( rev_iterator != rev_end )
-					std::cout << *rev_iterator++ << ' ';
-				std::cout << '\n';
+				{
+					if (*rev_iterator++ != i--)
+						return (-1);
+				}
 
+				i = 0;
 				while ( rev_iterator != rev_begin )
-					std::cout << *(--rev_iterator) << ' ';
-				std::cout << '\n';
+				{
+					if (*(--rev_iterator) != i++)
+						return (-1);
+				}
 			}
 
 			// OPERATOR ->
@@ -414,7 +425,12 @@ int	iterators_test(void)
 				std::reverse_iterator<map_iter> rev_iterator (numbers.end());
 
 				for ( ; rev_iterator != rev_end ; ++rev_iterator )
-				std::cout << rev_iterator->first << ' ' << rev_iterator->second << '\n';
+				{
+					if (rev_iterator->first >= 4)
+						return (-1);
+					else if (rev_iterator->second == "")
+						return (-1);
+				}
 			}
 
 			// OPERATOR []
@@ -427,7 +443,8 @@ int	iterators_test(void)
 
 				ft::reverse_iterator<iter_type> rev_iterator = myvector.rbegin();
 
-				std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
+				if (rev_iterator[3] != 6)
+					return (-1);
 			}
 
 			// OPERATOR +
@@ -441,7 +458,8 @@ int	iterators_test(void)
 
 				rev_it = 3 + myvector.rbegin();
 
-				std::cout << "The fourth element from the end is: " << *rev_it << '\n';
+				if (*rev_it != 6)
+					return (-1);
 			}
 
 			// OPERATOR -
@@ -456,8 +474,9 @@ int	iterators_test(void)
 				from = myvector.rbegin();
 				until = myvector.rend();
 
-				std::cout << "myvector has " << (until-from) << " elements.\n";
 				// Expected output : myvector has 10 elements.
+				if ((until - from) != 10)
+					return (-1);
 			}
 
 
