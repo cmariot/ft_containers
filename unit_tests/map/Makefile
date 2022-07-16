@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/07/13 13:24:19 by cmariot          ###   ########.fr        #
+#    Updated: 2022/07/13 15:20:04 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC_ROOTDIR		= srcs/
 SRC_SUBDIR	    = main.cpp \
 				  00_map_launcher.cpp \
 				  01_pair_tests.cpp \
+				  02_RBTree_tests.cpp \
 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

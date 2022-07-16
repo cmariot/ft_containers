@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 12:48:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:19:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	map_launcher(void)
 	std::string function_name = "MAP";
 
 	load_test(&tests, function_name, "Pair MakePair", (void *)&pair_test, "");
+	load_test(&tests, function_name, "RedBlackTree", (void *)&RBTree_test, "");
 //	load_test(&tests, function_name, "Constructor", (void *)&constructor_test, "");
 //	load_test(&tests, function_name, "Destructor", (void *)&destructor_test, "");
 //	load_test(&tests, function_name, "Operator=", (void *)&operator_equal_test, "");

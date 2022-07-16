@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:17:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 12:04:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:19:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <map>
 
 int		map_launcher(void);
+int		RBTree_test(void);
 
 int		pair_test(void);
 int		constructor_test(void);
