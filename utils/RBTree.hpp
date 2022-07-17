@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/16 16:02:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/17 03:35:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,6 @@ namespace ft
 
 			Node<Key, Value>	*_root;
 			size_t				_size;
-
-			// RBT Constructor
-			RedBlackTree(void)
-			{
-				_root = NULL;
-				_size = 0;
-			};
 
 		private :
 
@@ -303,7 +296,32 @@ namespace ft
 				}
 			};
 
+			void	destructor(Node<Key, Value> *node)
+			{
+				if (node != NULL)
+				{
+					destructor(node->_left_child);
+					destructor(node->_right_child);
+					delete node;
+				}
+			};
+
 		public :
+
+			// RBT Constructor
+			RedBlackTree(void)
+			{
+				_root = NULL;
+				_size = 0;
+			};
+
+			~RedBlackTree(void)
+			{
+				if (_root != NULL)
+				{
+					destructor(_root);
+				}
+			};
 
 			// Add a new node to the tree,
 			// If the tree is empty set a new node to _root

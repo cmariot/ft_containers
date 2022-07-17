@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 13:15:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/17 03:41:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -495,8 +495,8 @@ int	iterators_test(void)
 				std_it[i] = (size - i) * 5;
 			}
 			
-			it = it + 5;
-			std_it = std_it + 5;
+			it = it + 3;
+			std_it = std_it + 3;
 			if (*it.base() != *std_it.base())
 				return (-1);
 
@@ -505,7 +505,7 @@ int	iterators_test(void)
 			if (it[0] != std_it[0])
 				return (-1);
 		
-			for (size_t i = 0 ; i < size ; i++)
+			for (size_t i = 0 ; i < 2 ; i++)
 				if (*(it - i).base() != *(std_it - i).base())
 					return (-1);
 			it = it - 4;
@@ -518,12 +518,12 @@ int	iterators_test(void)
 			if (*(it -= 1) != *(std_it -= 1))
 				return (-1);
 
-			*(it -= 2) = 42;
-			*(std_it -= 2) = 42;
-			*(it += 2) = 21;
-			*(std_it += 2) = 21;
+			*(it += 2) = 42;
+			*(std_it += 2) = 42;
+			*(it -= 2) = 21;
+			*(std_it -= 2) = 21;
 
-			for (size_t i = 0 ; i < size ; i++)
+			for (size_t i = 0 ; i < 2 ; i++)
 				if (*(it - i) != *(std_it - i))
 					return (-1);
 

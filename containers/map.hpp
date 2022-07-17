@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 20:57:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:18:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ namespace ft
 
 			// MEMBER FUNCTIONS
 			explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) :
-				_comp(comp), _alloc(alloc)
+				_comp(comp), _alloc(alloc), _size(0)
 			{
+				_tree = ft::RedBlackTree<Key, T>();
 				return ;
 			};
 
