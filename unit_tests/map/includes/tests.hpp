@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:17:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 15:19:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/18 17:20:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,8 @@
 # include <map>
 
 int		map_launcher(void);
-int		RBTree_test(void);
-
 int		pair_test(void);
-int		constructor_test(void);
-int		destructor_test(void);
-int		operator_equal_test(void);
-int		iterators_test(void);
-int		size_test(void);
-int		max_size_test(void);
-int		resize_test(void);
-int		capacity_test(void);
-int		empty_test(void);
-int		reserve_test(void);
-int		operators_test(void);
-int		at_test(void);
-int		front_test(void);
-int		back_test(void);
-int		assign_test(void);
-int		push_back_test(void);
-int		pop_back_test(void);
-int		insert_test(void);
-int		erase_test(void);
-int		swap_test(void);
-int		clear_test(void);
-int		allocator_test(void);
-int		relational_test(void);
-int		swap2_test(void);
+int		RBTree_test(void);
+int		constructors_tests(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/18 13:24:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/18 17:49:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ namespace ft
 {
 
 	/* TO DO :
-	 * - [ ] MEMBER TYPES
-	 * - [ ] RED-BLACK TREE :
-	      - [ ] UTILISER ALLOCATOR DE MAP
-	      - [ ] UTILISER COMP DE MAP
+	 * - [X] MEMBER TYPES
+	 * - [X] RED-BLACK TREE :
+	      - [X] UTILISER ALLOCATOR DE MAP
+	      - [X] UTILISER COMP DE MAP
 	 * - [ ] CONSTRUCTORS
 	 * - [ ] DESTRUCTOR
 	 * - [ ] OPERATOR =
@@ -65,9 +65,9 @@ namespace ft
 	 */
 
 	template <class Key,
-			 class T,
+			 class Value,
 			 class Compare = std::less<Key>,
-			 class Allocator = std::allocator<ft::pair<const Key, T> > >
+			 class Allocator = std::allocator<ft::pair<const Key, Value> > >
 	class map
 	{
 
@@ -75,8 +75,8 @@ namespace ft
 		public :
 
 			typedef Key												key_type;
-			typedef T												mapped_type;
-			typedef ft::pair<const Key, T>							value_type;
+			typedef Value											mapped_type;
+			typedef ft::pair<const Key, Value>						value_type;
 			typedef size_t											size_type;
 			typedef ptrdiff_t										difference_type;
 			typedef Compare											key_compare;
@@ -95,7 +95,7 @@ namespace ft
 			key_compare							_comp;
 			allocator_type						_alloc;
 			size_type							_size;
-			RedBlackTree<key_type, mapped_type, allocator_type, key_compare>	*_tree;
+			ft::RedBlackTree<key_type, mapped_type, key_compare, std::allocator<ft::Node<key_type, mapped_type> > >		_tree(std::allocator<ft::Node<key_type, mapped_type>, difference_type());
 
 		public :
 			// MEMBER CLASS
@@ -133,12 +133,15 @@ namespace ft
 			};
 
 			// MEMBER FUNCTIONS
-			explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) :
-				_comp(comp), _alloc(alloc), _size(0)
-			{
-				_tree = ft::RedBlackTree<key_type, mapped_type, allocator_type, key_compare>(_alloc);
-				return ;
-			};
+			
+				// DEFAULT CONSTRUCTOR
+				explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) :
+					_comp(comp), _alloc(alloc), _size(0)
+				{
+					_tree.print();
+					return ;
+				};
+
 
 	};
 

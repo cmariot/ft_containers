@@ -6,12 +6,16 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/18 13:20:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:43:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RBTree_HPP
 # define RBTree_HPP
+
+# include <iostream>
+
+# include "../utils/pair.hpp"
 
 namespace ft
 {
@@ -59,10 +63,16 @@ namespace ft
 	};
 
 
-	template <class Key, class Value, class allocator_type, class key_compare>
+	template <class Key,
+			 class Value,
+			 class Compare = std::less<Key>,
+			 class Allocator = std::allocator<ft::pair<const Key, Value> > >
 	class RedBlackTree
 	{
 		public :
+
+			typedef Compare		key_compare;
+			typedef Allocator	allocator_type;
 
 			Node<Key, Value>	*_root;
 			size_t				_size;
@@ -249,7 +259,7 @@ namespace ft
 			// Add new_node bellow the parent node
 			void	add(Node<Key, Value> *parent, Node<Key, Value> *new_node)
 			{
-				if (new_node->_key > parent->_key)
+				if (_comp(parent->_key, new_node->_key))
 				{
 					// Add to the right
 					if (parent->_right_child == NULL)
@@ -304,7 +314,7 @@ namespace ft
 				{
 					destructor(node->_left_child);
 					destructor(node->_right_child);
-					delete node;
+					_alloc.deallocate(node, 1);
 					node = NULL;
 				}
 			};
@@ -312,12 +322,13 @@ namespace ft
 		public :
 
 			// RBT Constructor
-			RedBlackTree()
+			RedBlackTree(const allocator_type & allocator = allocator_type(),
+					const key_compare & compare = key_compare())
 			{
 				_root = NULL;
 				_size = 0;
-				_alloc = allocator_type();
-				_comp = key_compare();
+				_alloc = allocator;
+				_comp = compare;
 			};
 
 			~RedBlackTree(void)
@@ -333,7 +344,8 @@ namespace ft
 			// Else call a recursive function to add the node bellow
 			void	add(Key key, Value value)
 			{
-				Node<Key, Value> *node = new Node<Key, Value>(key, value);
+				Node<Key, Value>	*node = _alloc.allocate(1);
+				_alloc.construct(node, Node<Key, Value>(key, value));
 				if (_root == NULL)
 				{
 					_root = node;

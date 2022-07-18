@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02_RBTree_tests.cpp                                :+:      :+:    :+:   */
+/*   03_constructors.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/18 16:49:12 by cmariot          ###   ########.fr       */
+/*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
+/*   Updated: 2022/07/18 17:21:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	RBTree_test(void)
+int	constructors_tests(void)
 {
-	ft::RedBlackTree<int, char, std::less<int>, std::allocator<ft::Node<int, char> > >		rbt;
-
-	rbt.add(13, 'A');
-	rbt.add(8, 'A');
-	rbt.add(17, 'A');
-	rbt.add(1, 'A');
-	rbt.add(11, 'A');
-	rbt.add(15, 'A');
-	rbt.add(25, 'A');
-	rbt.add(6, 'A');
-	rbt.add(22, 'A');
-	rbt.add(27, 'A');
-
-	rbt.print();
+	ft::map<int, char> test;
 
 	return (0);
 }
