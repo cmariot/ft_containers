@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/17 12:18:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/18 13:24:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,43 @@
 
 namespace ft
 {
+
+	/* TO DO :
+	 * - [ ] MEMBER TYPES
+	 * - [ ] RED-BLACK TREE :
+	      - [ ] UTILISER ALLOCATOR DE MAP
+	      - [ ] UTILISER COMP DE MAP
+	 * - [ ] CONSTRUCTORS
+	 * - [ ] DESTRUCTOR
+	 * - [ ] OPERATOR =
+	 * - [ ] ITERATORS :
+		 - [ ] BEGIN
+		 - [ ] END
+		 - [ ] RBEGIN
+		 - [ ] REND
+	 * - [ ] CAPACITY
+		 - [ ] SIZE
+		 - [ ] EMPTY
+		 - [ ] MAX SIZE
+	 * - [ ] ELEMENT ACCESS :
+		 * - [ ] OPERATOR []
+	 * - [ ] MODIFIERS :
+		 - [ ] INSERT
+		 - [ ] ERASE
+		 - [ ] SWAP
+		 - [ ] CLEAR
+	 * - [ ] OBSERVERS :
+	 *   - [ ] KEY COMP
+	 *   - [ ] VALUE COMP
+	 * - [ ] OPERATIONS :
+		 - [ ] FIND
+		 - [ ] COUNT
+		 - [ ] LOWER_BOUND
+		 - [ ] UPPER_BOUND
+		 - [ ] EQUAL_RANGE
+	 * - [ ] ALLOCATOR
+		 - [ ] GET_ALLOCATOR
+	 */
 
 	template <class Key,
 			 class T,
@@ -58,7 +95,7 @@ namespace ft
 			key_compare							_comp;
 			allocator_type						_alloc;
 			size_type							_size;
-			RedBlackTree<key_type, mapped_type>	*_tree;
+			RedBlackTree<key_type, mapped_type, allocator_type, key_compare>	*_tree;
 
 		public :
 			// MEMBER CLASS
@@ -99,7 +136,7 @@ namespace ft
 			explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) :
 				_comp(comp), _alloc(alloc), _size(0)
 			{
-				_tree = ft::RedBlackTree<Key, T>();
+				_tree = ft::RedBlackTree<key_type, mapped_type, allocator_type, key_compare>(_alloc);
 				return ;
 			};
 

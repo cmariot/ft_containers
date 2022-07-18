@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/17 03:35:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/18 13:20:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,15 @@ namespace ft
 	};
 
 
-	template <class Key, class Value>
+	template <class Key, class Value, class allocator_type, class key_compare>
 	class RedBlackTree
 	{
 		public :
 
 			Node<Key, Value>	*_root;
 			size_t				_size;
+			allocator_type		_alloc;
+			key_compare			_comp;
 
 		private :
 
@@ -303,16 +305,19 @@ namespace ft
 					destructor(node->_left_child);
 					destructor(node->_right_child);
 					delete node;
+					node = NULL;
 				}
 			};
 
 		public :
 
 			// RBT Constructor
-			RedBlackTree(void)
+			RedBlackTree()
 			{
 				_root = NULL;
 				_size = 0;
+				_alloc = allocator_type();
+				_comp = key_compare();
 			};
 
 			~RedBlackTree(void)
