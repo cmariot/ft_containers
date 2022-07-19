@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/18 17:49:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/19 05:34:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <cstddef>
 # include <memory>
 # include <iostream>
+# include <limits>
 
 # include "../utils/RBTree.hpp"
 # include "../utils/enable_if.hpp"
@@ -32,7 +33,7 @@ namespace ft
 	 * - [X] RED-BLACK TREE :
 	      - [X] UTILISER ALLOCATOR DE MAP
 	      - [X] UTILISER COMP DE MAP
-	 * - [ ] CONSTRUCTORS
+	 * - [/] CONSTRUCTORS
 	 * - [ ] DESTRUCTOR
 	 * - [ ] OPERATOR =
 	 * - [ ] ITERATORS :
@@ -40,10 +41,10 @@ namespace ft
 		 - [ ] END
 		 - [ ] RBEGIN
 		 - [ ] REND
-	 * - [ ] CAPACITY
-		 - [ ] SIZE
-		 - [ ] EMPTY
-		 - [ ] MAX SIZE
+	 * - [X] CAPACITY
+		 - [X] SIZE
+		 - [X] EMPTY
+		 - [X] MAX SIZE
 	 * - [ ] ELEMENT ACCESS :
 		 * - [ ] OPERATOR []
 	 * - [ ] MODIFIERS :
@@ -51,17 +52,17 @@ namespace ft
 		 - [ ] ERASE
 		 - [ ] SWAP
 		 - [ ] CLEAR
-	 * - [ ] OBSERVERS :
-	 *   - [ ] KEY COMP
-	 *   - [ ] VALUE COMP
+	 * - [X] OBSERVERS :
+	 *   - [X] KEY COMP
+	 *   - [X] VALUE COMP
 	 * - [ ] OPERATIONS :
 		 - [ ] FIND
 		 - [ ] COUNT
 		 - [ ] LOWER_BOUND
 		 - [ ] UPPER_BOUND
 		 - [ ] EQUAL_RANGE
-	 * - [ ] ALLOCATOR
-		 - [ ] GET_ALLOCATOR
+	 * - [X] ALLOCATOR
+		 - [X] GET_ALLOCATOR
 	 */
 
 	template <class Key,
@@ -92,10 +93,13 @@ namespace ft
 
 		// PRIVATE MEMBER OBJECTS
 		private :
+
+			typedef ft::RedBlackTree<key_type, mapped_type, key_compare, std::allocator<ft::Node<key_type, mapped_type> > >		red_black_tree;
+
 			key_compare							_comp;
 			allocator_type						_alloc;
 			size_type							_size;
-			ft::RedBlackTree<key_type, mapped_type, key_compare, std::allocator<ft::Node<key_type, mapped_type> > >		_tree(std::allocator<ft::Node<key_type, mapped_type>, difference_type());
+			red_black_tree						_tree;
 
 		public :
 			// MEMBER CLASS
@@ -133,16 +137,89 @@ namespace ft
 			};
 
 			// MEMBER FUNCTIONS
-			
+
 				// DEFAULT CONSTRUCTOR
-				explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) :
-					_comp(comp), _alloc(alloc), _size(0)
+				explicit map(const key_compare & comp = key_compare(),
+							 const allocator_type & alloc = allocator_type()) :
+								_comp(comp),
+								_alloc(alloc),
+								_size(0)
 				{
-					_tree.print();
+					_tree = red_black_tree(_alloc, _comp);
 					return ;
 				};
 
+				// RANGE CONSTRUCTOR
+				template <class InputIterator>
+				map(InputIterator first,
+					InputIterator last,
+					const key_compare& comp = key_compare(),
+					const allocator_type& alloc = allocator_type()) :
+							_comp(comp),
+							_alloc(alloc),
+							_size(0)
+				{
+					_tree = red_black_tree(_alloc, _comp);
+					while (first != last)
+					{
+						_tree.add(*first, mapped_type());
+						first++;
+						_size++;
+					}
+					return ;
+				};
 
+				// COPY CONSTRUCTOR
+				map(const map & x)
+				{
+					_size = x.size();
+				//	_alloc = x.get_allocator();
+				//	_comp = x.key_comp();
+				//	_tree = ; 
+				};
+
+				// OPERATOR =
+				map& operator = (const map& other)
+				{
+					(void)other;
+					return (*this);
+				};
+
+				// EMPTY
+				bool empty(void) const
+				{
+					return (_size == 0);
+				};
+
+				// SIZE
+				size_type size(void) const
+				{
+					return (_size);
+				};
+
+				// MAX SIZE
+				size_type max_size(void) const
+				{
+					return (std::numeric_limits<difference_type>::max());
+				};
+
+				// KEY COMP
+				key_compare key_comp(void) const
+				{
+					return (_comp);
+				};
+
+				// VALUE COMP
+				value_compare value_comp(void) const
+				{
+					return (value_compare(_comp));
+				};
+
+				// GET ALLOCATOR
+				allocator_type get_allocator(void) const
+				{
+					return (_alloc);
+				};
 	};
 
 };
