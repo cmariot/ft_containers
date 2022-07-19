@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/12 15:14:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:38:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # include "../utils/enable_if.hpp"
 # include "../utils/utils.hpp"
-# include "../iterators/iterator.hpp"
+# include "../iterators/random_access_iterator.hpp"
 # include "../iterators/reverse_iterator.hpp"
 
 # include <vector>

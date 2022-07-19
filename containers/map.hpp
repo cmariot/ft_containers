@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/19 05:34:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:36:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "../utils/RBTree.hpp"
 # include "../utils/enable_if.hpp"
 # include "../utils/utils.hpp"
-# include "../iterators/iterator.hpp"
+# include "../iterators/bidirectional_iterator.hpp"
 # include "../iterators/reverse_iterator.hpp"
 # include "../utils/pair.hpp"
 
@@ -33,9 +33,9 @@ namespace ft
 	 * - [X] RED-BLACK TREE :
 	      - [X] UTILISER ALLOCATOR DE MAP
 	      - [X] UTILISER COMP DE MAP
-	 * - [/] CONSTRUCTORS
-	 * - [ ] DESTRUCTOR
-	 * - [ ] OPERATOR =
+	 * - [X] CONSTRUCTORS
+	 * - [X] DESTRUCTOR
+	 * - [X] OPERATOR =
 	 * - [ ] ITERATORS :
 		 - [ ] BEGIN
 		 - [ ] END
@@ -48,10 +48,10 @@ namespace ft
 	 * - [ ] ELEMENT ACCESS :
 		 * - [ ] OPERATOR []
 	 * - [ ] MODIFIERS :
-		 - [ ] INSERT
+		 - [/] INSERT
 		 - [ ] ERASE
 		 - [ ] SWAP
-		 - [ ] CLEAR
+		 - [X] CLEAR
 	 * - [X] OBSERVERS :
 	 *   - [X] KEY COMP
 	 *   - [X] VALUE COMP
@@ -77,7 +77,7 @@ namespace ft
 
 			typedef Key												key_type;
 			typedef Value											mapped_type;
-			typedef ft::pair<const Key, Value>						value_type;
+			typedef ft::pair<Key, Value>							value_type;
 			typedef size_t											size_type;
 			typedef ptrdiff_t										difference_type;
 			typedef Compare											key_compare;
@@ -86,13 +86,13 @@ namespace ft
 			typedef const value_type &								const_reference;
 			typedef typename Allocator::pointer						pointer;
 			typedef typename Allocator::const_pointer				const_pointer;
-			//typedef typename		T*								iterator;			// a implementer
+			typedef value_type *	 								iterator;			// a implementer
 			//typedef typename		T*								const_iterator;		// a implementer
 			//typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
 			//typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		// PRIVATE MEMBER OBJECTS
-		private :
+		public :
 
 			typedef ft::RedBlackTree<key_type, mapped_type, key_compare, std::allocator<ft::Node<key_type, mapped_type> > >		red_black_tree;
 
@@ -103,6 +103,7 @@ namespace ft
 
 		public :
 			// MEMBER CLASS
+			// Here the keyword friend is allowed
 			class value_compare
 			{
 
@@ -162,8 +163,8 @@ namespace ft
 					_tree = red_black_tree(_alloc, _comp);
 					while (first != last)
 					{
-						_tree.add(*first, mapped_type());
-						first++;
+						_tree.add(*first->first, *first->second);
+						++first;
 						_size++;
 					}
 					return ;
@@ -172,16 +173,15 @@ namespace ft
 				// COPY CONSTRUCTOR
 				map(const map & x)
 				{
-					_size = x.size();
-				//	_alloc = x.get_allocator();
-				//	_comp = x.key_comp();
-				//	_tree = ; 
+					this = map(x.begin(), x.end(), x.key_comp(), x.get_allocator());
+					return ;
 				};
 
 				// OPERATOR =
 				map& operator = (const map& other)
 				{
-					(void)other;
+					~this();
+					this = map(other);
 					return (*this);
 				};
 
@@ -201,6 +201,27 @@ namespace ft
 				size_type max_size(void) const
 				{
 					return (std::numeric_limits<difference_type>::max());
+				};
+			
+				mapped_type& operator[] (const key_type& k)
+				{
+					return ((*((insert(ft::make_pair(k, mapped_type()))).first)).second);
+				};
+
+				//INSERT
+				pair<iterator,bool> insert(const value_type& val)
+				{
+					_tree.add(val.first, val.second);
+					_size++;
+					return (ft::pair<iterator, bool>(iterator(), true));
+				};
+
+				// CLEAR
+				void clear(void)
+				{
+					_tree.~red_black_tree();
+					_tree = red_black_tree();
+					_size = 0;
 				};
 
 				// KEY COMP
