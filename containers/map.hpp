@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/20 02:08:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/20 03:34:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
 	 * - [ ] MODIFIERS :
 		 - [/] INSERT
 		 - [ ] ERASE
-		 - [ ] SWAP
+		 - [X] SWAP
 		 - [X] CLEAR
 	 * - [X] OBSERVERS :
 	 *   - [X] KEY COMP
