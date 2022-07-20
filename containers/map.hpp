@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/20 03:34:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/20 04:55:50 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ namespace ft
 					_tree = red_black_tree(_alloc, _comp);
 					while (first != last)
 					{
-						_tree.add(*first->first, *first->second);
+						_tree.add(first->first, first->second);
 						++first;
 						_size++;
 					}
