@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/19 20:36:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/20 02:08:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 	 * - [X] CONSTRUCTORS
 	 * - [X] DESTRUCTOR
 	 * - [X] OPERATOR =
-	 * - [ ] ITERATORS :
+	 * - [ ] ITERATORS
 		 - [ ] BEGIN
 		 - [ ] END
 		 - [ ] RBEGIN
@@ -45,8 +45,8 @@ namespace ft
 		 - [X] SIZE
 		 - [X] EMPTY
 		 - [X] MAX SIZE
-	 * - [ ] ELEMENT ACCESS :
-		 * - [ ] OPERATOR []
+	 * - [X] ELEMENT ACCESS :
+		 * - [X] OPERATOR []
 	 * - [ ] MODIFIERS :
 		 - [/] INSERT
 		 - [ ] ERASE
@@ -75,26 +75,30 @@ namespace ft
 		// MEMBER TYPES
 		public :
 
-			typedef Key												key_type;
-			typedef Value											mapped_type;
-			typedef ft::pair<Key, Value>							value_type;
-			typedef size_t											size_type;
-			typedef ptrdiff_t										difference_type;
-			typedef Compare											key_compare;
-			typedef Allocator										allocator_type;
-			typedef value_type &									reference;
-			typedef const value_type &								const_reference;
-			typedef typename Allocator::pointer						pointer;
-			typedef typename Allocator::const_pointer				const_pointer;
-			typedef value_type *	 								iterator;			// a implementer
-			//typedef typename		T*								const_iterator;		// a implementer
-			//typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
-			//typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef Key														key_type;
+			typedef Value													mapped_type;
+			typedef ft::pair<const Key, Value>								value_type;
+			typedef size_t													size_type;
+			typedef ptrdiff_t												difference_type;
+			typedef Compare													key_compare;
+			typedef Allocator												allocator_type;
+			typedef value_type &											reference;
+			typedef const value_type &										const_reference;
+			typedef typename Allocator::pointer								pointer;
+			typedef typename Allocator::const_pointer						const_pointer;
+			typedef typename ft::bidirectional_iterator<value_type>			iterator;
+			typedef typename ft::const_bidirectional_iterator<value_type>	const_iterator;
+			typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
 		// PRIVATE MEMBER OBJECTS
 		public :
 
-			typedef ft::RedBlackTree<key_type, mapped_type, key_compare, std::allocator<ft::Node<key_type, mapped_type> > >		red_black_tree;
+			typedef ft::RedBlackTree <	key_type,
+										mapped_type,
+										key_compare,
+										std::allocator<ft::Node<key_type, mapped_type> >
+									  >	red_black_tree;
 
 			key_compare							_comp;
 			allocator_type						_alloc;
@@ -102,7 +106,7 @@ namespace ft
 			red_black_tree						_tree;
 
 		public :
-			// MEMBER CLASS
+		// MEMBER CLASS
 			// Here the keyword friend is allowed
 			class value_compare
 			{
@@ -137,8 +141,9 @@ namespace ft
 
 			};
 
-			// MEMBER FUNCTIONS
+		// MEMBER FUNCTIONS
 
+			// CONSTRUCTORS
 				// DEFAULT CONSTRUCTOR
 				explicit map(const key_compare & comp = key_compare(),
 							 const allocator_type & alloc = allocator_type()) :
@@ -177,13 +182,67 @@ namespace ft
 					return ;
 				};
 
-				// OPERATOR =
-				map& operator = (const map& other)
+			// DESTRUCTOR
+			~map(void)
+			{
+				_tree.~red_black_tree();
+				_size.~size_type();
+				_alloc.~allocator_type();
+				_comp.~key_compare();
+				return ;
+			};
+
+			// OPERATOR =
+			map& operator = (const map& other)
+			{
+				~this();
+				this = map(other);
+				return (*this);
+			};
+
+			// ITERATORS
+
+				// BEGIN
+				iterator begin(void)
 				{
-					~this();
-					this = map(other);
-					return (*this);
+					return (iterator());
 				};
+				const_iterator begin(void) const
+				{
+					return (const_iterator());
+				};
+
+				// END
+				iterator end(void)
+				{
+					return (iterator());
+				};
+				const_iterator end(void) const
+				{
+					return (const_iterator());
+				};
+
+				// RBEGIN
+				reverse_iterator rbegin(void)
+				{
+					return (reverse_iterator());
+				};
+				const_reverse_iterator rbegin(void) const
+				{
+					return (const_reverse_iterator());
+				};
+
+				// REND
+				reverse_iterator rend(void)
+				{
+					return (reverse_iterator());
+				};
+				const_reverse_iterator rend(void) const
+				{
+					return (const_reverse_iterator());
+				};
+
+			// CAPACITY
 
 				// EMPTY
 				bool empty(void) const
@@ -202,11 +261,16 @@ namespace ft
 				{
 					return (std::numeric_limits<difference_type>::max());
 				};
-			
+
+			// ELEMENT ACCESS
+
+				// OPERATOR []
 				mapped_type& operator[] (const key_type& k)
 				{
 					return ((*((insert(ft::make_pair(k, mapped_type()))).first)).second);
 				};
+
+			// MODIFIERS
 
 				//INSERT
 				pair<iterator,bool> insert(const value_type& val)
@@ -214,6 +278,33 @@ namespace ft
 					_tree.add(val.first, val.second);
 					_size++;
 					return (ft::pair<iterator, bool>(iterator(), true));
+				};
+				iterator insert (iterator position, const value_type& val);
+				template <class InputIterator>
+				void insert (InputIterator first, InputIterator last);
+
+				// ERASE
+				void erase (iterator position);
+				size_type erase (const key_type& k);
+				void erase (iterator first, iterator last);
+
+				// SWAP
+				void swap (map& x)
+				{
+					red_black_tree	tmp_tree = x._tree;
+					size_type		tmp_size = x._size;
+					allocator_type	tmp_allocator = x.get_allocator();
+					key_compare		tmp_comp = x.key_comp();
+
+					x._tree = _tree;
+					x._size = _size;
+					x._alloc = _alloc;
+					x._comp = _comp;
+
+					_tree = tmp_tree;
+					_size = tmp_size;
+					_alloc = tmp_allocator;
+					_comp = tmp_comp;
 				};
 
 				// CLEAR
@@ -223,6 +314,8 @@ namespace ft
 					_tree = red_black_tree();
 					_size = 0;
 				};
+
+			// OBSERVERS
 
 				// KEY COMP
 				key_compare key_comp(void) const
@@ -235,6 +328,29 @@ namespace ft
 				{
 					return (value_compare(_comp));
 				};
+
+			// OPERATIONS
+
+				// FIND
+				iterator find (const key_type& k);
+				const_iterator find (const key_type& k) const;
+
+				// COUNT
+				size_type count (const key_type& k) const;
+
+				// LOWER BOUNDS
+				iterator lower_bound (const key_type& k);
+				const_iterator lower_bound (const key_type& k) const;
+
+				// UPPER BOUNDS
+				iterator upper_bound (const key_type& k);
+				const_iterator upper_bound (const key_type& k) const;
+
+				// EQUAL RANGE
+				pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+				pair<iterator,iterator>             equal_range (const key_type& k);
+
+			// ALLOCATOR
 
 				// GET ALLOCATOR
 				allocator_type get_allocator(void) const

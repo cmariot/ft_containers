@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 18:52:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 12:01:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/19 23:55:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,36 @@ namespace ft
 			// CONSTRUCTOR
 
 				// DEFAULT
-				pair(void)
+				pair(void) :
+					first(first_type()),
+					second(second_type())
 				{
-					first = first_type();
-					second = second_type();
+					return ;
 				};
 
 				// INIT
-				pair(const T1& x, const T2& y)
+				pair(const T1& x, const T2& y) :
+					first(x),
+					second(y)
 				{
-					first = x;
-					second = y;
+					return ;
 				};
 
 				// COPY
 				template <class U1, class U2>
-				pair(const pair<U1, U2>& p)
+				pair(const pair<U1, U2>& p) :
+					first(p.first),
+					second(p.second)
 				{
-					first = p.first;
-					second = p.second;
+					return ;
 				};
 
 
 			// OPERATOR =
 			pair& operator = (const pair& pr)
 			{
-				first = first_type(pr.first);
-				second = second_type(pr.second);
+				this->first = pr.first;
+				this->second = pr.second;
 				return (*this);
 			};
 
