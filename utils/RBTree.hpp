@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/21 17:59:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 18:18:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,7 +344,9 @@ namespace ft
 			// Else call a recursive function to add the node bellow
 			void	add(Key key, Value value)
 			{
-				Node<Key, Value>	*node = _alloc.allocate(1);
+				Node<Key, Value>	*node = _alloc::rebind<Node<Key, Value> >::other(al).allocate(1, (Node<Key, Value> *)0)
+
+;
 				_alloc.construct(node, Node<Key, Value>(key, value));
 				if (_root == NULL)
 				{
