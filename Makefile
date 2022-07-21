@@ -7,6 +7,7 @@ all :
 fclean :
 	@make fclean -C unit_tests/vector --no-print-directory
 	@make fclean -C unit_tests/map --no-print-directory
+	@rm -f *.log
 
 re :
 	@make re -C unit_tests/vector --no-print-directory

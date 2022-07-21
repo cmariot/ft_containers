@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/18 16:49:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 18:02:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	RBTree_test(void)
 {
-	ft::RedBlackTree<int, char, std::less<int>, std::allocator<ft::Node<int, char> > >		rbt;
+	ft::RedBlackTree<int, char,  std::allocator<ft::pair<const int, char> >, std::less<int> >		rbt;
 
 	rbt.add(13, 'A');
 	rbt.add(8, 'A');

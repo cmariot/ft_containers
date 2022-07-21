@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/20 04:55:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 17:40:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ namespace ft
 {
 
 	/* TO DO :
+	 * - [ ] Allocator : ft::pair ?
 	 * - [X] MEMBER TYPES
 	 * - [X] RED-BLACK TREE :
 	      - [X] UTILISER ALLOCATOR DE MAP
@@ -63,6 +64,9 @@ namespace ft
 		 - [ ] EQUAL_RANGE
 	 * - [X] ALLOCATOR
 		 - [X] GET_ALLOCATOR
+	 * - [ ] NON MEMBER FUNCTIONS OVERLOAD
+	 *		- [ ] COMPARAISON OPERATORS
+	 *		- [X] SWAP
 	 */
 
 	template <class Key,
@@ -97,20 +101,18 @@ namespace ft
 			typedef ft::RedBlackTree <	key_type,
 										mapped_type,
 										key_compare,
-										std::allocator<ft::Node<key_type, mapped_type> >
+										std::allocator<ft::Node<key_type, mapped_type> > // Ici ce n'est pas _alloc qui est utilise ...
 									  >	red_black_tree;
 
 			key_compare							_comp;
 			allocator_type						_alloc;
 			size_type							_size;
-			red_black_tree						_tree;
+			red_black_tree						_tree; // Donc ici non plus, et c'est la qu'il y a des alloc
 
 		public :
 		// MEMBER CLASS
-			// Here the keyword friend is allowed
 			class value_compare
 			{
-
 				// MEMBER TYPES
 				public :
 
@@ -259,7 +261,7 @@ namespace ft
 				// MAX SIZE
 				size_type max_size(void) const
 				{
-					return (std::numeric_limits<difference_type>::max());
+					return (get_allocator().max_size());
 				};
 
 			// ELEMENT ACCESS
@@ -267,7 +269,7 @@ namespace ft
 				// OPERATOR []
 				mapped_type& operator[] (const key_type& k)
 				{
-					return ((*((insert(ft::make_pair(k, mapped_type()))).first)).second);
+					return ((*((this->insert(ft::make_pair(k, mapped_type()))).first)).second);
 				};
 
 			// MODIFIERS
@@ -357,8 +359,35 @@ namespace ft
 				{
 					return (_alloc);
 				};
+
+	}; // END OF CLASS MAP
+
+	// NON MEMBER FUNCTIONS
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator == (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator != (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator < (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator <= (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator > (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator >= (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+
+	template<class Key, class T, class Compare, class Alloc>
+	void swap(ft::map<Key,T,Compare,Alloc>& lhs, ft::map<Key,T,Compare,Alloc>& rhs)
+	{
+		lhs.swap(rhs);
 	};
 
-};
+}; // END OF NAMESPACE FT
 
 #endif

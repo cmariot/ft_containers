@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/19 20:38:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 17:37:55 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ namespace	ft
 			};
 
 			// DEREFERENCE
-			pointer operator -> (void)
+			pointer operator -> (void) const
 			{
 				return (_ptr);
 			};

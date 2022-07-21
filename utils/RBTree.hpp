@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/19 05:34:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 17:59:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ namespace ft
 
 	template <class Key,
 			 class Value,
-			 class Compare = std::less<Key>,
-			 class Allocator = std::allocator<ft::pair<const Key, Value> > >
+			 class Allocator/* = std::allocator<ft::pair<const Key, Value> > */,
+			 class Compare = std::less<Key> >
 	class RedBlackTree
 	{
 		public :
