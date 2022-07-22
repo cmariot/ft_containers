@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/21 18:18:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 21:15:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,40 @@ namespace ft
 	 * 
 	 */
 
-	template <class Key, class Value>
+	template <class Key, class Value, class Allocator>
 	class Node
 	{
 		public :
 
-			Key					_key;
-			Value				_value;
-			Node<Key, Value>	*_parent;
-			Node<Key, Value>	*_left_child;
-			Node<Key, Value>	*_right_child;
-			bool				_is_left_child;
-			bool				_black;
+			Key							_key;
+			Value						_value;
+			Allocator					_alloc;
+			ft::pair<const Key, Value>	*_pair;
+			Node<Key, Value, Allocator>	*_parent;
+			Node<Key, Value, Allocator>	*_left_child;
+			Node<Key, Value, Allocator>	*_right_child;
+			bool						_is_left_child;
+			bool						_black;
 
 			// Node Constructor
-			Node(Key key, Value value) :
+			Node(Key key, Value value, Allocator alloc) :
 				_key(key),
-				_value(value)
+				_value(value),
+				_alloc(alloc)
 			{
+				_pair = _alloc.allocate(1);
+				_alloc.construct(_pair, ft::make_pair<Key, Value>(key, value));
 				_parent = NULL;
 				_left_child = NULL;
 				_right_child = NULL;
 				_black = false;
 				_is_left_child = false;
 				return ;
+			};
+
+			~Node(void)
+			{
+				_alloc.deallocate(_pair, 1);
 			};
 	};
 
@@ -74,28 +84,31 @@ namespace ft
 			typedef Compare		key_compare;
 			typedef Allocator	allocator_type;
 
-			Node<Key, Value>	*_root;
+			Node<Key, Value, Allocator>	*_root;
 			size_t				_size;
 			allocator_type		_alloc;
 			key_compare			_comp;
+			Node<Key, Value, Allocator>	*_min;
+			Node<Key, Value, Allocator>	*_max;
+
 
 		private :
 
-			void	rightLeftRotate(Node<Key, Value> *node)
+			void	rightLeftRotate(Node<Key, Value, Allocator> *node)
 			{
 				rightRotate(node->_right_child);
 				leftRotate(node);
 			};
 
-			void	leftRightRotate(Node<Key, Value> *node)
+			void	leftRightRotate(Node<Key, Value, Allocator> *node)
 			{
 				leftRotate(node->_left_child);
 				rightRotate(node);
 			};
 
-			void	rightRotate(Node<Key, Value> *node)
+			void	rightRotate(Node<Key, Value, Allocator> *node)
 			{
-				Node<Key, Value> *tmp = node->_left_child;
+				Node<Key, Value, Allocator> *tmp = node->_left_child;
 
 				node->_left_child = tmp->_right_child;
 				if (node->_left_child != NULL)
@@ -127,9 +140,9 @@ namespace ft
 				node->_parent = tmp;
 			};
 
-			void	leftRotate(Node<Key, Value> *node)
+			void	leftRotate(Node<Key, Value, Allocator> *node)
 			{
-				Node<Key, Value> *tmp = node->_right_child;
+				Node<Key, Value, Allocator> *tmp = node->_right_child;
 
 				node->_right_child = tmp->_left_child;
 				if (node->_right_child != NULL)
@@ -165,7 +178,7 @@ namespace ft
 			// If node->_parent and node are right children -> left rotation
 			// If node->_parent is a left child and node is a rigth child -> left-rigth rotation
 			// If node->_parent is a right child and node is a left child -> right-left rotation
-			void	rotate(Node<Key, Value> *node)
+			void	rotate(Node<Key, Value, Allocator> *node)
 			{
 				if (node->_is_left_child == true)
 				{
@@ -205,7 +218,7 @@ namespace ft
 			};
 
 			// Make a rotation or a color flip depending the color of the node aunt
-			void	correctTree(Node<Key, Value> *node)
+			void	correctTree(Node<Key, Value, Allocator> *node)
 			{
 				if (node->_parent->_is_left_child == true)
 				{
@@ -245,7 +258,7 @@ namespace ft
 			};
 
 			// After an insertion check and correct the tree depending the RBT rules
-			void	checkColor(Node<Key, Value> *node)
+			void	checkColor(Node<Key, Value, Allocator> *node)
 			{
 				if (node == NULL || node->_parent == NULL)
 					return ;
@@ -257,7 +270,7 @@ namespace ft
 			};
 
 			// Add new_node bellow the parent node
-			void	add(Node<Key, Value> *parent, Node<Key, Value> *new_node)
+			void	add(Node<Key, Value, Allocator> *parent, Node<Key, Value, Allocator> *new_node)
 			{
 				if (_comp(parent->_key, new_node->_key))
 				{
@@ -284,7 +297,7 @@ namespace ft
 				return (add(parent->_left_child, new_node));
 			};
 
-			void	print(Node<Key, Value> *node, std::string indent, bool last)
+			void	print(Node<Key, Value, Allocator> *node, std::string indent, bool last)
 			{
 				if (node != NULL)
 				{
@@ -308,18 +321,23 @@ namespace ft
 				}
 			};
 
-			void	destructor(Node<Key, Value> *node)
+			void	destructor(Node<Key, Value, Allocator> *node)
 			{
 				if (node != NULL)
 				{
 					destructor(node->_left_child);
 					destructor(node->_right_child);
-					_alloc.deallocate(node, 1);
+					delete node;
 					node = NULL;
 				}
 			};
 
 		public :
+
+			Node<Key, Value, Allocator>	*next(void)
+			{
+				return (NULL);
+			};
 
 			// RBT Constructor
 			RedBlackTree(const allocator_type & allocator = allocator_type(),
@@ -344,14 +362,13 @@ namespace ft
 			// Else call a recursive function to add the node bellow
 			void	add(Key key, Value value)
 			{
-				Node<Key, Value>	*node = _alloc::rebind<Node<Key, Value> >::other(al).allocate(1, (Node<Key, Value> *)0)
-
-;
-				_alloc.construct(node, Node<Key, Value>(key, value));
+				Node<Key, Value, Allocator>	*node = new Node<Key, Value, Allocator>(key, value, _alloc);
 				if (_root == NULL)
 				{
 					_root = node;
 					_root->_black = true;
+					_min = node;
+					_max = node;
 					_size++;
 					return ;
 				}

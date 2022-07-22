@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/21 17:40:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/21 20:57:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ namespace ft
 {
 
 	/* TO DO :
-	 * - [ ] Allocator : ft::pair ?
 	 * - [X] MEMBER TYPES
 	 * - [X] RED-BLACK TREE :
 	      - [X] UTILISER ALLOCATOR DE MAP
@@ -100,14 +99,14 @@ namespace ft
 
 			typedef ft::RedBlackTree <	key_type,
 										mapped_type,
-										key_compare,
-										std::allocator<ft::Node<key_type, mapped_type> > // Ici ce n'est pas _alloc qui est utilise ...
+										std::allocator<ft::pair<const Key, Value> >,
+										key_compare
 									  >	red_black_tree;
 
 			key_compare							_comp;
 			allocator_type						_alloc;
 			size_type							_size;
-			red_black_tree						_tree; // Donc ici non plus, et c'est la qu'il y a des alloc
+			red_black_tree						_tree;
 
 		public :
 		// MEMBER CLASS
@@ -207,7 +206,7 @@ namespace ft
 				// BEGIN
 				iterator begin(void)
 				{
-					return (iterator());
+					return (iterator(_tree.pair));
 				};
 				const_iterator begin(void) const
 				{

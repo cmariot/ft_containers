@@ -1,4 +1,3 @@
-- [ ] MAP : Correction allocator : alloc<ft::pair> vs alloc<node<ft::pair> >
 - [ ] MAP : Tests des constructeurs
 - [ ] MAP : Insert
 - [ ] MAP : Iterateurs
