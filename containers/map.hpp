@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/25 14:40:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:00:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,12 @@ namespace ft
 					typedef value_type							first_argument_type;
 					typedef value_type							second_argument_type;
 
-				// PROTECTED MEMBER OBJECTS
 				protected :
 
+				// MEMBER OBJECTS
 					Compare										comp;
 
 				// MEMBER FUNCTIONS
-				protected :
-
 					// CONSTRUCTOR
 					value_compare(Compare c) :
 						comp(c)
@@ -206,11 +204,11 @@ namespace ft
 				// BEGIN
 				iterator begin(void)
 				{
-					return (iterator(_tree.pair));
+					return (iterator(_tree.begin()));
 				};
 				const_iterator begin(void) const
 				{
-					return (const_iterator());
+					return (const_iterator(_tree.begin()));
 				};
 
 				// END
@@ -281,8 +279,17 @@ namespace ft
 					return (ft::pair<iterator, bool>(iterator(), true));
 				};
 				iterator insert (iterator position, const value_type& val);
+				
 				template <class InputIterator>
-				void insert (InputIterator first, InputIterator last);
+				void insert (InputIterator first, InputIterator last)
+				{
+					while (first != last)
+					{
+						_tree.insert(first->first, first->second);
+						++first;
+						_size++;
+					}
+				};
 
 				// ERASE
 				void erase (iterator position);

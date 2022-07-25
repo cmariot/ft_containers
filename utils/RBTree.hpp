@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/25 15:39:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/25 18:13:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,41 @@ namespace ft
 				if (_root != NULL)
 				{
 					print(_root, "", true);
+				}
+			};
+
+			ft::pair<const Key, Value>	*begin(void)
+			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Key, Value, Allocator>	*_tmp = new ;
+					_tmp = _root;
+
+					std::cout << "BEFORE : " << _tmp->_pair->first << std::endl;
+					while (_tmp->_left_child != NULL)
+					{
+						_tmp = _tmp->_left_child;
+					}
+					std::cout << "AFTER : " << _root->_pair->first << std::endl;
+					return (_tmp->_pair);
+				}
+			};
+
+			ft::pair<const Key, Value>	*end(void)
+			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Key, Value, Allocator>	*_tmp = _root;
+
+					while (_tmp->_right_child != NULL)
+					{
+						_tmp = _tmp->_right_child;
+					}
+					return (_tmp->_pair);
 				}
 			};
 	};
