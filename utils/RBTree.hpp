@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/21 21:15:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/25 15:39:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,16 @@ namespace ft
 	{
 		public :
 
-			Key							_key;
-			Value						_value;
 			Allocator					_alloc;
 			ft::pair<const Key, Value>	*_pair;
+			bool						_is_left_child;
+			bool						_black;
 			Node<Key, Value, Allocator>	*_parent;
 			Node<Key, Value, Allocator>	*_left_child;
 			Node<Key, Value, Allocator>	*_right_child;
-			bool						_is_left_child;
-			bool						_black;
 
 			// Node Constructor
 			Node(Key key, Value value, Allocator alloc) :
-				_key(key),
-				_value(value),
 				_alloc(alloc)
 			{
 				_pair = _alloc.allocate(1);
@@ -88,8 +84,6 @@ namespace ft
 			size_t				_size;
 			allocator_type		_alloc;
 			key_compare			_comp;
-			Node<Key, Value, Allocator>	*_min;
-			Node<Key, Value, Allocator>	*_max;
 
 
 		private :
@@ -272,7 +266,7 @@ namespace ft
 			// Add new_node bellow the parent node
 			void	add(Node<Key, Value, Allocator> *parent, Node<Key, Value, Allocator> *new_node)
 			{
-				if (_comp(parent->_key, new_node->_key))
+				if (_comp(parent->_pair->first, new_node->_pair->first))
 				{
 					// Add to the right
 					if (parent->_right_child == NULL)
@@ -313,9 +307,9 @@ namespace ft
 						indent += "|    ";
 					}
 					if (node->_black == true)
-						std::cout << node->_key << " (BLACK)" << std::endl;
+						std::cout << node->_pair->first << " (BLACK)" << std::endl;
 					else
-						std::cout << node->_key << " (RED)" << std::endl;
+						std::cout << node->_pair->first << " (RED)" << std::endl;
 					print(node->_left_child, indent, false);
 					print(node->_right_child, indent, true);
 				}
@@ -367,8 +361,6 @@ namespace ft
 				{
 					_root = node;
 					_root->_black = true;
-					_min = node;
-					_max = node;
 					_size++;
 					return ;
 				}

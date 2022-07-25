@@ -1,4 +1,0 @@
-- [ ] MAP : Tests des constructeurs
-- [ ] MAP : Insert
-- [ ] MAP : Iterateurs
-

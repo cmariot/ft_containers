@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/21 20:57:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/25 14:40:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ namespace ft
 
 			typedef ft::RedBlackTree <	key_type,
 										mapped_type,
-										std::allocator<ft::pair<const Key, Value> >,
+										allocator_type,
 										key_compare
 									  >	red_black_tree;
 
