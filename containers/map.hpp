@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 08:36:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 18:16:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft
 
 			typedef ft::RedBlackTree <key_type, mapped_type, allocator_type, key_compare>	red_black_tree;
 
-			red_black_tree	_tree;
+			red_black_tree	*_tree;
 			key_compare		_comp;
 			size_type		_size;
 			allocator_type	_alloc;
@@ -112,7 +112,8 @@ namespace ft
 				_size(0),
 				_alloc(alloc)
 			{
-				_tree = red_black_tree(_alloc, _comp);
+				_tree = new red_black_tree;
+				*_tree = red_black_tree(_alloc, _comp);
 				return ;
 			};
 
@@ -125,16 +126,18 @@ namespace ft
 				_size(0),
 				_alloc(alloc)
 			{
-				_tree = red_black_tree(_alloc, _comp);
+				_tree = new red_black_tree;
+				*_tree = red_black_tree(_alloc, _comp);
 				while (first != last)
 				{
-					_tree.add(first->first, first->second);
+					_tree->add(first->first, first->second);
 					_size++;
 					first++;
 				}
 			};
 
 			// [/] Copy constructor
+			// A tester apres implementation des iterateurs
 			map(const map& x)
 			{
 				*this = map(x.begin(), x.end(), x.key_comp(), x.get_allocator());
@@ -151,24 +154,49 @@ namespace ft
 			// [X] Destructor
 			~map(void)
 			{
+				delete _tree;
 				return ;
 			};
 
 			// [ ] Begin
-			iterator begin();
-			const_iterator begin() const;
+			iterator begin()
+			{
+				return (iterator());
+			};
+			const_iterator begin() const
+			{
+				return (const_iterator());
+			};
 
 			// [ ] End
-			iterator end();
-			const_iterator end() const;
+			iterator end()
+			{
+				return (iterator());
+			};
+			const_iterator end() const
+			{
+				return (const_iterator());
+			};
 
 			// [ ] Rbegin
-			reverse_iterator rbegin();
-			const_reverse_iterator rbegin() const;
+			reverse_iterator rbegin()
+			{
+				return (reverse_iterator());
+			};
+			const_reverse_iterator rbegin() const
+			{
+				return (const_reverse_iterator());
+			};
 
 			// [ ] Rend
-			reverse_iterator rend();
-			const_reverse_iterator rend() const;
+			reverse_iterator rend()
+			{
+				return (reverse_iterator());
+			};
+			const_reverse_iterator rend() const
+			{
+				return (const_reverse_iterator());
+			};
 
 			// [X] Empty
 			bool empty(void) const
@@ -188,7 +216,7 @@ namespace ft
 				return (std::numeric_limits<difference_type>::max());
 			};
 
-			// [X] Operator []
+			// [/] Operator []
 			mapped_type& operator[] (const key_type& k)
 			{
 				return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
@@ -201,7 +229,7 @@ namespace ft
 			// [ ] Insert
 			pair<iterator,bool> insert (const value_type& val)
 			{
-				_tree.add(val.first, val.second);
+				_tree->add(val.first, val.second);
 				_size++;
 				return (ft::make_pair<iterator, bool>(iterator(), true));
 			};
@@ -214,18 +242,20 @@ namespace ft
 			size_type erase (const key_type& k);
 			void erase (iterator first, iterator last);
 
-			// [ ] Swap
-			// Besoin d'un constructeur par copie pour le _tree
-			void swap(map& x)
+			// [X] Swap
+			void swap(map & x)
 			{
+				red_black_tree	*tmp_tree = x._tree;
 				size_type		tmp_size = x._size;
 				allocator_type	tmp_allocator = x.get_allocator();
 				key_compare		tmp_comp = x.key_comp();
 
+				x._tree = _tree;
 				x._size = _size;
 				x._alloc = _alloc;
 				x._comp = _comp;
 
+				_tree = tmp_tree;
 				_size = tmp_size;
 				_alloc = tmp_allocator;
 				_comp = tmp_comp;
@@ -234,8 +264,8 @@ namespace ft
 			// [X] Clear
 			void clear(void)
 			{
-				_tree.~RedBlackTree();
-				_tree = red_black_tree(_alloc, _comp);
+				_tree->~RedBlackTree();
+				*_tree = red_black_tree(_alloc, _comp);
 				_size = 0;
 			};
 
@@ -298,6 +328,7 @@ namespace ft
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator >= (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
 
+	// [X] Swap
 	template< class Key, class T, class Compare, class Alloc >
 	void swap(ft::map<Key, T, Compare, Alloc> & lhs, ft::map<Key, T, Compare, Alloc> & rhs)
 	{

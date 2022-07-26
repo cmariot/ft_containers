@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 03:45:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:41:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,7 @@ namespace ft
 				_comp = compare;
 			};
 
+			// RBT Destructor
 			~RedBlackTree(void)
 			{
 				if (_root != NULL)
@@ -368,6 +369,7 @@ namespace ft
 				return ;
 			};
 
+			// Print the tree
 			void	print()
 			{
 				if (_root != NULL)
@@ -376,38 +378,6 @@ namespace ft
 				}
 			};
 
-			ft::pair<const Key, Value>	*begin(void)
-			{
-				if (_root == NULL)
-					return (NULL);
-				else
-				{
-					Node<Key, Value, Allocator>	*_tmp = _root;
-					_tmp = _root;
-
-					while (_tmp->_left_child != NULL)
-					{
-						_tmp = _tmp->_left_child;
-					}
-					return (_tmp->_pair);
-				}
-			};
-
-			ft::pair<const Key, Value>	*end(void)
-			{
-				if (_root == NULL)
-					return (NULL);
-				else
-				{
-					Node<Key, Value, Allocator>	*_tmp = _root;
-
-					while (_tmp->_right_child != NULL)
-					{
-						_tmp = _tmp->_right_child;
-					}
-					return (_tmp->_pair);
-				}
-			};
 	};
 
 };
