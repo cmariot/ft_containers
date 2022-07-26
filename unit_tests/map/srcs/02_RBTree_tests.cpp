@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/25 17:43:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/25 20:23:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ int	RBTree_test(void)
 
 	rbt.print();
 	
-	rbt.begin();
-	rbt.end();
-
 	//std::map<int, char> std_map;
 
 	//std_map.insert(std::make_pair(2, 'a'));

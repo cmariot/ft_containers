@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/25 18:13:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 03:45:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,24 @@ namespace ft
 	 * - Any NULL node is black
 	 *
 	 * If any rule is not satisfied : Rebalance the tree
-	 *
-	 * 
 	 */
 
 	template <class Key, class Value, class Allocator>
 	class Node
 	{
+		// PUBLIC MEMBER OBJECTS
 		public :
 
-			Allocator					_alloc;
-			ft::pair<const Key, Value>	*_pair;
-			bool						_is_left_child;
-			bool						_black;
-			Node<Key, Value, Allocator>	*_parent;
-			Node<Key, Value, Allocator>	*_left_child;
-			Node<Key, Value, Allocator>	*_right_child;
+			Allocator						_alloc;
+			ft::pair<const Key, Value>		*_pair;
+			Node<Key, Value, Allocator>		*_parent;
+			Node<Key, Value, Allocator>		*_left_child;
+			Node<Key, Value, Allocator>		*_right_child;
+			bool							_is_left_child;
+			bool							_black;
+
+		// PUBLIC MEMBER FUNCTIONS
+		public :
 
 			// Node Constructor
 			Node(Key key, Value value, Allocator alloc) :
@@ -62,6 +64,7 @@ namespace ft
 				return ;
 			};
 
+			// Node Destructor
 			~Node(void)
 			{
 				_alloc.deallocate(_pair, 1);
@@ -69,23 +72,24 @@ namespace ft
 	};
 
 
-	template <class Key,
-			 class Value,
-			 class Allocator/* = std::allocator<ft::pair<const Key, Value> > */,
-			 class Compare = std::less<Key> >
+	template <class Key, class Value, class Allocator, class Compare = std::less<Key> >
 	class RedBlackTree
 	{
+		// PUBLIC MEMBER TYPES
 		public :
 
-			typedef Compare		key_compare;
-			typedef Allocator	allocator_type;
+			typedef Compare					key_compare;
+			typedef Allocator				allocator_type;
 
-			Node<Key, Value, Allocator>	*_root;
-			size_t				_size;
-			allocator_type		_alloc;
-			key_compare			_comp;
+		// PUBLIC MEMBER OBJECTS
+		public :
 
+			Node<Key, Value, Allocator>		*_root;
+			size_t							_size;
+			allocator_type					_alloc;
+			key_compare						_comp;
 
+		// PRIVATE MEMBER FUNCTIONS
 		private :
 
 			void	rightLeftRotate(Node<Key, Value, Allocator> *node)
@@ -317,7 +321,7 @@ namespace ft
 
 			void	destructor(Node<Key, Value, Allocator> *node)
 			{
-				if (node != NULL)
+				if (node)
 				{
 					destructor(node->_left_child);
 					destructor(node->_right_child);
@@ -327,11 +331,6 @@ namespace ft
 			};
 
 		public :
-
-			Node<Key, Value, Allocator>	*next(void)
-			{
-				return (NULL);
-			};
 
 			// RBT Constructor
 			RedBlackTree(const allocator_type & allocator = allocator_type(),
@@ -383,15 +382,13 @@ namespace ft
 					return (NULL);
 				else
 				{
-					Node<Key, Value, Allocator>	*_tmp = new ;
+					Node<Key, Value, Allocator>	*_tmp = _root;
 					_tmp = _root;
 
-					std::cout << "BEFORE : " << _tmp->_pair->first << std::endl;
 					while (_tmp->_left_child != NULL)
 					{
 						_tmp = _tmp->_left_child;
 					}
-					std::cout << "AFTER : " << _root->_pair->first << std::endl;
 					return (_tmp->_pair);
 				}
 			};
