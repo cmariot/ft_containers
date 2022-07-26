@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 04:41:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 08:36:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,19 @@ namespace ft
 					Compare						comp;
 
 
-				// PROTECTED MEMBER FUNCTIONS
-					// CONSTRUCTOR
+				// PROTECTED MEMBER FUNCTION
+				protected :
+				public :
+
 					value_compare(Compare c) :
 						comp(c)
 					{
 						return ;
 					};
 
-					// OPERATOR ()
+				// PUBLIC MEMBER FUNCTION
+				public :
+
 					bool operator () (const value_type & lhs, const value_type & rhs) const
 					{
 						return (comp(lhs.first, rhs.first));
@@ -130,10 +134,18 @@ namespace ft
 				}
 			};
 
-			// [X] Copy constructor
+			// [/] Copy constructor
 			map(const map& x)
 			{
-				this = map(x.begin(), x.end(), x.key_compare(), x.get_allocator());
+				*this = map(x.begin(), x.end(), x.key_comp(), x.get_allocator());
+			};
+
+			// [/] Operator =
+			map& operator= (const map& x)
+			{
+				clear();
+				*this = map(x);
+				return (*this);
 			};
 
 			// [X] Destructor
@@ -203,16 +215,42 @@ namespace ft
 			void erase (iterator first, iterator last);
 
 			// [ ] Swap
-			void swap (map& x);
+			// Besoin d'un constructeur par copie pour le _tree
+			void swap(map& x)
+			{
+				size_type		tmp_size = x._size;
+				allocator_type	tmp_allocator = x.get_allocator();
+				key_compare		tmp_comp = x.key_comp();
 
-			// [ ] Clear
-			void clear();
+				x._size = _size;
+				x._alloc = _alloc;
+				x._comp = _comp;
 
-			// [ ] Key Comp
-			key_compare key_comp() const;
+				_size = tmp_size;
+				_alloc = tmp_allocator;
+				_comp = tmp_comp;
+			};
 
-			// [ ] Value Comp
-			value_compare value_comp() const;
+			// [X] Clear
+			void clear(void)
+			{
+				_tree.~RedBlackTree();
+				_tree = red_black_tree(_alloc, _comp);
+				_size = 0;
+			};
+
+			// [X] Key Comp
+			key_compare key_comp() const
+			{
+				return (_comp);
+			};
+
+			// [/] Value Comp
+			// Voir constructeur en protected et mention friend autorise dans la classe value_compare
+			value_compare value_comp() const
+			{
+				return (value_compare(_comp));
+			};
 
 			// [ ] Find
 			iterator find (const key_type& k);
@@ -234,7 +272,7 @@ namespace ft
 			pair<iterator,iterator>             equal_range (const key_type& k);
 
 			// [X] Get Allocator
-			allocator_type get_allocator() const
+			allocator_type get_allocator(void) const
 			{
 				return (_alloc);
 			};

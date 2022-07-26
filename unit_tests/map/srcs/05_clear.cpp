@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_constructors.cpp                                :+:      :+:    :+:   */
+/*   05_clear.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 06:48:23 by cmariot          ###   ########.fr       */
+/*   Created: 2022/07/26 06:48:13 by cmariot           #+#    #+#             */
+/*   Updated: 2022/07/26 06:54:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	constructors_tests(void)
+int	clear_tests(void)
 {
 	ft::map<int, char>	ft_map;
 
@@ -20,15 +20,17 @@ int	constructors_tests(void)
 	ft_map.insert(ft::pair<int, char>(2, 'b'));
 	ft_map.insert(ft::pair<int, char>(3, 'c'));
 
-	std::map<int, char>	std_map;
-	std_map.insert(std::pair<int, char>(1, 'a'));
-	std_map.insert(std::pair<int, char>(2, 'b'));
-	std_map.insert(std::pair<int, char>(3, 'c'));
+	ft_map.clear();
 
-	ft::map<int, char>	ft_range(std_map.begin(), std_map.end()); 
+	if (ft_map.size() != 0)
+		return (1);
 
-	// A tester apres l'implementation des iterateurs begin, end et ++
-	//ft::map<int, char>	ft_copy(ft_range);
+	ft_map.insert(ft::pair<int, char>(1, 'a'));
+	ft_map.insert(ft::pair<int, char>(2, 'b'));
+	ft_map.insert(ft::pair<int, char>(3, 'c'));
+
+	if (ft_map.size() != 3)
+		return (1);
 
 	return (0);
 }

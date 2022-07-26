@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_constructors.cpp                                :+:      :+:    :+:   */
+/*   04_destructor.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 06:48:23 by cmariot          ###   ########.fr       */
+/*   Created: 2022/07/26 06:47:58 by cmariot           #+#    #+#             */
+/*   Updated: 2022/07/26 06:50:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	constructors_tests(void)
+int	destructor_tests(void)
 {
 	ft::map<int, char>	ft_map;
 
@@ -29,6 +29,8 @@ int	constructors_tests(void)
 
 	// A tester apres l'implementation des iterateurs begin, end et ++
 	//ft::map<int, char>	ft_copy(ft_range);
+
+	//ft::map<int, char>	ft_equal = ft_copy;
 
 	return (0);
 }
