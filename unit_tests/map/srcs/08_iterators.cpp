@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.hpp                                          :+:      :+:    :+:   */
+/*   08_iterators.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:17:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:05:13 by cmariot          ###   ########.fr       */
+/*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
+/*   Updated: 2022/07/26 20:13:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTS_HPP
-# define TESTS_HPP
+#include "tests.hpp"
 
-# include "libunit.hpp"
+int	iterator_tests(void)
+{
+	ft::map<int, char>	ft_map;
 
-# include "map.hpp"
-# include <map>
+	ft_map.insert(ft::pair<int, char>(1, 'a'));
+	ft_map.insert(ft::pair<int, char>(2, 'b'));
+	ft_map.insert(ft::pair<int, char>(3, 'c'));
 
-int		map_launcher(void);
-int		pair_test(void);
-int		RBTree_test(void);
-int		constructors_tests(void);
-int		destructor_tests(void);
-int		clear_tests(void);
-int		value_key_comp_tests(void);
-int		swap_tests(void);
-int		iterator_tests(void);
+	std::cout << ft_map.begin()->first << std::endl;
+	
+	std::cout << ft_map.end()->first << std::endl;
 
-#endif
+	return (0);
+}

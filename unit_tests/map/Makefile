@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/07/26 08:06:11 by cmariot          ###   ########.fr        #
+#    Updated: 2022/07/26 20:05:46 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC_SUBDIR	    = main.cpp \
 				  05_clear.cpp \
 				  06_value_key_comp.cpp \
 				  07_swap.cpp \
+				  08_iterators.cpp \
 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 19:23:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 20:25:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ namespace ft
 		public :
 
 			Node<Key, Value, Allocator>		*_root;
-			size_t							_size;
 			allocator_type					_alloc;
 			key_compare						_comp;
 
@@ -334,12 +333,12 @@ namespace ft
 
 			// RBT Constructor
 			RedBlackTree(const allocator_type & allocator = allocator_type(),
-					const key_compare & compare = key_compare())
+					const key_compare & compare = key_compare()) :
+				_root(NULL),
+				_alloc(allocator),
+				_comp(compare)
 			{
-				_root = NULL;
-				_size = 0;
-				_alloc = allocator;
-				_comp = compare;
+				return ;
 			};
 
 			// RBT Destructor
@@ -361,10 +360,8 @@ namespace ft
 				{
 					_root = node;
 					_root->_black = true;
-					_size++;
 					return ;
 				}
-				_size++;
 				add(_root, node);
 				return ;
 			};
@@ -378,6 +375,35 @@ namespace ft
 				}
 			};
 
+			// Return a pair<Key, Value> on the smalest element
+			Node<Key, Value, Allocator>	*begin(void) const
+			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Key, Value, Allocator>	*_tmp = _root;
+
+					while (_tmp->_left_child != NULL)
+						_tmp = _tmp->_left_child;
+					return (_tmp);
+				}
+			};
+
+			// Return a pair<Key, Value> on the biggest element
+			Node<Key, Value, Allocator>	*end(void) const
+			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Key, Value, Allocator>	*_tmp = _root;
+
+					while (_tmp->_right_child != NULL)
+						_tmp = _tmp->_right_child;
+					return (_tmp);
+				}
+			};
 	};
 
 };

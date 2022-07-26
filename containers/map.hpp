@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 19:23:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 20:31:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,44 +158,44 @@ namespace ft
 				return ;
 			};
 
-			// [ ] Begin
+			// [/] Begin
 			iterator begin()
 			{
-				return (iterator());
+				return (iterator(_tree->begin()->_pair));
 			};
 			const_iterator begin() const
 			{
-				return (const_iterator());
+				return (const_iterator(_tree->begin()->_pair));
 			};
 
-			// [ ] End
+			// [/] End
 			iterator end()
 			{
-				return (iterator());
+				return (iterator(_tree->end()->_pair));
 			};
 			const_iterator end() const
 			{
-				return (const_iterator());
+				return (const_iterator(_tree->end()->_pair));
 			};
 
-			// [ ] Rbegin
+			// [/] Rbegin
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator());
+				return (reverse_iterator(_tree->end()->_pair));
 			};
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator());
+				return (const_reverse_iterator(_tree->end()->_pair));
 			};
 
-			// [ ] Rend
+			// [/] Rend
 			reverse_iterator rend()
 			{
-				return (reverse_iterator());
+				return (reverse_iterator(_tree->begin()->_pair));
 			};
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator());
+				return (const_reverse_iterator(_tree->begin()->_pair));
 			};
 
 			// [X] Empty
@@ -282,23 +282,23 @@ namespace ft
 			};
 
 			// [ ] Find
-			iterator find (const key_type& k);
-			const_iterator find (const key_type& k) const;
+			iterator find(const key_type& k);
+			const_iterator find(const key_type& k) const;
 
 			// [ ] Count
-			size_type count (const key_type& k) const;
+			size_type count(const key_type& k) const;
 
 			// [ ] Lower Bound
-			iterator lower_bound (const key_type& k);
-			const_iterator lower_bound (const key_type& k) const;
+			iterator lower_bound(const key_type& k);
+			const_iterator lower_bound(const key_type& k) const;
 
 			// [ ] Upper Bound
-			iterator upper_bound (const key_type& k);
-			const_iterator upper_bound (const key_type& k) const;
+			iterator upper_bound(const key_type& k);
+			const_iterator upper_bound(const key_type& k) const;
 
 			// [ ] Equal Range
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-			pair<iterator,iterator>             equal_range (const key_type& k);
+			pair<const_iterator,const_iterator> equal_range(const key_type& k) const;
+			pair<iterator,iterator>             equal_range(const key_type& k);
 
 			// [X] Get Allocator
 			allocator_type get_allocator(void) const
