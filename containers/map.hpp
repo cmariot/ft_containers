@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 18:16:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 19:23:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ namespace ft
 				// PUBLIC MEMBER TYPES
 				public :
 
+					friend class map;
 					typedef bool				result_type;
 					typedef value_type			first_argument_type;
 					typedef value_type			second_argument_type;
@@ -74,7 +75,6 @@ namespace ft
 
 				// PROTECTED MEMBER FUNCTION
 				protected :
-				public :
 
 					value_compare(Compare c) :
 						comp(c)
@@ -275,8 +275,7 @@ namespace ft
 				return (_comp);
 			};
 
-			// [/] Value Comp
-			// Voir constructeur en protected et mention friend autorise dans la classe value_compare
+			// [X] Value Comp
 			value_compare value_comp() const
 			{
 				return (value_compare(_comp));

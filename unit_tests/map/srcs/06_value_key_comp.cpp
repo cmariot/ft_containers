@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 07:14:17 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 07:51:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/26 19:18:34 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	value_key_comp_tests(void)
 {
 	ft::map<int, char>	ft_map;
 
-	int	value1 = 1;
-	int	value2 = 2;
+	int	value1 = 2;
+	int	value2 = 1;
 
 	bool key_comp = ft_map.key_comp()(value1, value2);
 
