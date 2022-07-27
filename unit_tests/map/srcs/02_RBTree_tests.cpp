@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/25 20:23:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/27 02:35:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,30 @@
 
 int	RBTree_test(void)
 {
-	ft::RedBlackTree<int, char,  std::allocator<ft::pair<const int, char> >, std::less<int> >		rbt;
+	// Constructor
+	ft::RedBlackTree<ft::pair<const int, char>,  std::allocator<ft::pair<const int, char> >, std::less<int> >		rbt;
 
-	rbt.add(13, 'A');
-	rbt.add(8, 'A');
-	rbt.add(17, 'A');
-	rbt.add(-1, 'A');
-	rbt.add(11, 'A');
-	rbt.add(15, 'A');
-	rbt.add(25, 'A');
-	rbt.add(6, 'A');
-	rbt.add(22, 'A');
-	rbt.add(27, 'A');
+	// Add elements
+	rbt.add(ft::pair<const int, char>(13, 'Z'));
+	rbt.add(ft::pair<const int, char>(8, 'Z'));
+	rbt.add(ft::pair<const int, char>(17, 'Z'));
+	rbt.add(ft::pair<const int, char>(-1, 'Z'));
+	rbt.add(ft::pair<const int, char>(11, 'Z'));
+	rbt.add(ft::pair<const int, char>(15, 'Z'));
+	rbt.add(ft::pair<const int, char>(25, 'Z'));
+	rbt.add(ft::pair<const int, char>(6, 'Z'));
+	rbt.add(ft::pair<const int, char>(22, 'Z'));
+	rbt.add(ft::pair<const int, char>(27, 'Z'));
 
+	// Print the tree
 	rbt.print();
-	
+
+	////Find key
+	ft::pair<int, char> ft_pair = ft::make_pair<int, char>(6, 'A');
+	if (rbt.find(ft_pair.first) == NULL)
+		std::cout << "Not found" << std::endl;
+
+
 	//std::map<int, char> std_map;
 
 	//std_map.insert(std::make_pair(2, 'a'));

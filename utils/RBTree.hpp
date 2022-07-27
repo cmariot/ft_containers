@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:25:34 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/27 05:27:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ namespace ft
 	 * If any rule is not satisfied : Rebalance the tree
 	 */
 
-	template <class Key, class Value, class Allocator>
+	template <class Pair, class Allocator>
 	class Node
 	{
 		// PUBLIC MEMBER OBJECTS
 		public :
 
 			Allocator						_alloc;
-			ft::pair<const Key, Value>		*_pair;
-			Node<Key, Value, Allocator>		*_parent;
-			Node<Key, Value, Allocator>		*_left_child;
-			Node<Key, Value, Allocator>		*_right_child;
+			Pair							*_pair;
+			Node<Pair, Allocator>			*_parent;
+			Node<Pair, Allocator>			*_left_child;
+			Node<Pair, Allocator>			*_right_child;
 			bool							_is_left_child;
 			bool							_black;
 
@@ -51,11 +51,11 @@ namespace ft
 		public :
 
 			// Node Constructor
-			Node(Key key, Value value, Allocator alloc) :
+			Node(Pair pair, Allocator alloc) :
 				_alloc(alloc)
 			{
 				_pair = _alloc.allocate(1);
-				_alloc.construct(_pair, ft::make_pair<Key, Value>(key, value));
+				_alloc.construct(_pair, pair);
 				_parent = NULL;
 				_left_child = NULL;
 				_right_child = NULL;
@@ -72,7 +72,7 @@ namespace ft
 	};
 
 
-	template <class Key, class Value, class Allocator, class Compare = std::less<Key> >
+	template <class Pair, class Allocator, class Compare = std::less<typename Pair::first_type> >
 	class RedBlackTree
 	{
 		// PUBLIC MEMBER TYPES
@@ -84,28 +84,28 @@ namespace ft
 		// PUBLIC MEMBER OBJECTS
 		public :
 
-			Node<Key, Value, Allocator>		*_root;
+			Node<Pair, Allocator>		*_root;
 			allocator_type					_alloc;
 			key_compare						_comp;
 
 		// PRIVATE MEMBER FUNCTIONS
 		private :
 
-			void	rightLeftRotate(Node<Key, Value, Allocator> *node)
+			void	rightLeftRotate(Node<Pair, Allocator> *node)
 			{
 				rightRotate(node->_right_child);
 				leftRotate(node);
 			};
 
-			void	leftRightRotate(Node<Key, Value, Allocator> *node)
+			void	leftRightRotate(Node<Pair, Allocator> *node)
 			{
 				leftRotate(node->_left_child);
 				rightRotate(node);
 			};
 
-			void	rightRotate(Node<Key, Value, Allocator> *node)
+			void	rightRotate(Node<Pair, Allocator> *node)
 			{
-				Node<Key, Value, Allocator> *tmp = node->_left_child;
+				Node<Pair, Allocator> *tmp = node->_left_child;
 
 				node->_left_child = tmp->_right_child;
 				if (node->_left_child != NULL)
@@ -137,9 +137,9 @@ namespace ft
 				node->_parent = tmp;
 			};
 
-			void	leftRotate(Node<Key, Value, Allocator> *node)
+			void	leftRotate(Node<Pair, Allocator> *node)
 			{
-				Node<Key, Value, Allocator> *tmp = node->_right_child;
+				Node<Pair, Allocator> *tmp = node->_right_child;
 
 				node->_right_child = tmp->_left_child;
 				if (node->_right_child != NULL)
@@ -175,7 +175,7 @@ namespace ft
 			// If node->_parent and node are right children -> left rotation
 			// If node->_parent is a left child and node is a rigth child -> left-rigth rotation
 			// If node->_parent is a right child and node is a left child -> right-left rotation
-			void	rotate(Node<Key, Value, Allocator> *node)
+			void	rotate(Node<Pair, Allocator> *node)
 			{
 				if (node->_is_left_child == true)
 				{
@@ -215,7 +215,7 @@ namespace ft
 			};
 
 			// Make a rotation or a color flip depending the color of the node aunt
-			void	correctTree(Node<Key, Value, Allocator> *node)
+			void	correctTree(Node<Pair, Allocator> *node)
 			{
 				if (node->_parent->_is_left_child == true)
 				{
@@ -255,7 +255,7 @@ namespace ft
 			};
 
 			// After an insertion check and correct the tree depending the RBT rules
-			void	checkColor(Node<Key, Value, Allocator> *node)
+			void	checkColor(Node<Pair, Allocator> *node)
 			{
 				if (node == NULL || node->_parent == NULL)
 					return ;
@@ -267,7 +267,7 @@ namespace ft
 			};
 
 			// Add new_node bellow the parent node
-			void	add(Node<Key, Value, Allocator> *parent, Node<Key, Value, Allocator> *new_node)
+			void	add(Node<Pair, Allocator> *parent, Node<Pair, Allocator> *new_node)
 			{
 				if (_comp(parent->_pair->first, new_node->_pair->first))
 				{
@@ -294,7 +294,7 @@ namespace ft
 				return (add(parent->_left_child, new_node));
 			};
 
-			void	print(Node<Key, Value, Allocator> *node, std::string indent, bool last)
+			void	print(Node<Pair, Allocator> *node, std::string indent, bool last)
 			{
 				if (node != NULL)
 				{
@@ -318,7 +318,7 @@ namespace ft
 				}
 			};
 
-			void	destructor(Node<Key, Value, Allocator> *node)
+			void	destructor(Node<Pair, Allocator> *node)
 			{
 				if (node)
 				{
@@ -353,9 +353,9 @@ namespace ft
 			// Add a new node to the tree,
 			// If the tree is empty set a new node to _root
 			// Else call a recursive function to add the node bellow
-			void	add(Key key, Value value)
+			void	add(Pair pair)
 			{
-				Node<Key, Value, Allocator>	*node = new Node<Key, Value, Allocator>(key, value, _alloc);
+				Node<Pair, Allocator>	*node = new Node<Pair, Allocator>(pair, _alloc);
 				if (_root == NULL)
 				{
 					_root = node;
@@ -375,35 +375,32 @@ namespace ft
 				}
 			};
 
-			// Return a pair<Key, Value> on the smalest element
-			Node<Key, Value, Allocator>	*begin(void) const
+			Node<Pair, Allocator> *find(typename Pair::first_type & key) const
 			{
-				if (_root == NULL)
-					return (NULL);
-				else
+				Node<Pair, Allocator>	*node = _root;
+
+				while (node != NULL)
 				{
-					Node<Key, Value, Allocator>	*_tmp = _root;
-
-					while (_tmp->_left_child != NULL)
-						_tmp = _tmp->_left_child;
-					return (_tmp);
+					if (node->_pair->first > key)
+					{
+						node = node->_left_child;
+					}
+					else if (node->_pair->first < key)
+					{
+						node = node->_right_child;
+					}
+					else
+					{
+						return (node);
+					}
 				}
-			};
+				return (NULL);
+			}
 
-			// Return a pair<Key, Value> on the biggest element
-			Node<Key, Value, Allocator>	*end(void) const
+			iterator begin(void) const
 			{
-				if (_root == NULL)
-					return (NULL);
-				else
-				{
-					Node<Key, Value, Allocator>	*_tmp = _root;
 
-					while (_tmp->_right_child != NULL)
-						_tmp = _tmp->_right_child;
-					return (_tmp);
-				}
-			};
+			}
 	};
 
 };

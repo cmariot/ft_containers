@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:28:01 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/27 00:20:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ namespace	ft
 			// DEREFERENCE
 			reference operator * (void)
 			{
-				return (*_ptr);
+				return (*(_ptr->_pair));
 			};
 
 			// DEREFERENCE
 			pointer operator -> (void)
 			{
-				return (_ptr);
+				return (_ptr->_pair);
 			};
 
 			// PREFIX INCREMENTATION

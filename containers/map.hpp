@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:31:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/27 04:07:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ namespace ft
 		// PRIVATE MEMBER OBJECTS
 		private :
 
-			typedef ft::RedBlackTree <key_type, mapped_type, allocator_type, key_compare>	red_black_tree;
+			typedef ft::RedBlackTree <value_type, allocator_type, key_compare>	red_black_tree;
 
 			red_black_tree	*_tree;
 			key_compare		_comp;
@@ -117,7 +117,7 @@ namespace ft
 				return ;
 			};
 
-			// [X] Range constructor
+			// [ ] Range constructor
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last,
 						const key_compare& comp = key_compare(),
@@ -130,7 +130,7 @@ namespace ft
 				*_tree = red_black_tree(_alloc, _comp);
 				while (first != last)
 				{
-					_tree->add(first->first, first->second);
+					//_tree->add(first);
 					_size++;
 					first++;
 				}
@@ -161,41 +161,41 @@ namespace ft
 			// [/] Begin
 			iterator begin()
 			{
-				return (iterator(_tree->begin()->_pair));
+				return (iterator(_tree->begin()));
 			};
 			const_iterator begin() const
 			{
-				return (const_iterator(_tree->begin()->_pair));
+				return (const_iterator(_tree->begin()));
 			};
 
 			// [/] End
 			iterator end()
 			{
-				return (iterator(_tree->end()->_pair));
+				return (iterator(_tree->end()));
 			};
 			const_iterator end() const
 			{
-				return (const_iterator(_tree->end()->_pair));
+				return (const_iterator(_tree->end()));
 			};
 
 			// [/] Rbegin
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(_tree->end()->_pair));
+				return (reverse_iterator(_tree->end()));
 			};
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(_tree->end()->_pair));
+				return (const_reverse_iterator(_tree->end()));
 			};
 
 			// [/] Rend
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(_tree->begin()->_pair));
+				return (reverse_iterator(_tree->begin()));
 			};
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(_tree->begin()->_pair));
+				return (const_reverse_iterator(_tree->begin()));
 			};
 
 			// [X] Empty
@@ -229,7 +229,7 @@ namespace ft
 			// [ ] Insert
 			pair<iterator,bool> insert (const value_type& val)
 			{
-				_tree->add(val.first, val.second);
+				_tree->add(val);
 				_size++;
 				return (ft::make_pair<iterator, bool>(iterator(), true));
 			};

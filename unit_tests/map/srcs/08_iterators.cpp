@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:13:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/27 03:25:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	iterator_tests(void)
 
 	std::cout << ft_map.begin()->first << std::endl;
 	
-	std::cout << ft_map.end()->first << std::endl;
+	//std::cout << ft_map.end()->first << std::endl;
 
 	return (0);
 }
