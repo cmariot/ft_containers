@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/27 00:20:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/28 13:32:30 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, T> >	traits;
+			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, Node<T> > >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -38,55 +38,72 @@ namespace	ft
 			typedef typename traits::pointer				pointer;
 			typedef typename traits::reference				reference;
 
-			// DEFAULT CONSTRUCTOR
+			// [X] DEFAULT CONSTRUCTOR
 			bidirectional_iterator(void) :
-				_ptr(NULL)
+				_node(NULL)
 			{
 				return ;
 			};
 
-			// COPY CONSTRUCTOR
+			// [X] COPY CONSTRUCTOR
 			bidirectional_iterator(pointer ptr) :
-				_ptr(ptr)
+				_node(ptr)
 			{
 				return ;
 			};
 
-			// COPY ASSIGNATION (=)
+			// [X] COPY ASSIGNATION (=)
 			bidirectional_iterator operator = (const bidirectional_iterator & rhs)
 			{
 				if (this == &rhs)
 					return (*this);
-				this->_ptr = rhs._ptr;
+				this->_node = rhs._node;
 				return (*this);
 			};
 
-			// DESTRUCTOR
+			// [X] DESTRUCTOR
 			~bidirectional_iterator(void)
 			{
 				return ;
 			};
 
-			// DEREFERENCE
+			// [X] DEREFERENCE
 			reference operator * (void)
 			{
-				return (*(_ptr->_pair));
+				return (_node->_pair);
 			};
 
-			// DEREFERENCE
-			pointer operator -> (void)
+			// [X] DEREFERENCE
+			T* operator -> (void) const
 			{
-				return (_ptr->_pair);
+				return (_node->_pair);
 			};
 
-			// PREFIX INCREMENTATION
+			// [X] PREFIX INCREMENTATION
 			bidirectional_iterator & operator ++ (void)
 			{
-				++_ptr;
+				if (_node->_right_child)
+				{
+					Node<T>	*left = _node->_right_child;
+					while (left->_left_child)
+						left = left->_left_child;
+					_node = left;
+				}
+				else
+				{ 
+					Node<T>	*cur = _node;
+					Node<T>	*parent = cur->_parent;
+					while (parent && cur == parent->_right_child)
+					{
+						cur = cur->_parent;
+						parent = parent->_parent;
+					}
+					_node = parent;
+				}
 				return (*this);
 			};
 
-			// SUFIX INCREMENTATION
+			// [X] SUFIX INCREMENTATION
 			bidirectional_iterator operator ++ (int)
 			{
 				bidirectional_iterator	tmp(*this);
@@ -95,14 +112,31 @@ namespace	ft
 				return (tmp);
 			};
 
-			// PREFIX DECREMENTATION
+			// [ ] PREFIX DECREMENTATION
 			bidirectional_iterator & operator -- (void)
 			{
-				--_ptr;
+				if (_node->_left_child)
+				{
+					Node<T>	*left = _node->_left_child;
+					while (left->_right_child)
+						left = left->_right_child;
+					_node = left;
+				}
+				else
+				{
+					Node<T>	*cur = _node;
+					Node<T>	*parent = cur->_parent;
+					while (parent && cur == parent->_left_child)
+					{
+						cur = cur->_parent;
+						parent = parent->_parent;
+					}
+					_node = parent;
+				}
 				return (*this);
 			};
 
-			// SUFIX DECREMENTATION
+			// [X] SUFIX DECREMENTATION
 			bidirectional_iterator operator -- (int)
 			{
 				bidirectional_iterator	tmp(*this);
@@ -111,33 +145,33 @@ namespace	ft
 				return (tmp);
 			};
 
-			// OPERATOR ==
+			// [X] OPERATOR ==
 			bool operator == (const bidirectional_iterator & rhs) const
 			{
-				return (_ptr == rhs._ptr);
+				return (_node == rhs._node);
 			};
 
-			// OPERATOR !=
+			// [X] OPERATOR !=
 			bool operator != (const bidirectional_iterator & rhs) const
 			{
-				return (_ptr != rhs._ptr);
+				return (_node != rhs._node);
 			};
 			
-			// OPERATOR ==
+			// [X] OPERATOR ==
 			bool operator == (const const_bidirectional_iterator<T> & rhs) const
 			{
-				return (_ptr == rhs._ptr);
+				return (_node == rhs._node);
 			};
 
-			// OPERATOR !=
+			// [X] OPERATOR !=
 			bool operator != (const const_bidirectional_iterator<T> & rhs) const
 			{
-				return (_ptr != rhs._ptr);
+				return (_node != rhs._node);
 			};
 
 		public :
 
-			pointer		_ptr;
+			pointer		_node;
 
 	};
 
@@ -147,7 +181,7 @@ namespace	ft
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, const T> >	traits;
+			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, Node<T> > >	traits;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -155,74 +189,72 @@ namespace	ft
 			typedef typename traits::pointer				pointer;
 			typedef typename traits::reference				reference;
 
-			// DEFAULT CONSTRUCTOR
+			// [X] DEFAULT CONSTRUCTOR
 			const_bidirectional_iterator(void) :
-				_ptr(NULL)
+				_node(NULL)
 			{
 				return ;
 			};
 
-			// COPY CONSTRUCTOR
+			// [X] COPY CONSTRUCTOR
 			const_bidirectional_iterator(pointer ptr) :
-				_ptr(ptr)
+				_node(ptr)
 			{
 				return ;
 			};
 
-			const_bidirectional_iterator(const const_bidirectional_iterator & rhs)
-			{
-				_ptr = rhs._ptr;
-				return ;
-			};
-
-			const_bidirectional_iterator(const ft::bidirectional_iterator<T> & rhs)
-			{
-				_ptr = rhs._ptr;
-				return ;
-			};
-
-			// COPY ASSIGNATION (=) const_iterator
+			// [X] COPY ASSIGNATION (=)
 			const_bidirectional_iterator operator = (const const_bidirectional_iterator & rhs)
 			{
 				if (this == &rhs)
 					return (*this);
-				this->_ptr = rhs._ptr;
+				this->_node = rhs._node;
 				return (*this);
 			};
 
-			// COPY ASSIGNATION (=) const_iterator
-			const_bidirectional_iterator operator = (const ft::bidirectional_iterator<T> & rhs)
-			{
-				this->_ptr = rhs._ptr;
-				return (*this);
-			};
-
-			// DESTRUCTOR
+			// [X] DESTRUCTOR
 			~const_bidirectional_iterator(void)
 			{
 				return ;
 			};
 
-			// DEREFERENCE
+			// [X] DEREFERENCE
 			reference operator * (void)
 			{
-				return (*_ptr);
+				return (_node->_pair);
 			};
 
-			// DEREFERENCE
-			pointer operator -> (void) const
+			// [X] DEREFERENCE
+			T* operator -> (void) const
 			{
-				return (_ptr);
+				return (_node->_pair);
 			};
 
-			// PREFIX INCREMENTATION
+			// [X] PREFIX INCREMENTATION
 			const_bidirectional_iterator & operator ++ (void)
 			{
-				++_ptr;
+				if (_node->_right_child)
+				{
+					Node<T>	*left = _node->_right_child;
+					while (left->_left_child)
+						left = left->_left_child;
+					_node = left;
+				}
+				else
+				{ 
+					Node<T>	*cur = _node;
+					Node<T>	*parent = cur->_parent;
+					while (parent && cur == parent->_right_child)
+					{
+						cur = cur->_parent;
+						parent = parent->_parent;
+					}
+					_node = parent;
+				}
 				return (*this);
 			};
 
-			// SUFIX INCREMENTATION
+			// [X] SUFIX INCREMENTATION
 			const_bidirectional_iterator operator ++ (int)
 			{
 				const_bidirectional_iterator	tmp(*this);
@@ -231,14 +263,31 @@ namespace	ft
 				return (tmp);
 			};
 
-			// PREFIX DECREMENTATION
+			// [ ] PREFIX DECREMENTATION
 			const_bidirectional_iterator & operator -- (void)
 			{
-				--_ptr;
+				if (_node->_left_child)
+				{
+					Node<T>	*left = _node->_left_child;
+					while (left->_right_child)
+						left = left->_right_child;
+					_node = left;
+				}
+				else
+				{
+					Node<T>	*cur = _node;
+					Node<T>	*parent = cur->_parent;
+					while (parent && cur == parent->_left_child)
+					{
+						cur = cur->_parent;
+						parent = parent->_parent;
+					}
+					_node = parent;
+				}
 				return (*this);
 			};
 
-			// SUFIX DECREMENTATION
+			// [X] SUFIX DECREMENTATION
 			const_bidirectional_iterator operator -- (int)
 			{
 				const_bidirectional_iterator	tmp(*this);
@@ -247,33 +296,33 @@ namespace	ft
 				return (tmp);
 			};
 
-			// OPERATOR ==
-			bool operator == (const const_bidirectional_iterator & rhs) const
-			{
-				return (_ptr == rhs._ptr);
-			};
-
-			// OPERATOR !=
-			bool operator != (const const_bidirectional_iterator & rhs) const
-			{
-				return (_ptr != rhs._ptr);
-			};
-
-			// OPERATOR ==
+			// [X] OPERATOR ==
 			bool operator == (const bidirectional_iterator<T> & rhs) const
 			{
-				return (_ptr == rhs._ptr);
+				return (_node == rhs._node);
 			};
 
-			// OPERATOR !=
+			// [X] OPERATOR !=
 			bool operator != (const bidirectional_iterator<T> & rhs) const
 			{
-				return (_ptr != rhs._ptr);
+				return (_node != rhs._node);
+			};
+			
+			// [X] OPERATOR ==
+			bool operator == (const const_bidirectional_iterator<T> & rhs) const
+			{
+				return (_node == rhs._node);
+			};
+
+			// [X] OPERATOR !=
+			bool operator != (const const_bidirectional_iterator<T> & rhs) const
+			{
+				return (_node != rhs._node);
 			};
 
 		public :
 
-			const T*	_ptr;
+			pointer		_node;
 
 	};
 };

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/27 05:27:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/28 12:35:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
 	 * If any rule is not satisfied : Rebalance the tree
 	 */
 
-	template <class Pair, class Allocator>
+	template <class Pair, class Allocator = std::allocator<Pair> >
 	class Node
 	{
 		// PUBLIC MEMBER OBJECTS
@@ -72,7 +72,7 @@ namespace ft
 	};
 
 
-	template <class Pair, class Allocator, class Compare = std::less<typename Pair::first_type> >
+	template <class Key, class Pair, class Allocator, class Compare = std::less<typename Pair::first_type> >
 	class RedBlackTree
 	{
 		// PUBLIC MEMBER TYPES
@@ -84,7 +84,7 @@ namespace ft
 		// PUBLIC MEMBER OBJECTS
 		public :
 
-			Node<Pair, Allocator>		*_root;
+			Node<Pair, Allocator>			*_root;
 			allocator_type					_alloc;
 			key_compare						_comp;
 
@@ -397,10 +397,35 @@ namespace ft
 				return (NULL);
 			}
 
-			iterator begin(void) const
+			// Return a pair<Key, Value> on the smalest element
+			Node<Pair, Allocator>	*begin(void) const
 			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Pair, Allocator>	*_tmp = _root;
 
-			}
+					while (_tmp->_left_child != NULL)
+						_tmp = _tmp->_left_child;
+					return (_tmp);
+				}
+			};
+
+			// Return a pair<Key, Value> on the biggest element
+			Node<Pair, Allocator>	*end(void) const
+			{
+				if (_root == NULL)
+					return (NULL);
+				else
+				{
+					Node<Pair, Allocator>	*_tmp = _root;
+
+					while (_tmp->_right_child != NULL)
+						_tmp = _tmp->_right_child;
+					return (_tmp);
+				}
+			};
 	};
 
 };

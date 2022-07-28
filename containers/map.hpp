@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/27 04:07:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/28 13:28:27 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ namespace ft
 		// PRIVATE MEMBER OBJECTS
 		private :
 
-			typedef ft::RedBlackTree <value_type, allocator_type, key_compare>	red_black_tree;
+			typedef ft::RedBlackTree<key_type, value_type, allocator_type, key_compare>	red_black_tree;
 
 			red_black_tree	*_tree;
 			key_compare		_comp;
@@ -144,10 +144,12 @@ namespace ft
 			};
 
 			// [/] Operator =
-			map& operator= (const map& x)
+			map& operator = (const map& x)
 			{
 				clear();
-				*this = map(x);
+				this->_size = x.size();
+				this->_alloc = x.get_allocator();
+				this->_comp = x.key_comp();
 				return (*this);
 			};
 
