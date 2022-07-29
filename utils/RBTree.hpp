@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/28 17:37:26 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 14:22:45 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,6 +423,7 @@ namespace ft
 
 					while (_tmp->_right_child != NULL)
 						_tmp = _tmp->_right_child;
+					_tmp = _tmp->_right_child;
 					return (_tmp);
 				}
 			};

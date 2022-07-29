@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/29 11:42:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 14:39:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
 			typedef typename Allocator::pointer								pointer;
 			typedef typename Allocator::const_pointer						const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type>			iterator;
-			typedef typename ft::const_bidirectional_iterator<value_type>	const_iterator;
+			typedef typename ft::bidirectional_iterator<const value_type>	const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -58,11 +58,11 @@ namespace ft
 
 			class value_compare
 			{
+				friend class map;
 
 				// PUBLIC MEMBER TYPES
 				public :
 
-					friend class map;
 					typedef bool				result_type;
 					typedef value_type			first_argument_type;
 					typedef value_type			second_argument_type;
@@ -71,7 +71,6 @@ namespace ft
 				protected :
 
 					Compare						comp;
-
 
 				// PROTECTED MEMBER FUNCTION
 				protected :
@@ -117,7 +116,7 @@ namespace ft
 				return ;
 			};
 
-			// [ ] Range constructor
+			// [X] Range constructor
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last,
 						const key_compare& comp = key_compare(),
@@ -134,11 +133,9 @@ namespace ft
 					_size++;
 					first++;
 				}
-				_tree->add(make_pair<Key, Value>(first->first, first->second));
-				_size++;
 			};
 
-			// [/] Copy constructor
+			// [X] Copy constructor
 			// A tester apres implementation des iterateurs
 			map(const map& x)
 			{
@@ -149,17 +146,15 @@ namespace ft
 			map& operator = (const map& x)
 			{
 				iterator	it = x.begin();
-				size_type	i = 0;
 
 				clear();
 				_size = x.size();
 				_alloc = x.get_allocator();
 				_comp = x.key_comp();
-				while (i < _size)
+				while (it != x.end())
 				{
 					_tree->add(make_pair<Key, Value>(it->first, it->second));
 					it++;
-					i++;
 				}
 				return (*this);
 			};
@@ -184,21 +179,21 @@ namespace ft
 			// [/] End
 			iterator end()
 			{
-				return (iterator(NULL));
+				return (iterator(_tree->end()));
 			};
 			const_iterator end() const
 			{
-				return (const_iterator(NULL));
+				return (const_iterator(_tree->end()));
 			};
 
 			// [/] Rbegin
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(NULL));
+				return (reverse_iterator(_tree->end()));
 			};
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(NULL));
+				return (const_reverse_iterator(_tree->end()));
 			};
 
 			// [/] Rend
@@ -246,9 +241,26 @@ namespace ft
 				_size++;
 				return (ft::make_pair<iterator, bool>(iterator(), true));
 			};
-			iterator insert (iterator position, const value_type& val);
+			iterator insert (iterator position, const value_type& val)
+			{
+				iterator	it = begin();
+
+				while (it != position)
+				{
+					it++;
+				}
+				it->second = val;
+				return (it);
+			};
 			template <class InputIterator>
-			void insert (InputIterator first, InputIterator last);
+			void insert (InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(ft::make_pair<first->first_type, first->second_type>(first->first, first->second));
+					first++;
+				}
+			};
 
 			// [ ] Erase 
 			void erase (iterator position);
