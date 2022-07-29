@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/28 13:32:30 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:36:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 
+# include "map.hpp"
 # include "random_access_iterator.hpp"
 
 namespace	ft
@@ -23,7 +24,6 @@ namespace	ft
 	template <class T>
 	class const_bidirectional_iterator;
 
-	// RANDOM ACCESS ITERATOR
 	template <class T>
 	class bidirectional_iterator
 	{
@@ -171,7 +171,7 @@ namespace	ft
 
 		public :
 
-			pointer		_node;
+			Node<T>		*_node;
 
 	};
 
@@ -322,7 +322,7 @@ namespace	ft
 
 		public :
 
-			pointer		_node;
+			Node<T>		*_node;
 
 	};
 };

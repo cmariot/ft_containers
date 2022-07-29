@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/28 12:35:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/28 17:37:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,7 +398,7 @@ namespace ft
 			}
 
 			// Return a pair<Key, Value> on the smalest element
-			Node<Pair, Allocator>	*begin(void) const
+			Node<Pair, Allocator>	*begin(void)
 			{
 				if (_root == NULL)
 					return (NULL);
@@ -413,7 +413,7 @@ namespace ft
 			};
 
 			// Return a pair<Key, Value> on the biggest element
-			Node<Pair, Allocator>	*end(void) const
+			Node<Pair, Allocator>	*end(void)
 			{
 				if (_root == NULL)
 					return (NULL);

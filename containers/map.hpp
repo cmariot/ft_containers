@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/28 13:28:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:42:03 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,12 @@ namespace ft
 				*_tree = red_black_tree(_alloc, _comp);
 				while (first != last)
 				{
-					//_tree->add(first);
+					_tree->add(make_pair<Key, Value>(first->first, first->second));
 					_size++;
 					first++;
 				}
+				_tree->add(make_pair<Key, Value>(first->first, first->second));
+				_size++;
 			};
 
 			// [/] Copy constructor
@@ -146,10 +148,19 @@ namespace ft
 			// [/] Operator =
 			map& operator = (const map& x)
 			{
+				iterator	it = x.begin();
+				size_type	i = 0;
+
 				clear();
-				this->_size = x.size();
-				this->_alloc = x.get_allocator();
-				this->_comp = x.key_comp();
+				_size = x.size();
+				_alloc = x.get_allocator();
+				_comp = x.key_comp();
+				while (i < _size)
+				{
+					_tree->add(make_pair<Key, Value>(it->first, it->second));
+					it++;
+					i++;
+				}
 				return (*this);
 			};
 
@@ -161,11 +172,11 @@ namespace ft
 			};
 
 			// [/] Begin
-			iterator begin()
+			iterator begin(void)
 			{
 				return (iterator(_tree->begin()));
 			};
-			const_iterator begin() const
+			const_iterator begin(void) const
 			{
 				return (const_iterator(_tree->begin()));
 			};
@@ -173,21 +184,21 @@ namespace ft
 			// [/] End
 			iterator end()
 			{
-				return (iterator(_tree->end()));
+				return (iterator(NULL));
 			};
 			const_iterator end() const
 			{
-				return (const_iterator(_tree->end()));
+				return (const_iterator(NULL));
 			};
 
 			// [/] Rbegin
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(_tree->end()));
+				return (reverse_iterator(NULL));
 			};
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(_tree->end()));
+				return (const_reverse_iterator(NULL));
 			};
 
 			// [/] Rend

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/28 13:14:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:43:31 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,16 @@ int	iterator_tests(void)
 	ft_map.insert(ft::pair<int, char>(2, 'b'));
 	ft_map.insert(ft::pair<int, char>(3, 'c'));
 
-	ft::map<int, char>::iterator	it;
-	ft::map<int, char>::iterator	ite;
-
-	it = ft_map.begin();
-	ite = ft_map.end();
+	ft::map<int, char>::iterator	it = ft_map.begin();
+	ft::map<int, char>::iterator	ite = ft_map.end();
 
 	while (it != ite)
 	{
 		std::cout << it->first << ":" << it->second << std::endl;
 		it++;
 	}
-	while (it != ft_map.begin())
-	{
-		std::cout << it->first << ":" << it->second << std::endl;
-		it--;
-	}
+
+	//ft::map<int, char>::const_iterator	cit = ft_map.begin();
+
 	return (0);
 }
