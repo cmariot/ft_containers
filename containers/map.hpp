@@ -25,6 +25,10 @@
 # include "../iterators/reverse_iterator.hpp"
 # include "../utils/pair.hpp"
 
+// TODO :
+// - [ ] Conversion iterator -> const iterator
+// - [ ] Max_size() doit renvoyer la bonne valeur
+
 namespace ft
 {
 
@@ -221,7 +225,7 @@ namespace ft
 			// [X] Max_size
 			size_type max_size() const
 			{
-				return (std::numeric_limits<difference_type>::max());
+				return (std::numeric_limits<size_type>::max());
 			};
 
 			// [/] Operator []

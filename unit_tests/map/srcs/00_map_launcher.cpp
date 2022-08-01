@@ -25,5 +25,6 @@ int	map_launcher(void)
 	load_test(&tests, function_name, "Val_Key comp", (void *)&value_key_comp_tests, "");
 	load_test(&tests, function_name, "Swap tests", (void *)&swap_tests, "");
 	load_test(&tests, function_name, "Iterators", (void *)&iterator_tests, "");
+	load_test(&tests, function_name, "Empty test", (void *)&empty_test, "");
 	return (launch_tests(&tests));
 }
