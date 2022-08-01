@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/29 14:26:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 17:25:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ namespace	ft
 				return ;
 			};
 
+			operator bidirectional_iterator<const T>(void) const
+            {
+                return (bidirectional_iterator<T>(this->_node));
+            }
+			
 			// [X] COPY ASSIGNATION (=)
 			bidirectional_iterator operator = (const bidirectional_iterator & rhs)
 			{
