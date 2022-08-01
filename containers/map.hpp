@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/29 14:39:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 20:26:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
 			typedef typename Allocator::pointer								pointer;
 			typedef typename Allocator::const_pointer						const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type>			iterator;
-			typedef typename ft::bidirectional_iterator<const value_type>	const_iterator;
+			typedef typename ft::bidirectional_iterator<value_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -257,7 +257,7 @@ namespace ft
 			{
 				while (first != last)
 				{
-					insert(ft::make_pair<first->first_type, first->second_type>(first->first, first->second));
+					insert(ft::make_pair<Key, Value>(first->first, first->second));
 					first++;
 				}
 			};

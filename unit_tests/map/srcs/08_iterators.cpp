@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/29 14:25:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/07/29 17:20:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	iterator_tests(void)
 		it++;
 	}
 
-	//ft::map<int, char>::const_iterator	cit = ft_map.begin();
+	ft::map<int, char>::const_iterator	cit = ft_map.begin();
 
 	return (0);
 }
