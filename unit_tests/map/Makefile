@@ -59,6 +59,7 @@ SRC_SUBDIR	    = main.cpp \
 				  07_swap.cpp \
 				  08_iterators.cpp \
 				  09_empty.cpp \
+				  10_relational_operators.cpp \
 
 
 SRCS			= $(addprefix $(SRC_ROOTDIR), $(SRC_SUBDIR))

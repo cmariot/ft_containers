@@ -26,5 +26,6 @@ int	map_launcher(void)
 	load_test(&tests, function_name, "Swap tests", (void *)&swap_tests, "");
 	load_test(&tests, function_name, "Iterators", (void *)&iterator_tests, "");
 	load_test(&tests, function_name, "Empty test", (void *)&empty_test, "");
+	load_test(&tests, function_name, "Relational", (void *)&relational_ope, "");
 	return (launch_tests(&tests));
 }

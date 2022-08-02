@@ -134,7 +134,6 @@ namespace ft
 				*_tree = red_black_tree(_alloc, _comp);
 				for (InputIterator it = first ; it != last ; ++it)
 				{
-					//Node<Pair, Allocator> *find(typename Pair::first_type & key) const
 					if (_tree->find(it->first) == NULL)
 					{
 						_tree->add(ft::make_pair<Key, Value>(it->first, it->second));
@@ -143,7 +142,7 @@ namespace ft
 				}
 			};
 
-			// [X] Copy constructor
+			// [/] Copy constructor
 			map(const map& x)
 			{
 				*this = map(x.begin(), x.end(), x.key_comp(), x.get_allocator());
@@ -235,7 +234,7 @@ namespace ft
 			// [/] Operator []
 			mapped_type& operator[] (const key_type& k)
 			{
-				return ( (*((this->insert(ft::make_pair<key_type, mapped_type>(k,mapped_type()))).first)).second );
+				return ((*((this->insert(ft::make_pair<key_type, mapped_type>(k, mapped_type()))).first)).second);
 			};
 
 			// [ ] Insert
@@ -267,9 +266,20 @@ namespace ft
 			};
 
 			// [ ] Erase 
-			void erase (iterator position);
-			size_type erase (const key_type& k);
-			void erase (iterator first, iterator last);
+			void erase(iterator position)
+			{
+				(void)position;
+			};
+			size_type erase(const key_type& k)
+			{
+				(void)k;
+				return (0);
+			};
+			void erase(iterator first, iterator last)
+			{
+				(void)first;
+				(void)last;
+			};
 
 			// [X] Swap
 			void swap(map & x)
@@ -383,13 +393,13 @@ namespace ft
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator <= (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
 	{
-		return !(rhs > lhs);
+		return !(rhs < lhs);
 	};
 
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator > (const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs)
 	{
-		return !(rhs < lhs);
+		return (rhs < lhs);
 	};
 
 	template< class Key, class T, class Compare, class Alloc >

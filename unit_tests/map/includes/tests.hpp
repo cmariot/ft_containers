@@ -28,5 +28,6 @@ int		value_key_comp_tests(void);
 int		swap_tests(void);
 int		iterator_tests(void);
 int		empty_test(void);
+int		relational_ope(void);
 
 #endif
