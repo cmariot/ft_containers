@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/29 14:22:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/02 05:47:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,17 +382,11 @@ namespace ft
 				while (node != NULL)
 				{
 					if (node->_pair->first > key)
-					{
 						node = node->_left_child;
-					}
 					else if (node->_pair->first < key)
-					{
 						node = node->_right_child;
-					}
 					else
-					{
 						return (node);
-					}
 				}
 				return (NULL);
 			}
@@ -427,6 +421,7 @@ namespace ft
 					return (_tmp);
 				}
 			};
+
 	};
 
 };
