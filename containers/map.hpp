@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/02 06:11:27 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/02 07:12:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ namespace ft
 				{
 					it++;
 				}
+				(void)val;
 				return (it);
 			};
 			template <class InputIterator>
