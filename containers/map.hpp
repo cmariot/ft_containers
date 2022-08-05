@@ -27,7 +27,14 @@
 # include "../utils/pair.hpp"
 
 // TODO :
-// - [ ] Conversion iterator -> const iterator
+// - [ ] Faire compiler tous les tests MLI
+//		- ite_n1
+//		- Comp
+//		- rite
+//		- rite_arrow
+//		- Bound
+// - [ ] Faire en sorte que les tests MLI retrounent une valeur
+// - [ ] Output MLI identique
 
 namespace ft
 {
@@ -54,7 +61,6 @@ namespace ft
 			typedef typename Allocator::const_pointer						const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type>			iterator;
 			typedef typename ft::bidirectional_iterator<value_type>			const_iterator;
-
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
