@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/02 06:12:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/07 22:07:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 namespace	ft
 {
 
-	template <class T>
+	template <class Pair>
 	class bidirectional_iterator
 	{
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, Node<T> > >	traits;
+			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, Node<Pair> > >	traits;
+			
+			typedef ft::Node<Pair>							node;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -42,18 +44,23 @@ namespace	ft
 				return ;
 			};
 
-			// [X] COPY CONSTRUCTOR
-			bidirectional_iterator(pointer ptr) :
+			// [X] COPY CONSTRUCPairOR
+			bidirectional_iterator(node *ptr) :
 				_node(ptr)
 			{
 				return ;
 			};
+			bidirectional_iterator(const bidirectional_iterator & rhs) :
+				_node(rhs._node)
+			{
+				return ;
+			};
+			bidirectional_iterator(const const_bidirectional_iterator<Pair> & rhs) :
+				_node(rhs._node)
+			{
+				return ;
+			};
 
-			operator bidirectional_iterator<const T>(void) const
-            {
-                return (bidirectional_iterator<T>(this->_node));
-            }
-			
 			// [X] COPY ASSIGNATION (=)
 			bidirectional_iterator operator = (const bidirectional_iterator & rhs)
 			{
@@ -70,13 +77,13 @@ namespace	ft
 			};
 
 			// [X] DEREFERENCE
-			T & operator * (void)
+			Pair & operator * (void)
 			{
 				return (*(_node->_pair));
 			};
 
 			// [X] DEREFERENCE
-			T* operator -> (void) const
+			Pair* operator -> (void) const
 			{
 				return (_node->_pair);
 			};
@@ -86,15 +93,15 @@ namespace	ft
 			{
 				if (_node->_right_child)
 				{
-					Node<T>	*left = _node->_right_child;
+					Node<Pair>	*left = _node->_right_child;
 					while (left->_left_child)
 						left = left->_left_child;
 					_node = left;
 				}
 				else
 				{ 
-					Node<T>	*cur = _node;
-					Node<T>	*parent = cur->_parent;
+					Node<Pair>	*cur = _node;
+					Node<Pair>	*parent = cur->_parent;
 					while (parent && cur == parent->_right_child)
 					{
 						cur = cur->_parent;
@@ -119,15 +126,15 @@ namespace	ft
 			{
 				if (_node->_left_child)
 				{
-					Node<T>	*left = _node->_left_child;
+					Node<Pair>	*left = _node->_left_child;
 					while (left->_right_child)
 						left = left->_right_child;
 					_node = left;
 				}
 				else
 				{
-					Node<T>	*cur = _node;
-					Node<T>	*parent = cur->_parent;
+					Node<Pair>	*cur = _node;
+					Node<Pair>	*parent = cur->_parent;
 					while (parent && cur == parent->_left_child)
 					{
 						cur = cur->_parent;
@@ -161,17 +168,19 @@ namespace	ft
 
 		public :
 
-			Node<T>		*_node;
+			Node<Pair>		*_node;
 
 	};
 
-	template <class T>
+	template <class Pair>
 	class const_bidirectional_iterator
 	{
 
 		public :
 
-			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, const Node<T> > >	traits;
+			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, const Node<Pair> > >	traits;
+			
+			typedef ft::Node<Pair>							node;
 
 			typedef typename traits::iterator_category		iterator_category;
 			typedef typename traits::value_type				value_type;
@@ -186,22 +195,22 @@ namespace	ft
 				return ;
 			};
 
-			// [X] COPY CONSTRUCTOR
-			const_bidirectional_iterator(pointer ptr) :
+			// [X] COPY CONSTRUCPairOR
+			const_bidirectional_iterator(node *ptr) :
 				_node(ptr)
 			{
 				return ;
 			};
-			const_bidirectional_iterator(ft::bidirectional_iterator<T> & rhs) :
-				_node(rhs.node)
+			const_bidirectional_iterator(const bidirectional_iterator<Pair> & rhs) :
+				_node(rhs._node)
 			{
 				return ;
 			};
-
-			operator const_bidirectional_iterator<const T>(void) const
+			const_bidirectional_iterator(const const_bidirectional_iterator & rhs) :
+				_node(rhs._node)
 			{
-				return (const_bidirectional_iterator<T>(this->_node));
-			}
+				return ;
+			};
 
 			// [X] COPY ASSIGNATION (=)
 			const_bidirectional_iterator operator = (const const_bidirectional_iterator & rhs)
@@ -211,14 +220,13 @@ namespace	ft
 				this->_node = rhs._node;
 				return (*this);
 			};
-			const_bidirectional_iterator operator = (const bidirectional_iterator<T> & rhs)
+			const_bidirectional_iterator operator = (const bidirectional_iterator<Pair> & rhs)
 			{
 				if (this == &rhs)
 					return (*this);
 				this->_node = rhs._node;
 				return (*this);
 			};
-
 
 			// [X] DESTRUCTOR
 			~const_bidirectional_iterator(void)
@@ -227,13 +235,13 @@ namespace	ft
 			};
 
 			// [X] DEREFERENCE
-			T & operator * (void)
+			Pair & operator * (void)
 			{
 				return (*(_node->_pair));
 			};
 
 			// [X] DEREFERENCE
-			T* operator -> (void) const
+			Pair* operator -> (void) const
 			{
 				return (_node->_pair);
 			};
@@ -243,15 +251,15 @@ namespace	ft
 			{
 				if (_node->_right_child)
 				{
-					Node<T>	*left = _node->_right_child;
+					Node<Pair>	*left = _node->_right_child;
 					while (left->_left_child)
 						left = left->_left_child;
 					_node = left;
 				}
 				else
 				{ 
-					Node<T>	*cur = _node;
-					Node<T>	*parent = cur->_parent;
+					Node<Pair>	*cur = _node;
+					Node<Pair>	*parent = cur->_parent;
 					while (parent && cur == parent->_right_child)
 					{
 						cur = cur->_parent;
@@ -276,15 +284,15 @@ namespace	ft
 			{
 				if (_node->_left_child)
 				{
-					Node<T>	*left = _node->_left_child;
+					Node<Pair>	*left = _node->_left_child;
 					while (left->_right_child)
 						left = left->_right_child;
 					_node = left;
 				}
 				else
 				{
-					Node<T>	*cur = _node;
-					Node<T>	*parent = cur->_parent;
+					Node<Pair>	*cur = _node;
+					Node<Pair>	*parent = cur->_parent;
 					while (parent && cur == parent->_left_child)
 					{
 						cur = cur->_parent;
@@ -310,30 +318,186 @@ namespace	ft
 				return (_node == rhs._node);
 			};
 
-			// [X] OPERATOR ==
-			bool operator == (const bidirectional_iterator<T> & rhs) const
-			{
-				return (_node == rhs._node);
-			};
-
 			// [X] OPERATOR !=
 			bool operator != (const const_bidirectional_iterator & rhs) const
 			{
 				return (_node != rhs._node);
 			};
 
-			// [X] OPERATOR !=
-			bool operator != (const bidirectional_iterator<T> & rhs) const
-			{
-				return (_node != rhs._node);
-			};
-
 		public :
 
-			const Node<T>		*_node;
+			Node<Pair>		*_node;
 
 	};
-
+//	template <class Pair>
+//	class const_bidirectional_iterator
+//	{
+//
+//		public :
+//
+//			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, const Node<Pair> > >	traits;
+//
+//			typedef typename traits::iterator_category		iterator_category;
+//			typedef typename traits::value_type				value_type;
+//			typedef typename traits::difference_type		difference_type;
+//			typedef typename traits::pointer				pointer;
+//			typedef typename traits::reference				reference;
+//
+//			// [X] DEFAULPair CONSPairRUCPairOR
+//			const_bidirectional_iterator(void) :
+//				_node(NULL)
+//			{
+//				return ;
+//			};
+//
+//			// [X] COPY CONSPairRUCPairOR
+//			const_bidirectional_iterator(pointer ptr) :
+//				_node(ptr)
+//			{
+//				return ;
+//			};
+//			const_bidirectional_iterator(ft::bidirectional_iterator<Pair> & rhs) :
+//				_node(rhs.node)
+//			{
+//				return ;
+//			};
+//
+//			operator const_bidirectional_iterator<const Pair>(void) const
+//			{
+//				return (const_bidirectional_iterator<Pair>(this->_node));
+//			}
+//
+//			// [X] COPY ASSIGNAPairION (=)
+//			const_bidirectional_iterator operator = (const const_bidirectional_iterator & rhs)
+//			{
+//				if (this == &rhs)
+//					return (*this);
+//				this->_node = rhs._node;
+//				return (*this);
+//			};
+//			const_bidirectional_iterator operator = (const bidirectional_iterator<Pair> & rhs)
+//			{
+//				if (this == &rhs)
+//					return (*this);
+//				this->_node = rhs._node;
+//				return (*this);
+//			};
+//
+//
+//			// [X] DESPairRUCPairOR
+//			~const_bidirectional_iterator(void)
+//			{
+//				return ;
+//			};
+//
+//			// [X] DEREFERENCE
+//			Pair & operator * (void)
+//			{
+//				return (*(_node->_pair));
+//			};
+//
+//			// [X] DEREFERENCE
+//			Pair* operator -> (void) const
+//			{
+//				return (_node->_pair);
+//			};
+//
+//			// [X] PREFIX INCREMENPairAPairION
+//			const_bidirectional_iterator & operator ++ (void)
+//			{
+//				if (_node->_right_child)
+//				{
+//					Node<Pair>	*left = _node->_right_child;
+//					while (left->_left_child)
+//						left = left->_left_child;
+//					_node = left;
+//				}
+//				else
+//				{ 
+//					Node<Pair>	*cur = _node;
+//					Node<Pair>	*parent = cur->_parent;
+//					while (parent && cur == parent->_right_child)
+//					{
+//						cur = cur->_parent;
+//						parent = parent->_parent;
+//					}
+//					_node = parent;
+//				}
+//				return (*this);
+//			};
+//
+//			// [X] SUFIX INCREMENPairAPairION
+//			const_bidirectional_iterator operator ++ (int)
+//			{
+//				const_bidirectional_iterator	tmp(*this);
+//
+//				operator++();
+//				return (tmp);
+//			};
+//
+//			// [X] PREFIX DECREMENPairAPairION
+//			const_bidirectional_iterator & operator -- (void)
+//			{
+//				if (_node->_left_child)
+//				{
+//					Node<Pair>	*left = _node->_left_child;
+//					while (left->_right_child)
+//						left = left->_right_child;
+//					_node = left;
+//				}
+//				else
+//				{
+//					Node<Pair>	*cur = _node;
+//					Node<Pair>	*parent = cur->_parent;
+//					while (parent && cur == parent->_left_child)
+//					{
+//						cur = cur->_parent;
+//						parent = parent->_parent;
+//					}
+//					_node = parent;
+//				}
+//				return (*this);
+//			};
+//
+//			// [X] SUFIX DECREMENPairAPairION
+//			const_bidirectional_iterator operator -- (int)
+//			{
+//				const_bidirectional_iterator	tmp(*this);
+//
+//				operator--();
+//				return (tmp);
+//			};
+//
+//			// [X] OPERAPairOR ==
+//			bool operator == (const const_bidirectional_iterator & rhs) const
+//			{
+//				return (_node == rhs._node);
+//			};
+//
+//			// [X] OPERAPairOR ==
+//			bool operator == (const bidirectional_iterator<Pair> & rhs) const
+//			{
+//				return (_node == rhs._node);
+//			};
+//
+//			// [X] OPERAPairOR !=
+//			bool operator != (const const_bidirectional_iterator & rhs) const
+//			{
+//				return (_node != rhs._node);
+//			};
+//
+//			// [X] OPERAPairOR !=
+//			bool operator != (const bidirectional_iterator<Pair> & rhs) const
+//			{
+//				return (_node != rhs._node);
+//			};
+//
+//		public :
+//
+//			const Node<Pair>		*_node;
+//
+//	};
+//
 
 };
 

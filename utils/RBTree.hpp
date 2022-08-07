@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/02 05:47:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/07 13:24:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ namespace ft
 	 * If any rule is not satisfied : Rebalance the tree
 	 */
 
+	template <class Pair>
+	class bidirectional_iterator;
+	template <class Pair>
+	class const_bidirectional_iterator;
+
 	template <class Pair, class Allocator = std::allocator<Pair> >
 	class Node
 	{
@@ -51,7 +56,7 @@ namespace ft
 		public :
 
 			// Node Constructor
-			Node(Pair pair, Allocator alloc) :
+			Node(const Pair & pair, Allocator alloc) :
 				_alloc(alloc)
 			{
 				_pair = _alloc.allocate(1);
@@ -267,7 +272,7 @@ namespace ft
 			};
 
 			// Add new_node bellow the parent node
-			void	add(Node<Pair, Allocator> *parent, Node<Pair, Allocator> *new_node)
+			ft::pair<Node<Pair, Allocator> *, bool>	add(Node<Pair, Allocator> *parent, Node<Pair, Allocator> *new_node)
 			{
 				if (_comp(parent->_pair->first, new_node->_pair->first))
 				{
@@ -278,20 +283,25 @@ namespace ft
 						new_node->_parent = parent;
 						new_node->_is_left_child = false;
 						checkColor(new_node);
-						return ;
+						return (ft::make_pair<Node<Pair, Allocator> *, bool>(new_node, true));
 					}
 					return (add(parent->_right_child, new_node));
 				}
-				// Add to the left
-				if (parent->_left_child == NULL)
+				else if (!(_comp(parent->_pair->first, new_node->_pair->first)))
 				{
-					parent->_left_child = new_node;
-					new_node->_parent = parent;
-					new_node->_is_left_child = true;
-					checkColor(new_node);
-					return ;
+					// Add to the left
+					if (parent->_left_child == NULL)
+					{
+						parent->_left_child = new_node;
+						new_node->_parent = parent;
+						new_node->_is_left_child = true;
+						checkColor(new_node);
+						return (ft::make_pair<Node<Pair, Allocator> *, bool>(new_node, true));
+					}
+					return (add(parent->_left_child, new_node));
 				}
-				return (add(parent->_left_child, new_node));
+				else
+					return (ft::make_pair<Node<Pair, Allocator> *, bool>(new_node, false));
 			};
 
 			void	print(Node<Pair, Allocator> *node, std::string indent, bool last)
@@ -347,23 +357,23 @@ namespace ft
 				if (_root != NULL)
 				{
 					destructor(_root);
+					_root = NULL;
 				}
 			};
 
 			// Add a new node to the tree,
 			// If the tree is empty set a new node to _root
 			// Else call a recursive function to add the node bellow
-			void	add(Pair pair)
+			ft::pair<Node<Pair, Allocator> *, bool>	add(Pair pair)
 			{
 				Node<Pair, Allocator>	*node = new Node<Pair, Allocator>(pair, _alloc);
 				if (_root == NULL)
 				{
 					_root = node;
 					_root->_black = true;
-					return ;
+					return (ft::make_pair<Node<Pair, Allocator> *, bool>(_root, true));
 				}
-				add(_root, node);
-				return ;
+				return (add(_root, node));
 			};
 
 			// Print the tree
@@ -392,35 +402,33 @@ namespace ft
 			}
 
 			// Return a pair<Key, Value> on the smalest element
-			Node<Pair, Allocator>	*begin(void)
+			bidirectional_iterator<Pair>	begin(void)
 			{
-				if (_root == NULL)
-					return (NULL);
-				else
-				{
-					Node<Pair, Allocator>	*_tmp = _root;
+				Node<Pair, Allocator>	*left = _root;
 
-					while (_tmp->_left_child != NULL)
-						_tmp = _tmp->_left_child;
-					return (_tmp);
-				}
+				while (left && left->_left_child)
+					left = left->_left_child;
+				return (bidirectional_iterator<Pair>(left));
+			};
+			const_bidirectional_iterator<Pair>	cbegin(void) const
+			{
+				Node<Pair, Allocator>	*left = _root;
+
+				while (left && left->_left_child)
+					left = left->_left_child;
+				return (const_bidirectional_iterator<Pair>(left));
 			};
 
 			// Return a pair<Key, Value> on the biggest element
-			Node<Pair, Allocator>	*end(void)
+			bidirectional_iterator<Pair>	end(void)
 			{
-				if (_root == NULL)
-					return (NULL);
-				else
-				{
-					Node<Pair, Allocator>	*_tmp = _root;
-
-					while (_tmp->_right_child != NULL)
-						_tmp = _tmp->_right_child;
-					_tmp = _tmp->_right_child;
-					return (_tmp);
-				}
+				return (bidirectional_iterator<Pair>(NULL));
 			};
+			const_bidirectional_iterator<Pair>	cend(void) const
+			{
+				return (const_bidirectional_iterator<Pair>(NULL));
+			};
+
 
 	};
 

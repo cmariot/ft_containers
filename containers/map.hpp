@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/02 07:12:17 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/07 13:30:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
 			typedef typename Allocator::pointer								pointer;
 			typedef typename Allocator::const_pointer						const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type>			iterator;
-			typedef typename ft::bidirectional_iterator<value_type>			const_iterator;
+			typedef typename ft::const_bidirectional_iterator<value_type>	const_iterator;
 			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -181,21 +181,21 @@ namespace ft
 			// [/] Begin
 			iterator begin(void)
 			{
-				return (iterator(_tree->begin()));
+				return (_tree->begin());
 			};
 			const_iterator begin(void) const
 			{
-				return (const_iterator(_tree->begin()));
+				return (_tree->cbegin());
 			};
 
 			// [/] End
 			iterator end()
 			{
-				return (iterator(_tree->end()));
+				return (_tree->end());
 			};
 			const_iterator end() const
 			{
-				return (const_iterator(_tree->end()));
+				return (_tree->cend());
 			};
 
 			// [/] Rbegin
@@ -205,7 +205,7 @@ namespace ft
 			};
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(_tree->end()));
+				return (const_reverse_iterator(_tree->cend()));
 			};
 
 			// [/] Rend
@@ -215,7 +215,7 @@ namespace ft
 			};
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(_tree->begin()));
+				return (const_reverse_iterator(_tree->cbegin()));
 			};
 
 			// [X] Empty

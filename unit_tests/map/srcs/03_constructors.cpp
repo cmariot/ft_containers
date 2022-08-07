@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 06:48:23 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/07 13:21:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,31 @@ int	constructors_tests(void)
 	std_map.insert(std::pair<int, char>(2, 'b'));
 	std_map.insert(std::pair<int, char>(3, 'c'));
 
-	ft::map<int, char>	ft_range(std_map.begin(), std_map.end()); 
-	
 
+
+	ft::map<int, char>	ft_range(std_map.begin(), std_map.end()); 
 
 	ft::map<int, char>				mp(ft_map.begin(), ft_map.end());
 	ft::map<int, char>::iterator	it = mp.begin();
 	ft::map<int, char>::iterator	ite = mp.end();
-
-	ft::map<int, char>				mp_range(it, --(--ite));
-	for (int i = 0; it != ite; ++it)
-			it->second = ++i * 5;
-
-	it = mp.begin();
-	ite = --(--mp.end());
 	
-	ft::map<int, char>				mp_copy(mp);
-	for (int i = 0; it != ite; ++it)
-			it->second = ++i * 7;
+	//std::cout << ite->first << std::endl;
 
-	mp = mp_copy;
-	mp_copy = mp_range;
-	mp_range.clear();
-
+//	ft::map<int, char>				mp_range(it, --(--ite));
+//	for (int i = 0; it != ite; ++it)
+//			it->second = ++i * 5;
+//
+//	it = mp.begin();
+//	ite = --(--mp.end());
+//	
+//	ft::map<int, char>				mp_copy(mp);
+//	for (int i = 0; it != ite; ++it)
+//			it->second = ++i * 7;
+//
+//	mp = mp_copy;
+//	mp_copy = mp_range;
+//	mp_range.clear();
+//
 	// A tester apres l'implementation des iterateurs begin, end et ++
 	//ft::map<int, char>	ft_copy(ft_range);
 
