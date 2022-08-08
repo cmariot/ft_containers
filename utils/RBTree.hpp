@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 03:31:59 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 07:46:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,20 @@ namespace ft
 				}
 			};
 
+			void	del(Node<Pair, Allocator> *node, typename Pair::first_type & key)
+			{
+				if (node != NULL)
+				{
+					if (node->_pair->first == key)
+					{
+						std::cout << "DEL ICI" << std::endl;
+						return ;
+					}
+					del(node->_left_child, key);
+					del(node->_right_child, key);
+				}
+			};
+
 			void	destructor(Node<Pair, Allocator> *node)
 			{
 				if (node)
@@ -374,6 +388,14 @@ namespace ft
 					return (ft::make_pair<Node<Pair, Allocator> *, bool>(_root, true));
 				}
 				return (add(_root, node));
+			};
+
+			void	del(typename Pair::first_type & key)
+			{
+				if (_root != NULL)
+				{
+					del(_root, key);
+				}
 			};
 
 			// Print the tree

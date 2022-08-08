@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 04:31:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 08:09:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@
 
 // TODO :
 // - [ ] Faire compiler tous les tests MLI
-//		- ite_n1
-//		- Comp
 //		- rite
 //		- rite_arrow
-//		- Bound
+//		- Comp
 // - [ ] Faire en sorte que les tests MLI retrounent une valeur
 // - [ ] Output MLI identique
 
@@ -81,12 +79,12 @@ namespace ft
 				// PROTECTED MEMBER OBJECT
 				protected :
 
-					Compare						comp;
+					key_compare					comp;
 
 				// PROTECTED MEMBER FUNCTION
 				protected :
 
-					value_compare(Compare c) :
+					value_compare(key_compare c) :
 						comp(c)
 					{
 						return ;
@@ -95,7 +93,7 @@ namespace ft
 				// PUBLIC MEMBER FUNCTION
 				public :
 
-					bool operator () (const value_type & lhs, const value_type & rhs) const
+					result_type operator () (const value_type & lhs, const value_type & rhs) const
 					{
 						return (comp(lhs.first, rhs.first));
 					};
@@ -151,23 +149,33 @@ namespace ft
 			// [/] Copy constructor
 			map(const map & x)
 			{
-				iterator it = x.begin();
-				iterator ite = x.end();
+				iterator it;
+				iterator ite;
 
+				it = x.begin();
+				ite= x.end();
 				_comp = x.key_comp();
-				_size = x.size();
+				_size = 0;
 				_alloc = x.get_allocator();
 				_tree = new red_black_tree;
 				*_tree = red_black_tree(_alloc, _comp);
 				while (it != ite)
-					_tree->add(*it++);
+				{
+					if (_tree->find(it->first) == NULL)
+					{
+						_tree->add(*it);
+						_size++;
+					}
+					it++;
+				}
 			};
 
 			// [/] Operator =
 			map& operator = (const map& x)
 			{
-				iterator	it = x.begin();
+				iterator	it;
 
+				it = x.begin();
 				clear();
 				_size = x.size();
 				_alloc = x.get_allocator();
@@ -248,7 +256,7 @@ namespace ft
 			// [/] Operator []
 			mapped_type& operator[] (const key_type& k)
 			{
-				return ((*((this->insert(ft::make_pair<key_type, mapped_type>(k, mapped_type()))).first)).second);
+				return (insert(ft::make_pair(k, mapped_type())).first->second);
 			};
 
 			// [ ] Insert
@@ -256,7 +264,7 @@ namespace ft
 			{
 				_tree->add(val);
 				_size++;
-				return (ft::make_pair<iterator, bool>(iterator(), true));
+				return (_tree->add(val));
 			};
 			iterator insert (iterator position, const value_type& val)
 			{
@@ -273,10 +281,7 @@ namespace ft
 			void insert (InputIterator first, InputIterator last)
 			{
 				while (first != last)
-				{
-					insert(ft::make_pair<Key, Value>(first->first, first->second));
-					first++;
-				}
+					insert(*first++);
 			};
 
 			// [ ] Erase 

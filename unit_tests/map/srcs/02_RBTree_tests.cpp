@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/27 06:29:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 07:47:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	RBTree_test(void)
 	if (rbt.find(ft_pair.first) == NULL)
 		std::cout << "Not found" << std::endl;
 
+
+	rbt.del(8);
 
 	//std::map<int, char> std_map;
 

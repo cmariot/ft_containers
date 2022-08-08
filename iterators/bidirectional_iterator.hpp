@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 04:05:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 05:26:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace	ft
 		public :
 
 			typedef ft::iterator_traits<iterator<std::bidirectional_iterator_tag, Node<Pair> > >	traits;
-			
+
 			typedef ft::Node<Pair>							node;
 
 			typedef typename traits::iterator_category		iterator_category;
@@ -44,28 +44,16 @@ namespace	ft
 				return ;
 			};
 
-			// [X] COPY CONSTRUCPairOR
+			// [X] COPY CONSTRUCTOR
 			bidirectional_iterator(node *ptr) :
 				_node(ptr)
 			{
 				return ;
 			};
-			bidirectional_iterator(const bidirectional_iterator & rhs) :
-				_node(rhs._node)
-			{
-				return ;
-			};
-			bidirectional_iterator(const const_bidirectional_iterator<Pair> & rhs) :
-				_node(rhs._node)
-			{
-				return ;
-			};
 
 			// [X] COPY ASSIGNATION (=)
-			bidirectional_iterator operator = (const bidirectional_iterator & rhs)
+			bidirectional_iterator operator = (const const_bidirectional_iterator<Pair> & rhs)
 			{
-				if (this == &rhs)
-					return (*this);
 				this->_node = rhs._node;
 				return (*this);
 			};
