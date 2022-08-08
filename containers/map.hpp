@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 08:25:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 11:22:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../utils/enable_if.hpp"
 # include "../utils/utils.hpp"
 # include "../iterators/bidirectional_iterator.hpp"
-# include "../iterators/reverse_iterator.hpp"
+# include "../iterators/rite_map.hpp"
 # include "../utils/pair.hpp"
 
 // TODO :
@@ -59,8 +59,8 @@ namespace ft
 			typedef typename Allocator::const_pointer						const_pointer;
 			typedef typename ft::bidirectional_iterator<value_type>			iterator;
 			typedef typename ft::const_bidirectional_iterator<value_type>	const_iterator;
-			typedef ft::reverse_iterator<iterator>							reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+			typedef ft::rite_map<iterator>									reverse_iterator;
+			typedef ft::rite_map<const_iterator>							const_reverse_iterator;
 
 		// PUBLIC MEMBER CLASS
 		public :
@@ -260,21 +260,20 @@ namespace ft
 			};
 
 			// [ ] Insert
-			pair<iterator,bool> insert (const value_type& val)
+			pair<iterator, bool> insert (const value_type& val)
 			{
+				if (_tree->find(val.first) != NULL)
+					return (ft::make_pair<iterator, bool>(_tree->find(val.first), false));
 				_size++;
 				return (_tree->add(val));
 			};
 			iterator insert (iterator position, const value_type& val)
 			{
-				iterator	it = begin();
-
-				while (it != position)
-				{
-					it++;
-				}
-				(void)val;
-				return (it);
+				if (_tree->find(val.first) != NULL)
+					return (iterator(NULL));
+				insert(val);
+				(void)position;
+				return (_tree->find(val.first));
 			};
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last)
@@ -335,7 +334,7 @@ namespace ft
 			// [X] Value Comp
 			value_compare value_comp() const
 			{
-				return (value_compare(_comp));
+				return (value_compare(key_comp()));
 			};
 
 			// [ ] Find

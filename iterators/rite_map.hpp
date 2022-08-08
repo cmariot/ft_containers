@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*   rite_map.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 12:28:41 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 12:34:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REVERSE_ITERATOR_HPP
-# define REVERSE_ITERATOR_HPP
+#ifndef RITE_MAP_HPP
+# define RITE_MAP_HPP
 
 # include <iostream>
 # include "random_access_iterator.hpp"
@@ -20,7 +20,7 @@ namespace	ft
 {
 	// REVERSE ITERATOR
 	template <class Iterator>
-	class reverse_iterator
+	class rite_map
 	{
 
 		public :
@@ -35,14 +35,14 @@ namespace	ft
 			typedef typename traits::reference				reference;
 
 			// DEFAULT CONSTRUCTOR
-			reverse_iterator(void)
+			rite_map(void)
 			{
 				current = iterator_type();
 				return ;
 			};
 
 			// CONSTRUCTOR FROM ITERATOR
-			reverse_iterator(iterator_type it)
+			rite_map(iterator_type it)
 			{
 				current = it;
 				return ;
@@ -50,7 +50,7 @@ namespace	ft
 
 			// CONSTRUCTOR FROM REVERSE ITERATOR
 			template <class Iter>
-			reverse_iterator(const reverse_iterator<Iter>& rev_it)
+			rite_map(const rite_map<Iter>& rev_it)
 			{
 				*this = rev_it;
 				return ;
@@ -58,7 +58,7 @@ namespace	ft
 
 			// OPERATOR =
 			template< class U > 
-			reverse_iterator& operator = (const reverse_iterator<U> & other)
+			rite_map& operator = (const rite_map<U> & other)
 			{
 				current = other.base();
 				return (*this);
@@ -73,9 +73,7 @@ namespace	ft
 			// DEREFERENCE *
 			reference operator * (void) const
 			{
-				iterator_type tmp;
-
-				tmp = current;
+				iterator_type tmp = current;
 				return (*(--tmp));
 			};
 
@@ -92,56 +90,56 @@ namespace	ft
 			};
 
 			// OPERATOR +
-			reverse_iterator operator + (difference_type n) const
+			rite_map operator + (difference_type n) const
 			{
 				return (base() - n);
 			};
 
 			// OPERATOR ++
-			reverse_iterator & operator ++ (void)
+			rite_map & operator ++ (void)
 			{
 				--current;
 				return (*this);
 			};
 
 			// OPERATOR ++
-			reverse_iterator operator ++ (int)
+			rite_map operator ++ (int)
 			{
-				reverse_iterator	tmp = *this;
+				rite_map	tmp = *this;
 				++(*this);
 				return (tmp);
 			};
 
 			//OPERATOR +=
-			reverse_iterator & operator += (difference_type n)
+			rite_map & operator += (difference_type n)
 			{
 				current -= n;
 				return (*this);
 			};
 
 			// OPERATOR -
-			reverse_iterator operator - (difference_type n) const
+			rite_map operator - (difference_type n) const
 			{
 				return (base() + n);
 			};
 
 			// OPERATOR --
-			reverse_iterator & operator -- (void)
+			rite_map & operator -- (void)
 			{
 				++current;
 				return (*this);
 			};
 
 			// OPERATOR --
-			reverse_iterator operator -- (int)
+			rite_map operator -- (int)
 			{
-				reverse_iterator	tmp = *this;
+				rite_map	tmp = *this;
 				--(*this);
 				return (tmp);
 			};
 			
 			//OPERATOR -=
-			reverse_iterator & operator -= (difference_type n)
+			rite_map & operator -= (difference_type n)
 			{
 				current += n;
 				return (*this);
@@ -156,58 +154,58 @@ namespace	ft
 
 	// NON MEMBER
 	template <class Iterator1, class Iterator2>
-	bool operator == (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator == (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() == rhs.base());
 	};
 
 	template <class Iterator1, class Iterator2>
-	bool operator != (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator != (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() != rhs.base());
 	};
 
 	template <class Iterator1, class Iterator2>
-	bool operator <  (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator <  (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() > rhs.base());
 	};
 
 	template <class Iterator1, class Iterator2>
-	bool operator <= (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator <= (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() >= rhs.base());
 	};
 
 	template <class Iterator1, class Iterator2>
-	bool operator >  (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator >  (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() < rhs.base());
 	};
 
 	template <class Iterator1, class Iterator2>
-	bool operator >= (const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
+	bool operator >= (const rite_map<Iterator1>& lhs, const rite_map<Iterator2>& rhs)
 	{
 		return (lhs.base() <= rhs.base());
 	};
 
 	// OPERATOR +
 	template <class Iter> 
-	reverse_iterator<Iter> operator + (typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter>& it)
+	rite_map<Iter> operator + (typename rite_map<Iter>::difference_type n, const rite_map<Iter>& it)
 	{
-		return (ft::reverse_iterator<Iter>(it.base() - n));
+		return (ft::rite_map<Iter>(it.base() - n));
 	};
 
 	// OPERATOR -
 	template <class Iterator>
-	typename reverse_iterator<Iterator>::difference_type operator - (const reverse_iterator<Iterator> & lhs, const reverse_iterator<Iterator> & rhs)
+	typename rite_map<Iterator>::difference_type operator - (const rite_map<Iterator> & lhs, const rite_map<Iterator> & rhs)
 	{
 		return (rhs.base() - lhs.base());
 	};
 	
 	// OPERATOR -
 	template <class Iterator1, class Iterator2>
-	typename reverse_iterator<Iterator1>::difference_type operator - (const reverse_iterator<Iterator1> & lhs, const reverse_iterator<Iterator2> & rhs)
+	typename rite_map<Iterator1>::difference_type operator - (const rite_map<Iterator1> & lhs, const rite_map<Iterator2> & rhs)
 	{
 		return (rhs.base() - lhs.base());
 	};

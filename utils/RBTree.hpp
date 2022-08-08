@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 07:46:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 10:53:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ namespace ft
 				{
 					if (node->_pair->first == key)
 					{
-						std::cout << "DEL ICI" << std::endl;
+						
 						return ;
 					}
 					del(node->_left_child, key);
