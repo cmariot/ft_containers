@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 08:09:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 08:25:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,6 @@ namespace ft
 			// [ ] Insert
 			pair<iterator,bool> insert (const value_type& val)
 			{
-				_tree->add(val);
 				_size++;
 				return (_tree->add(val));
 			};
@@ -352,20 +351,18 @@ namespace ft
 			// [ ] Count
 			size_type count(const key_type& k) const
 			{
-				size_type	result;
 				iterator	it;
 				iterator	ite;
 
-				result = 0;
 				it = begin();
 				ite = end();
 				while (it != ite)
 				{
 					if (it->first == k)
-						result++;
+						return (1);
 					it++;
 				}
-				return (result);
+				return (0);
 			};
 
 			// [ ] Lower Bound
