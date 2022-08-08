@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 11:22:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 14:59:58 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,43 +146,32 @@ namespace ft
 				}
 			};
 
-			// [/] Copy constructor
+			// [ ] Copy constructor
 			map(const map & x)
 			{
-				iterator it;
-				iterator ite;
-
-				it = x.begin();
-				ite= x.end();
 				_comp = x.key_comp();
 				_size = 0;
 				_alloc = x.get_allocator();
 				_tree = new red_black_tree;
 				*_tree = red_black_tree(_alloc, _comp);
-				while (it != ite)
-				{
-					if (_tree->find(it->first) == NULL)
-					{
-						_tree->add(*it);
-						_size++;
-					}
-					it++;
-				}
+				insert(x.begin(), x.end());
 			};
 
-			// [/] Operator =
+			// [X] Operator =
 			map& operator = (const map& x)
 			{
 				iterator	it;
+				iterator	ite;
 
 				it = x.begin();
+				ite = x.end();
 				clear();
 				_size = x.size();
 				_alloc = x.get_allocator();
 				_comp = x.key_comp();
-				while (it != x.end())
+				while (it != ite)
 				{
-					_tree->add(make_pair<Key, Value>(it->first, it->second));
+					_tree->add(*it);
 					it++;
 				}
 				return (*this);
@@ -195,7 +184,7 @@ namespace ft
 				return ;
 			};
 
-			// [/] Begin
+			// [ ] Begin
 			iterator begin(void)
 			{
 				return (_tree->begin());
@@ -205,7 +194,7 @@ namespace ft
 				return (_tree->cbegin());
 			};
 
-			// [/] End
+			// [ ] End
 			iterator end()
 			{
 				return (_tree->end());
@@ -215,7 +204,7 @@ namespace ft
 				return (_tree->cend());
 			};
 
-			// RBEGIN : return a reverse iterator at the 'begining' (i.e. the last index) of the array
+			// [ ] RBEGIN : return a reverse iterator at the 'begining' (i.e. the last index) of the array
 			reverse_iterator rbegin(void)
 			{
 				return (reverse_iterator(end()));
@@ -224,7 +213,8 @@ namespace ft
 			{
 				return (const_reverse_iterator(end()));
 			};
-			// REND : return a reverse iterator at the 'end' (i.e. the first index) of the array
+
+			// [ ] REND : return a reverse iterator at the 'end' (i.e. the first index) of the array
 			reverse_iterator rend(void)
 			{
 				return (reverse_iterator(begin()));
@@ -253,13 +243,13 @@ namespace ft
 						/ sizeof(Node<value_type, allocator_type> *));
 			};
 
-			// [/] Operator []
+			// [X] Operator []
 			mapped_type& operator[] (const key_type& k)
 			{
 				return (insert(ft::make_pair(k, mapped_type())).first->second);
 			};
 
-			// [ ] Insert
+			// [X] Insert
 			pair<iterator, bool> insert (const value_type& val)
 			{
 				if (_tree->find(val.first) != NULL)
@@ -367,37 +357,59 @@ namespace ft
 			// [ ] Lower Bound
 			iterator lower_bound(const key_type& k)
 			{
-				(void)k;
-				return (begin());
+				iterator	it;
+
+				it = begin();
+				while (it != end() && key_comp()(it->first, k) == true)
+				{
+					it++;
+				}
+				return (it);
 			};
 			const_iterator lower_bound(const key_type& k) const
 			{
-				(void)k;
-				return (begin());
+				iterator	it;
+
+				it = begin();
+				while (it != end() && key_comp()(it->first, k) == true)
+				{
+					it++;
+				}
+				return (const_iterator(it));
 			};
 
 			// [ ] Upper Bound
 			iterator upper_bound(const key_type& k)
 			{
-				(void)k;
-				return (begin());
+				iterator	it;
+
+				it = begin();
+				while (it != end() && key_comp()(it->first, k) == false)
+				{
+					it++;
+				}
+				return (it);
 			};
 			const_iterator upper_bound(const key_type& k) const
 			{
-				(void)k;
-				return (begin());
+				iterator	it;
+
+				it = begin();
+				while (it != end() && key_comp()(it->first, k) == false)
+				{
+					it++;
+				}
+				return (const_iterator(it));
 			};
 
 			// [ ] Equal Range
 			pair<const_iterator,const_iterator> equal_range(const key_type& k) const
 			{
-				(void)k;
-				return (ft::make_pair<const_iterator, const_iterator>(begin(), begin()));
+				return (ft::make_pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
 			};
 			pair<iterator,iterator>	equal_range(const key_type& k)
 			{
-				(void)k;
-				return (ft::make_pair<iterator, iterator>(begin(), begin()));
+				return (ft::make_pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
 			};
 
 			// [X] Get Allocator

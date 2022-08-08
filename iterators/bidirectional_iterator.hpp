@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 12:29:04 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 14:27:29 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,13 +233,13 @@ namespace	ft
 			};
 
 			// [X] DEREFERENCE
-			const Pair & operator * (void)
+			Pair & operator * (void)
 			{
-				return (*(_node->_pair));
+				return (*_node->_pair);
 			};
 
 			// [X] DEREFERENCE
-			const Pair * operator -> (void) const
+			Pair * operator -> (void) const
 			{
 				return (_node->_pair);
 			};
