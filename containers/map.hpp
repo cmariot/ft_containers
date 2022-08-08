@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 14:59:58 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 17:25:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@
 # include "../utils/pair.hpp"
 
 // TODO :
-// - [ ] Faire compiler tous les tests MLI
-//		- rite
-//		- rite_arrow
-//		- Comp
-// - [ ] Faire en sorte que les tests MLI retrounent une valeur
-// - [ ] Output MLI identique
+// [ ] erase
+// [ ] rite
+// [ ] copy construct (voir -- sur iterator end)
+// [ ] comp
+// [ ] bounds
 
 namespace ft
 {
@@ -358,21 +357,28 @@ namespace ft
 			iterator lower_bound(const key_type& k)
 			{
 				iterator	it;
-
+				iterator	ite;
+				
+				ite = end();
 				it = begin();
-				while (it != end() && key_comp()(it->first, k) == true)
+				while (it != ite)
 				{
+					if (key_comp()(it->first, k) == false)
+						return (it);
 					it++;
 				}
 				return (it);
 			};
 			const_iterator lower_bound(const key_type& k) const
 			{
-				iterator	it;
+				const_iterator	it;
+				const_iterator	ite = end();
 
 				it = begin();
-				while (it != end() && key_comp()(it->first, k) == true)
+				while (it != ite)
 				{
+					if (key_comp()(it->first, k) == false)
+						return (it);
 					it++;
 				}
 				return (const_iterator(it));
@@ -382,21 +388,34 @@ namespace ft
 			iterator upper_bound(const key_type& k)
 			{
 				iterator	it;
-
+				iterator	ite;
+				iterator	next_one;
+				
+				ite = end();
 				it = begin();
-				while (it != end() && key_comp()(it->first, k) == false)
+				next_one = find(k);
+				if (next_one != ite)
+					return (++next_one);
+				while (it != ite)
 				{
+					if (key_comp()(it->first, k) == true)
+						return (it);
 					it++;
 				}
-				return (it);
+				return (begin());
 			};
 			const_iterator upper_bound(const key_type& k) const
 			{
-				iterator	it;
+				const_iterator	it = begin();
+				const_iterator	ite = end();
+				const_iterator	next_one = find(k);
 
-				it = begin();
-				while (it != end() && key_comp()(it->first, k) == false)
+				if (next_one != ite)
+					return (++next_one);
+				while (it != ite)
 				{
+					if (key_comp()(it->first, k) == true)
+						return (it);
 					it++;
 				}
 				return (const_iterator(it));

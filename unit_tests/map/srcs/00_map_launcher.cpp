@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 03:48:39 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:46:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	map_launcher(void)
 	load_test(&tests, function_name, "Iterators", (void *)&iterator_tests, "");
 	load_test(&tests, function_name, "Empty test", (void *)&empty_test, "");
 	load_test(&tests, function_name, "Relational", (void *)&relational_ope, "");
+	load_test(&tests, function_name, "Bound test", (void *)&bound_tests, "");
 	return (launch_tests(&tests));
 }

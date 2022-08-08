@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:17:24 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 20:05:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:45:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		swap_tests(void);
 int		iterator_tests(void);
 int		empty_test(void);
 int		relational_ope(void);
+int		bound_tests(void);
 
 #endif
