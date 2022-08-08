@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:38:11 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/07 22:07:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 04:05:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,23 +124,26 @@ namespace	ft
 			// [X] PREFIX DECREMENTATION
 			bidirectional_iterator & operator -- (void)
 			{
-				if (_node->_left_child)
+				if (_node)
 				{
-					Node<Pair>	*left = _node->_left_child;
-					while (left->_right_child)
-						left = left->_right_child;
-					_node = left;
-				}
-				else
-				{
-					Node<Pair>	*cur = _node;
-					Node<Pair>	*parent = cur->_parent;
-					while (parent && cur == parent->_left_child)
+					if (_node->_left_child)
 					{
-						cur = cur->_parent;
-						parent = parent->_parent;
+						Node<Pair>	*left = _node->_left_child;
+						while (left->_right_child)
+							left = left->_right_child;
+						_node = left;
 					}
-					_node = parent;
+					else
+					{
+						Node<Pair>	*cur = _node;
+						Node<Pair>	*parent = cur->_parent;
+						while (parent && cur == parent->_left_child)
+						{
+							cur = cur->_parent;
+							parent = parent->_parent;
+						}
+						_node = parent;
+					}
 				}
 				return (*this);
 			};
@@ -150,7 +153,8 @@ namespace	ft
 			{
 				bidirectional_iterator	tmp(*this);
 
-				operator--();
+				if (_node)
+					operator--();
 				return (tmp);
 			};
 
@@ -159,9 +163,17 @@ namespace	ft
 			{
 				return (_node == rhs._node);
 			};
+			bool operator == (const const_bidirectional_iterator<Pair> & rhs) const
+			{
+				return (_node == rhs._node);
+			};
 
 			// [X] OPERATOR !=
 			bool operator != (const bidirectional_iterator & rhs) const
+			{
+				return (_node != rhs._node);
+			};
+			bool operator != (const const_bidirectional_iterator<Pair> & rhs) const
 			{
 				return (_node != rhs._node);
 			};
@@ -222,8 +234,6 @@ namespace	ft
 			};
 			const_bidirectional_iterator operator = (const bidirectional_iterator<Pair> & rhs)
 			{
-				if (this == &rhs)
-					return (*this);
 				this->_node = rhs._node;
 				return (*this);
 			};
@@ -235,13 +245,13 @@ namespace	ft
 			};
 
 			// [X] DEREFERENCE
-			Pair & operator * (void)
+			const Pair & operator * (void)
 			{
 				return (*(_node->_pair));
 			};
 
 			// [X] DEREFERENCE
-			Pair* operator -> (void) const
+			const Pair* operator -> (void) const
 			{
 				return (_node->_pair);
 			};
@@ -317,12 +327,21 @@ namespace	ft
 			{
 				return (_node == rhs._node);
 			};
+			bool operator == (const bidirectional_iterator<Pair> & rhs) const
+			{
+				return (_node == rhs._node);
+			};
 
 			// [X] OPERATOR !=
 			bool operator != (const const_bidirectional_iterator & rhs) const
 			{
 				return (_node != rhs._node);
 			};
+			bool operator != (const bidirectional_iterator<Pair> & rhs) const
+			{
+				return (_node != rhs._node);
+			};
+
 
 		public :
 

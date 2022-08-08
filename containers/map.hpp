@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/07 13:30:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 04:31:28 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,18 @@ namespace ft
 			};
 
 			// [/] Copy constructor
-			map(const map& x)
+			map(const map & x)
 			{
-				*this = map(x.begin(), x.end(), x.key_comp(), x.get_allocator());
+				iterator it = x.begin();
+				iterator ite = x.end();
+
+				_comp = x.key_comp();
+				_size = x.size();
+				_alloc = x.get_allocator();
+				_tree = new red_black_tree;
+				*_tree = red_black_tree(_alloc, _comp);
+				while (it != ite)
+					_tree->add(*it++);
 			};
 
 			// [/] Operator =
@@ -198,24 +207,23 @@ namespace ft
 				return (_tree->cend());
 			};
 
-			// [/] Rbegin
-			reverse_iterator rbegin()
+			// RBEGIN : return a reverse iterator at the 'begining' (i.e. the last index) of the array
+			reverse_iterator rbegin(void)
 			{
-				return (reverse_iterator(_tree->end()));
+				return (reverse_iterator(end()));
 			};
-			const_reverse_iterator rbegin() const
+			const_reverse_iterator rbegin(void) const
 			{
-				return (const_reverse_iterator(_tree->cend()));
+				return (const_reverse_iterator(end()));
 			};
-
-			// [/] Rend
-			reverse_iterator rend()
+			// REND : return a reverse iterator at the 'end' (i.e. the first index) of the array
+			reverse_iterator rend(void)
 			{
-				return (reverse_iterator(_tree->begin()));
+				return (reverse_iterator(begin()));
 			};
-			const_reverse_iterator rend() const
+			const_reverse_iterator rend(void) const
 			{
-				return (const_reverse_iterator(_tree->cbegin()));
+				return (const_reverse_iterator(begin()));
 			};
 
 			// [X] Empty
@@ -356,16 +364,40 @@ namespace ft
 			};
 
 			// [ ] Lower Bound
-			iterator lower_bound(const key_type& k);
-			const_iterator lower_bound(const key_type& k) const;
+			iterator lower_bound(const key_type& k)
+			{
+				(void)k;
+				return (begin());
+			};
+			const_iterator lower_bound(const key_type& k) const
+			{
+				(void)k;
+				return (begin());
+			};
 
 			// [ ] Upper Bound
-			iterator upper_bound(const key_type& k);
-			const_iterator upper_bound(const key_type& k) const;
+			iterator upper_bound(const key_type& k)
+			{
+				(void)k;
+				return (begin());
+			};
+			const_iterator upper_bound(const key_type& k) const
+			{
+				(void)k;
+				return (begin());
+			};
 
 			// [ ] Equal Range
-			pair<const_iterator,const_iterator> equal_range(const key_type& k) const;
-			pair<iterator,iterator>             equal_range(const key_type& k);
+			pair<const_iterator,const_iterator> equal_range(const key_type& k) const
+			{
+				(void)k;
+				return (ft::make_pair<const_iterator, const_iterator>(begin(), begin()));
+			};
+			pair<iterator,iterator>	equal_range(const key_type& k)
+			{
+				(void)k;
+				return (ft::make_pair<iterator, iterator>(begin(), begin()));
+			};
 
 			// [X] Get Allocator
 			allocator_type get_allocator(void) const

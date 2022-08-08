@@ -2,10 +2,6 @@
 
 int	relational_ope(void)
 {
-    //std::map<int, char> alice{{1, 'a'}, {2, 'b'}, {3, 'c'}};
-    //std::map<int, char> bob{{7, 'Z'}, {8, 'Y'}, {9, 'X'}, {10, 'W'}};
-    //std::map<int, char> eve{{0, 'a'}, {2, 'b'}, {3, 'c'}};
- 
     ft::map<int, char> alice;
 	alice.insert(ft::make_pair<int, char>(1, 'a'));
 	alice.insert(ft::make_pair<int, char>(2, 'b'));
@@ -17,7 +13,7 @@ int	relational_ope(void)
 	bob.insert(ft::make_pair<int, char>(9, 'X'));
 
     ft::map<int, char> eve;
-	eve.insert(ft::make_pair<int, char>(0, 'a'));
+	eve.insert(ft::make_pair<int, char>(1, 'a'));
 	eve.insert(ft::make_pair<int, char>(2, 'b'));
 	eve.insert(ft::make_pair<int, char>(3, 'c'));
 

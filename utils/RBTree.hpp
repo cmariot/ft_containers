@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/07 13:24:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/08 03:31:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,7 +428,14 @@ namespace ft
 			{
 				return (const_bidirectional_iterator<Pair>(NULL));
 			};
-
+			bidirectional_iterator<Pair>	rend(void)
+			{
+				return (bidirectional_iterator<Pair>(NULL));
+			};
+			const_bidirectional_iterator<Pair>	crend(void) const
+			{
+				return (const_bidirectional_iterator<Pair>(NULL));
+			};
 
 	};
 
