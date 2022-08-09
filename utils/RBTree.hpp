@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 10:53:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/09 10:36:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,41 @@ namespace ft
 				{
 					if (node->_pair->first == key)
 					{
-						
+						Node<Pair, Allocator>	*x;
+						Node<Pair, Allocator>	*y;
+						bool	original_color_is_black = false;
+
+						if (node->_black == true)
+							original_color_is_black = true;
+
+						if (node->_left_child == NULL)
+						{
+							x = node->_right_child;
+							node = x;
+						}
+						else if (node->_right_child == NULL)
+						{
+							x = node->_left_child;
+							node = x;
+						}
+						else
+						{
+
+							if (node->_left_child->_pair->first < node->_right_child->_pair->first)
+								y = node->_left_child;
+							else
+								y = node->_right_child;
+							
+							if (y->_black == true)
+								original_color_is_black = true;
+							else
+								original_color_is_black = false;
+
+							x = y->_right_child;
+
+							(void)original_color_is_black;
+						}
+
 						return ;
 					}
 					del(node->_left_child, key);

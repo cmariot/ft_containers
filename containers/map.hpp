@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:28 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 17:25:14 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/09 19:35:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@
 # include "../utils/pair.hpp"
 
 // TODO :
-// [ ] erase
-// [ ] rite
+// [ ] erase RBT a implementer
 // [ ] copy construct (voir -- sur iterator end)
-// [ ] comp
-// [ ] bounds
+// [ ] bounds output
+// [ ] rite
 
 namespace ft
 {
@@ -239,7 +238,7 @@ namespace ft
 			size_type max_size() const
 			{	
 				return (std::numeric_limits<size_type>::max()
-						/ sizeof(Node<value_type, allocator_type> *));
+						/ sizeof(Node<value_type, allocator_type>));
 			};
 
 			// [X] Operator []
@@ -365,23 +364,22 @@ namespace ft
 				{
 					if (key_comp()(it->first, k) == false)
 						return (it);
-					it++;
+					++it;
 				}
-				return (it);
+				return (ite);
 			};
 			const_iterator lower_bound(const key_type& k) const
 			{
-				const_iterator	it;
+				const_iterator	it = begin();
 				const_iterator	ite = end();
 
-				it = begin();
 				while (it != ite)
 				{
 					if (key_comp()(it->first, k) == false)
 						return (it);
-					it++;
+					++it;
 				}
-				return (const_iterator(it));
+				return (ite);
 			};
 
 			// [ ] Upper Bound
@@ -389,36 +387,29 @@ namespace ft
 			{
 				iterator	it;
 				iterator	ite;
-				iterator	next_one;
 				
 				ite = end();
 				it = begin();
-				next_one = find(k);
-				if (next_one != ite)
-					return (++next_one);
 				while (it != ite)
 				{
-					if (key_comp()(it->first, k) == true)
+					if (key_comp()(k, it->first) == true)
 						return (it);
-					it++;
+					++it;
 				}
-				return (begin());
+				return (ite);
 			};
 			const_iterator upper_bound(const key_type& k) const
 			{
 				const_iterator	it = begin();
 				const_iterator	ite = end();
-				const_iterator	next_one = find(k);
 
-				if (next_one != ite)
-					return (++next_one);
 				while (it != ite)
 				{
-					if (key_comp()(it->first, k) == true)
+					if (key_comp()(k, it->first) == true)
 						return (it);
-					it++;
+					++it;
 				}
-				return (const_iterator(it));
+				return (ite);
 			};
 
 			// [ ] Equal Range
