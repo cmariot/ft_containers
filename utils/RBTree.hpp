@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/15 18:55:48 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/15 20:08:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,6 +447,15 @@ namespace ft
 
 				y = z;
 				y_original_color = y->_black;
+				if (z->_left_child == NULL && z->_right_child == NULL)
+				{
+					if (z->_is_left_child)
+						z->_parent->_left_child = NULL;
+					else
+						z->_parent->_right_child = NULL;
+					delete z;
+					return (1);
+				}
 				if (z->_left_child == NULL)
 				{
 					x = z->_right_child;
