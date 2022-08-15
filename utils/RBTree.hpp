@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/09 10:36:10 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/15 18:55:48 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,53 +327,162 @@ namespace ft
 					print(node->_right_child, indent, true);
 				}
 			};
-
-			void	del(Node<Pair, Allocator> *node, typename Pair::first_type & key)
+			
+			void deleteFix(Node<Pair, Allocator> *x)
 			{
-				if (node != NULL)
+				Node<Pair, Allocator>	*s;
+
+				while (x != _root && x->_black == false)
 				{
-					if (node->_pair->first == key)
+					if (x == x->_parent->_left_child)
 					{
-						Node<Pair, Allocator>	*x;
-						Node<Pair, Allocator>	*y;
-						bool	original_color_is_black = false;
-
-						if (node->_black == true)
-							original_color_is_black = true;
-
-						if (node->_left_child == NULL)
+						s = x->_parent->_right_child;
+						if (s->_black == true) 
 						{
-							x = node->_right_child;
-							node = x;
+							s->_black = false;
+							x->_parent->_black = true;
+							leftRotate(x->_parent);
+							s = x->_parent->_right_child;
 						}
-						else if (node->_right_child == NULL)
+						if (s->_left_child->_black == 0 && s->_right_child->_black == 0)
 						{
-							x = node->_left_child;
-							node = x;
+							s->_black = 1;
+							x = x->_parent;
 						}
 						else
 						{
-
-							if (node->_left_child->_pair->first < node->_right_child->_pair->first)
-								y = node->_left_child;
-							else
-								y = node->_right_child;
-							
-							if (y->_black == true)
-								original_color_is_black = true;
-							else
-								original_color_is_black = false;
-
-							x = y->_right_child;
-
-							(void)original_color_is_black;
+							if (s->_right_child->_black == 0)
+							{
+								s->_left_child->_black = 0;
+								s->_black = 1;
+								rightRotate(s);
+								s = x->_parent->_right_child;
+							}
+							s->_black = x->_parent->_black;
+							x->_parent->_black = 0;
+							s->_right_child->_black = 0;
+							leftRotate(x->_parent);
+							x = _root;
 						}
-
-						return ;
 					}
-					del(node->_left_child, key);
-					del(node->_right_child, key);
+					else
+					{
+						s = x->_parent->_left_child;
+						if (s->_black == 1)
+						{
+							s->_black = 0;
+							x->_parent->_black = 1;
+							rightRotate(x->_parent);
+							s = x->_parent->_left_child;
+						}
+						if (s->_right_child->_black == 0 && s->_right_child->_black == 0)
+						{
+							s->_black = 1;
+							x = x->_parent;
+						}
+						else
+						{
+							if (s->_left_child->_black == 0)
+							{
+								s->_right_child->_black = 0;
+								s->_black = 1;
+								leftRotate(s);
+								s = x->_parent->_left_child;
+							}
+
+							s->_black = x->_parent->_black;
+							x->_parent->_black = 0;
+							s->_left_child->_black = 0;
+							rightRotate(x->_parent);
+							x = _root;
+						}
+					}
 				}
+				x->_black = 0;
+			}
+
+			void	transplant(Node<Pair, Allocator> *u, Node<Pair, Allocator> *v)
+			{
+				if (u->_parent == NULL)
+				{
+					_root = v;
+				}
+				else if (u == u->_parent->_left_child)
+				{
+					u->_parent->_left_child = v;
+				}
+				else
+				{
+					u->_parent->_right_child = v;
+				}
+				v->_parent = u->_parent;
+			}
+
+			Node<Pair, Allocator> *minimum(Node<Pair, Allocator> *node)
+			{
+				while (node->_left_child)
+					node = node->_left_child;
+				return (node);
+			}
+
+			size_t	del(Node<Pair, Allocator> *node, typename Pair::first_type & key)
+			{
+				Node<Pair, Allocator>	*x;
+				Node<Pair, Allocator>	*y;
+				Node<Pair, Allocator>	*z;
+				bool					y_original_color;
+
+				z = NULL;
+				while (node != NULL)
+				{
+					if (node->_pair->first == key)
+						z = node;
+					if (node->_pair->first <= key)
+						node = node->_right_child;
+					else
+						node = node->_left_child;
+				}
+				if (z == NULL)	// key not found
+					return (0);
+
+				y = z;
+				y_original_color = y->_black;
+				if (z->_left_child == NULL)
+				{
+					x = z->_right_child;
+					transplant(z, z->_right_child);
+				}
+				else if (z->_right_child == NULL)
+				{
+					x = z->_left_child;
+					transplant(z, z->_left_child);
+				}
+				else
+				{
+					y = minimum(z->_right_child);
+					y_original_color = y->_black;
+					x = y->_right_child;
+					if (y->_parent == z)
+					{
+						x->_parent = y;
+					}
+					else
+					{
+						transplant(y, y->_right_child);
+						y->_right_child = z->_right_child;
+						y->_right_child->_parent = y;
+					}
+					transplant(z, y);
+					y->_left_child = z->_left_child;
+					y->_left_child->_parent = y;
+					y->_black = z->_black;
+				}
+				delete z;
+				if (y_original_color == 0)
+				{
+					deleteFix(x);
+				}
+				return (1);
 			};
 
 			void	destructor(Node<Pair, Allocator> *node)
@@ -424,12 +533,11 @@ namespace ft
 				return (add(_root, node));
 			};
 
-			void	del(typename Pair::first_type & key)
+			size_t	del(typename Pair::first_type & key)
 			{
 				if (_root != NULL)
-				{
-					del(_root, key);
-				}
+					return (del(_root, key));
+				return (0);
 			};
 
 			// Print the tree

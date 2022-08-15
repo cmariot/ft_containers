@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 15:45:30 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 12:20:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/10 17:01:00 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,133 +19,133 @@ namespace ft
 {
 
 	template <class T, class Container = ft::vector<T> >
-	class stack
-	{
+		class stack
+		{
 
-		// MEMBER TYPES
-		public :
+			// MEMBER TYPES
+			public :
 
-			typedef Container									container_type;
-			typedef typename Container::value_type				value_type;
-			typedef typename Container::size_type				size_type;
-			typedef typename Container::reference				reference;
-			typedef typename Container::const_reference			const_reference;
-
-
-		// MEMBER OBJECT
-		protected :
-
-			Container c;
+				typedef Container									container_type;
+				typedef typename Container::value_type				value_type;
+				typedef typename Container::size_type				size_type;
+				typedef typename Container::reference				reference;
+				typedef typename Container::const_reference			const_reference;
 
 
-		// MEMBER FUNCTIONS
-		public :
+				// MEMBER OBJECT
+			protected :
 
-			// DEFAULT CONSTRUCTOR
-			explicit stack(const Container& cont = Container()) :
-				c(cont)
-			{
-				return ;
-			};
-			
-			// COPY CONSTRUCTOR
-			stack(const stack& other) :
-				c(other.c)
+				Container c;
+
+
+				// MEMBER FUNCTIONS
+			public :
+
+				// DEFAULT CONSTRUCTOR
+				explicit stack(const Container& cont = Container()) :
+					c(cont)
 			{
 				return ;
 			};
 
-			// DESTRUCTOR
-			~stack()
+				// COPY CONSTRUCTOR
+				stack(const stack& other) :
+					c(other.c)
 			{
 				return ;
 			};
 
-			// OPERATOR = 
-			stack& operator = (const stack & other)
-			{
-				c = other.c;
-				return (*this);
-			};
+				// DESTRUCTOR
+				~stack()
+				{
+					return ;
+				};
 
-			// TOP
-			reference top(void)
-			{
-				return (c.back());
-			};
-			const_reference top(void) const
-			{
-				return (c.back());
-			};
+				// OPERATOR = 
+				stack& operator = (const stack & other)
+				{
+					c = other.c;
+					return (*this);
+				};
 
-			// EMPTY
-			bool empty(void) const
-			{
-				return (c.empty());
-			};
+				// TOP
+				reference top(void)
+				{
+					return (c.back());
+				};
+				const_reference top(void) const
+				{
+					return (c.back());
+				};
 
-			// SIZE
-			size_type size(void) const
-			{
-				return (c.size());
-			};
+				// EMPTY
+				bool empty(void) const
+				{
+					return (c.empty());
+				};
 
-			// PUSH
-			void push(const value_type & value)
-			{
-				c.push_back(value);
-			};
+				// SIZE
+				size_type size(void) const
+				{
+					return (c.size());
+				};
 
-			// POP
-			void pop(void)
-			{
-				c.pop_back();
-			};
+				// PUSH
+				void push(const value_type & value)
+				{
+					c.push_back(value);
+				};
 
-			// RELATIONAL OPERATOR DECLARATIONS
-			friend bool ft::operator == (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-			friend bool ft::operator != (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-			friend bool ft::operator >  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-			friend bool ft::operator <  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-			friend bool ft::operator >= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-			friend bool ft::operator <= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-	};
+				// POP
+				void pop(void)
+				{
+					c.pop_back();
+				};
+
+				// RELATIONAL OPERATOR DECLARATIONS
+				friend bool ft::operator == (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+				friend bool ft::operator != (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+				friend bool ft::operator >  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+				friend bool ft::operator <  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+				friend bool ft::operator >= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+				friend bool ft::operator <= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
+		};
 
 	template <class T, class Container>
-	bool operator == (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-	{
-		return (lhs.c == rhs.c);
-	};
+		bool operator == (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		{
+			return (lhs.c == rhs.c);
+		};
 
 	template <class T, class Container>
-	bool operator != (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-	{
-		return (lhs.c != rhs.c);
-	};
-	
+		bool operator != (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		{
+			return (lhs.c != rhs.c);
+		};
+
 	template <class T, class Container>
-	bool operator < (const stack<T,Container>& lhs, const stack<T,Container>& rhs) 
-	{
-		return (lhs.c < rhs.c);
-	};
-	
+		bool operator < (const stack<T,Container>& lhs, const stack<T,Container>& rhs) 
+		{
+			return (lhs.c < rhs.c);
+		};
+
 	template <class T, class Container>
-	bool operator <= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-	{
-		return (lhs.c <= rhs.c);
-	};
-	
+		bool operator <= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		{
+			return (lhs.c <= rhs.c);
+		};
+
 	template <class T, class Container>
-	bool operator > (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-	{
-		return (lhs.c > rhs.c);
-	};
-	
+		bool operator > (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		{
+			return (lhs.c > rhs.c);
+		};
+
 	template <class T, class Container>
-	bool operator >= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-	{
-		return (lhs.c >= rhs.c);
-	};
+		bool operator >= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		{
+			return (lhs.c >= rhs.c);
+		};
 
 };
 #endif

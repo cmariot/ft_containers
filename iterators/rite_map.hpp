@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 12:34:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/09 21:52:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ namespace	ft
 			// DEREFERENCE ->
 			pointer operator-> (void) const
 			{
-				return &(operator*());
+				return &(operator*()->_pair);
 			};
 
 			//OPERATOR []

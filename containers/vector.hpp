@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 22:49:51 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/20 00:37:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/10 17:01:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,41 @@ namespace ft
 	// - Alloc	Type of the allocator used to define the storage allocation model
 	//			Default is std::allocator<T>
 	template	< class T, class Allocator = std::allocator<T> >
-	class	vector
-	{
+		class	vector
+		{
 
-		// TYPEDEFS :
-		// Declarations containing the decl-specifier typedef declare identifiers that can
-		// be used later for naming fundamental or compound types.
-		public :
+			// TYPEDEFS :
+			// Declarations containing the decl-specifier typedef declare identifiers that can
+			// be used later for naming fundamental or compound types.
+			public :
 
-			typedef T												value_type;
-			typedef Allocator										allocator_type;
-			typedef size_t											size_type;
-			typedef ptrdiff_t										difference_type;
-			typedef T &												reference;
-			typedef const T &										const_reference;
-			typedef T *												pointer;
-			typedef const T *										const_pointer;
-			typedef typename ft::random_access_iterator<T>			iterator;
-			typedef typename ft::const_random_access_iterator<T>	const_iterator;
-			typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-
-
-		// MEMBER TYPES :
-		protected :
-
-			size_type			_size;
-			size_type			_capacity;
-			allocator_type		_allocator;
-			pointer				_elements;
+				typedef T												value_type;
+				typedef Allocator										allocator_type;
+				typedef size_t											size_type;
+				typedef ptrdiff_t										difference_type;
+				typedef T &												reference;
+				typedef const T &										const_reference;
+				typedef T *												pointer;
+				typedef const T *										const_pointer;
+				typedef typename ft::random_access_iterator<T>			iterator;
+				typedef typename ft::const_random_access_iterator<T>	const_iterator;
+				typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
+				typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 
-		// MEMBER FUNCTIONS :
-		public :
+				// MEMBER TYPES :
+			protected :
 
-			// CONSTRUCTORS :
+				size_type			_size;
+				size_type			_capacity;
+				allocator_type		_allocator;
+				pointer				_elements;
+
+
+				// MEMBER FUNCTIONS :
+			public :
+
+				// CONSTRUCTORS :
 
 				// Empty container constructor (default constructor)
 				vector(const allocator_type & alloc = allocator_type()) :
@@ -82,9 +82,9 @@ namespace ft
 					_capacity(0),
 					_allocator(alloc),
 					_elements(NULL)
-				{
-					return ;
-				};
+			{
+				return ;
+			};
 
 				// Fill constructor by size and value
 				explicit vector(size_type n, const_reference value = value_type(),
@@ -92,29 +92,29 @@ namespace ft
 					_size(n),
 					_capacity(n),
 					_allocator(alloc)
-				{
-					_elements = _allocator.allocate(_capacity);
-					for (size_type i = 0 ; i < n ; i++)
-						_allocator.construct(&_elements[i], value);
-					return ;
-				};
+			{
+				_elements = _allocator.allocate(_capacity);
+				for (size_type i = 0 ; i < n ; i++)
+					_allocator.construct(&_elements[i], value);
+				return ;
+			};
 
 				// Range constructor
 				template <class InputIterator>
-				vector(InputIterator first,
-						typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last,
-						const allocator_type & alloc = allocator_type()) :
-					_allocator(alloc)
-				{
-					_size = 0;
-					for (InputIterator tmp = first ; tmp != last ; tmp++)
-						_size++;
-					_capacity = _size;
-					_elements = _allocator.allocate(_capacity);
-					for (size_type i = 0 ; i < _size ; i++)
-						_allocator.construct(&_elements[i], *(first++));
-					return ;
-				};
+					vector(InputIterator first,
+							typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last,
+							const allocator_type & alloc = allocator_type()) :
+						_allocator(alloc)
+			{
+				_size = 0;
+				for (InputIterator tmp = first ; tmp != last ; tmp++)
+					_size++;
+				_capacity = _size;
+				_elements = _allocator.allocate(_capacity);
+				for (size_type i = 0 ; i < _size ; i++)
+					_allocator.construct(&_elements[i], *(first++));
+				return ;
+			};
 
 				// Copy constructor
 				vector(const vector & x)
@@ -129,26 +129,26 @@ namespace ft
 				};
 
 
-			// DESTRUCTOR
-			~vector(void)
-			{
-				clear();
-				get_allocator().deallocate(_elements, _size);
-				return ;
-			};
+				// DESTRUCTOR
+				~vector(void)
+				{
+					clear();
+					get_allocator().deallocate(_elements, _size);
+					return ;
+				};
 
 
-			// OPERATOR =
-			vector const &	operator = (const vector<T, Allocator> & rhs)
-			{
-				clear();
-				get_allocator().deallocate(_elements, _size);
-				assign(rhs.begin(), rhs.end());
-				return (*this);
-			};
+				// OPERATOR =
+				vector const &	operator = (const vector<T, Allocator> & rhs)
+				{
+					clear();
+					get_allocator().deallocate(_elements, _size);
+					assign(rhs.begin(), rhs.end());
+					return (*this);
+				};
 
 
-			// ITERATORS
+				// ITERATORS
 				// BEGIN : return an iterator at the begining of the array
 				iterator begin(void)
 				{
@@ -187,7 +187,7 @@ namespace ft
 				};
 
 
-			// CAPACITY
+				// CAPACITY
 
 				// SIZE : return the number of elements in the vector
 				size_type	size(void) const
@@ -250,7 +250,7 @@ namespace ft
 					}
 				};
 
-			// ELEMENT ACCESS
+				// ELEMENT ACCESS
 				// OPERATOR[] : access the value at the index i
 				reference	operator [] (size_type i)
 				{
@@ -271,7 +271,7 @@ namespace ft
 									+ ") >= this->size() (which is "
 									+ ft::itoa<size_t>(_size)
 									+ ")")
-								);
+							  );
 					return (_elements[i]);
 				};
 				const_reference	at(size_type i) const
@@ -283,7 +283,7 @@ namespace ft
 									+ ") >= this->size() (which is "
 									+ ft::itoa<size_t>(_size)
 									+ ")")
-								);
+							  );
 					return (_elements[i]);
 				};
 
@@ -307,40 +307,40 @@ namespace ft
 					return (_elements[_size - 1]);
 				};
 
-			// MODIFIERS
+				// MODIFIERS
 				// ASSIGN : change the array elements
 				template <class InputIterator>
-				void assign
+					void assign
 					(
-						InputIterator first,
-						typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-						InputIterator>::type last
+					 InputIterator first,
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+					 InputIterator>::type last
 					)
-				{
-					if (_size)
 					{
-						clear();
-						get_allocator().deallocate(_elements, _size);
-					}
-					InputIterator tmp = first;
-					while (tmp != last)
-					{
-						_size++;
-						tmp++;
-					}
-					_capacity = _size;
-					if (_size and _size <= max_size())
-					{
-						_elements = get_allocator().allocate(_capacity);
-						for (size_type i = 0 ; i < _size ; i++)
+						if (_size)
 						{
-							get_allocator().construct(&_elements[i], *first);
-							++first;
+							clear();
+							get_allocator().deallocate(_elements, _size);
 						}
-					}
-					else
-						_elements = NULL;
-				};
+						InputIterator tmp = first;
+						while (tmp != last)
+						{
+							_size++;
+							tmp++;
+						}
+						_capacity = _size;
+						if (_size and _size <= max_size())
+						{
+							_elements = get_allocator().allocate(_capacity);
+							for (size_type i = 0 ; i < _size ; i++)
+							{
+								get_allocator().construct(&_elements[i], *first);
+								++first;
+							}
+						}
+						else
+							_elements = NULL;
+					};
 				void	assign(size_type n, const value_type& val)
 				{
 					if (_size)
@@ -454,42 +454,42 @@ namespace ft
 				};
 
 				template <class InputIterator>
-				void	insert
-						(
-							iterator position,
-							InputIterator first,
-							typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
-						)
-				{
-					iterator	it = begin();
-					size_type	distance = std::distance(first, last);
-					size_type	i = 0;
-					size_type	j = 1;
-					size_type	k = 0;
+					void	insert
+					(
+					 iterator position,
+					 InputIterator first,
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
+					)
+					{
+						iterator	it = begin();
+						size_type	distance = std::distance(first, last);
+						size_type	i = 0;
+						size_type	j = 1;
+						size_type	k = 0;
 
-					if (_size + distance > _capacity)
-						reserve(_size + distance);
-					while (it != position)
-					{
-						it++;
-						i++;
-					}
-					size_type backup = i;
-					while (i < _size)
-					{
-						get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
-						j++;
-						i++;
-					}
-					while (k < distance)
-					{
-						get_allocator().construct(&_elements[backup], *first);
-						first++;
-						k++;
-						backup++;
-					}
-					_size += distance;
-				};
+						if (_size + distance > _capacity)
+							reserve(_size + distance);
+						while (it != position)
+						{
+							it++;
+							i++;
+						}
+						size_type backup = i;
+						while (i < _size)
+						{
+							get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
+							j++;
+							i++;
+						}
+						while (k < distance)
+						{
+							get_allocator().construct(&_elements[backup], *first);
+							first++;
+							k++;
+							backup++;
+						}
+						_size += distance;
+					};
 
 				// ERASE : remove elements in the array
 				iterator	erase(iterator position)
@@ -535,7 +535,7 @@ namespace ft
 								get_allocator().construct(&_elements[j], _elements[j + distance + 1]);
 								get_allocator().destroy(&_elements[j + distance + 1]);
 							}
-								_size -= distance + 1;
+							_size -= distance + 1;
 							return (iterator(&_elements[i]));
 						}
 						it++;
@@ -570,7 +570,7 @@ namespace ft
 					_size = 0;
 				};
 
-			// ALLOCATOR
+				// ALLOCATOR
 				// GET_ALLOCATOR : return the allocator
 				allocator_type	get_allocator(void) const
 				{
@@ -578,13 +578,13 @@ namespace ft
 				};
 
 
-	};	// end of class ft::vector
+		};	// end of class ft::vector
 
 
 	// NON-MEMBER RELATIONAL OPERATORS OVERLOADS
 
-		// OPERATOR == : check the size and if all elements are equal
-		template <class T, class Alloc>
+	// OPERATOR == : check the size and if all elements are equal
+	template <class T, class Alloc>
 		bool operator == (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			if (!(lhs.size() == rhs.size()))
@@ -592,36 +592,36 @@ namespace ft
 			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		};
 
-		// OPERATOR !=
-		template <class T, class Alloc>
+	// OPERATOR !=
+	template <class T, class Alloc>
 		bool operator != (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			return (!(lhs == rhs));
 		};
 
-		//OPERATOR < : check all the elements of the first array, if one is sup to the second, return false
-		template <class T, class Alloc>
+	//OPERATOR < : check all the elements of the first array, if one is sup to the second, return false
+	template <class T, class Alloc>
 		bool operator < (const vector<T, Alloc> & lhs, const vector<T, Alloc> & rhs)
 		{
 			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		};
 
-		//OPERATOR <=
-		template <class T, class Alloc>
+	//OPERATOR <=
+	template <class T, class Alloc>
 		bool operator <= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			return !(rhs < lhs);
 		};
 
-		//OPERATOR >
-		template <class T, class Alloc>
+	//OPERATOR >
+	template <class T, class Alloc>
 		bool operator > (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			return (rhs < lhs);
 		};
 
-		//OPERATOR >=
-		template <class T, class Alloc>
+	//OPERATOR >=
+	template <class T, class Alloc>
 		bool operator >= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			return !(lhs < rhs);
@@ -629,8 +629,8 @@ namespace ft
 
 	//NON-MEMBER FUNCTION OVERLOADS
 
-		// SWAP
-		template <class U, class Alloc>
+	// SWAP
+	template <class U, class Alloc>
 		void swap(vector<U, Alloc> & x, vector<U, Alloc> & y)
 		{
 			x.swap(y);

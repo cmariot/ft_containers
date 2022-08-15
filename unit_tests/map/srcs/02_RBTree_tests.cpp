@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 07:47:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/13 19:39:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	RBTree_test(void)
 	rbt.add(ft::pair<const int, char>(13, 'Z'));
 	rbt.add(ft::pair<const int, char>(8, 'Z'));
 	rbt.add(ft::pair<const int, char>(17, 'Z'));
-	rbt.add(ft::pair<const int, char>(-1, 'Z'));
+	rbt.add(ft::pair<const int, char>(1, 'Z'));
 	rbt.add(ft::pair<const int, char>(11, 'Z'));
 	rbt.add(ft::pair<const int, char>(15, 'Z'));
 	rbt.add(ft::pair<const int, char>(25, 'Z'));
@@ -45,8 +45,10 @@ int	RBTree_test(void)
 		std::cout << "Not found" << std::endl;
 
 
-	rbt.del(8);
-
+	rbt.del(1);
+	rbt.print();
+	
+	rbt.del(22);
 	//std::map<int, char> std_map;
 
 	//std_map.insert(std::make_pair(2, 'a'));
