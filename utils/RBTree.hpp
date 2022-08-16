@@ -6,12 +6,12 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:21:29 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/15 20:08:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/16 04:58:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBTree_HPP
-# define RBTree_HPP
+#ifndef RBT_HPP
+# define RBT_HPP
 
 # include <iostream>
 
@@ -447,15 +447,6 @@ namespace ft
 
 				y = z;
 				y_original_color = y->_black;
-				if (z->_left_child == NULL && z->_right_child == NULL)
-				{
-					if (z->_is_left_child)
-						z->_parent->_left_child = NULL;
-					else
-						z->_parent->_right_child = NULL;
-					delete z;
-					return (1);
-				}
 				if (z->_left_child == NULL)
 				{
 					x = z->_right_child;
