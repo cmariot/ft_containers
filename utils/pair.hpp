@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 18:52:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/16 04:05:06 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 20:31:46 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/17 01:18:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,106 +16,106 @@
 namespace ft
 {
 
-	template <class T1, class T2>
-	struct pair
-	{
-		// MEMBER TYPES
-		typedef  T1				first_type;
-		typedef  T2				second_type;
+	template <class Key, class Value>
+		struct pair
+		{
 
-		// MEMBER OBJECTS
-		first_type	first;
-		second_type	second;
+			// MEMBER TYPES
+			typedef  Key				first_type;
+			typedef  Value				second_type;
 
-		// MEMBER FUNCTIONS
-			// CONSTRUCTOR
+			// MEMBER OBJECTS
+			first_type				first;
+			second_type				second;
 
-				// DEFAULT
-				pair(void) :
-					first(first_type()),
-					second(second_type())
-				{
-					return ;
-				};
-
-				// INIT
-				pair(const T1 & x, const T2 & y) :
-					first(x),
-					second(y)
-				{
-					return ;
-				};
-
-				// COPY
-				template <class U1, class U2>
-				pair(const ft::pair<U1, U2> & p) :
-					first(p.first),
-					second(p.second)
-				{
-					return ;
-				};
-				
-				pair(const ft::pair<T1, T2> & p) :
-					first(p.first),
-					second(p.second)
-				{
-					return ;
-				};
-
-			// OPERATOR =
-			pair& operator = (const pair & pr)
+			// MEMBER FUNCTION DEFAULT CONSTRUCTOR
+			pair(void) :
+				first(first_type()),
+				second(second_type())
 			{
-				first = pr.first;
-				second = pr.second;
+				return ;
+			};
+
+			// MEMBER FUNCTION INIT CONSTRUCTOR
+			pair(const Key & x, const Value & y) :
+				first(x),
+				second(y)
+			{
+				return ;
+			};
+
+			// MEMBER FUNCTION COPY CONSTRUCTOR
+			pair(const ft::pair<Key, Value> & other) :
+				first(other.first),
+				second(other.second)
+			{
+				return ;
+			};
+
+			// MEMBER FUNCTION TEMPLATE COPY CONSTRUCTOR
+			template <class T1, class T2>
+				pair(const ft::pair<T1, T2> & other) :
+					first(other.first),
+					second(other.second)
+			{
+				return ;
+			};
+
+			// MEMBER FUNCTION OPERATOR =
+			pair& operator = (const pair & other)
+			{
+				if (this == &other)
+					return (*this);
+				first = other.first;
+				second = other.second;
 				return (*this);
 			};
 
-	};
+		}; // END OF PAIR CLASS
 
-	// MAKE PAIR
-	template <class T1, class T2>
-	ft::pair<T1,T2> make_pair(T1 x, T2 y)
-	{
-		return (ft::pair<T1, T2>(x, y));
-	};
+	// NON-MEMBER FUNCTIONS : RELATIONAL OPERATORS
+	// ==
+	template <class Key, class Value>
+		bool operator == (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return lhs.first == rhs.first && lhs.second == rhs.second;
+		};
 
-	// NON MEMBER FUNCTIONS : RELATIONAL OPERATORS
-	template <class T1, class T2>
-	bool operator == (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return lhs.first==rhs.first && lhs.second==rhs.second;
-	};
+	// !=
+	template <class Key, class Value>
+		bool operator != (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return !(lhs==rhs);
+		};
 
-	template <class T1, class T2>
-	bool operator != (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return !(lhs==rhs);
-	};
+	// <
+	template <class Key, class Value>
+		bool operator <  (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second);
+		};
 
-	template <class T1, class T2>
-	bool operator <  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second);
-	};
+	// <=
+	template <class Key, class Value>
+		bool operator <= (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return !(rhs < lhs);
+		};
 
-	template <class T1, class T2>
-	bool operator <= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return !(rhs<lhs);
-	};
+	// >
+	template <class Key, class Value>
+		bool operator >  (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return rhs < lhs;
+		};
 
-	template <class T1, class T2>
-	bool operator >  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return rhs<lhs;
-	};
+	// >=
+	template <class Key, class Value>
+		bool operator >= (const ft::pair<Key,Value> & lhs, const ft::pair<Key,Value> & rhs)
+		{
+			return !(lhs < rhs);
+		};
 
-	template <class T1, class T2>
-	bool operator >= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
-	{
-		return !(lhs<rhs);
-	};
-
-};
+}; // END OF NAMESPACE FT
 
 #endif

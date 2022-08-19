@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 15:45:30 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/10 17:01:00 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 21:42:34 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/18 11:45:10 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define STACK_HPP
 
 # include "vector.hpp"
+# include <stack>
 
-namespace ft 
+namespace ft
 {
+
+	// LIFO Container adaptor
 
 	template <class T, class Container = ft::vector<T> >
 		class stack
@@ -31,39 +34,39 @@ namespace ft
 				typedef typename Container::reference				reference;
 				typedef typename Container::const_reference			const_reference;
 
-
-				// MEMBER OBJECT
+			// MEMBER OBJECT
 			protected :
 
-				Container c;
+				container_type										c;
 
-
-				// MEMBER FUNCTIONS
+			// MEMBER FUNCTIONS
 			public :
 
 				// DEFAULT CONSTRUCTOR
-				explicit stack(const Container& cont = Container()) :
+				explicit stack(const container_type & cont = Container()) :
 					c(cont)
-			{
-				return ;
-			};
-
-				// COPY CONSTRUCTOR
-				stack(const stack& other) :
-					c(other.c)
-			{
-				return ;
-			};
-
-				// DESTRUCTOR
-				~stack()
 				{
 					return ;
 				};
 
-				// OPERATOR = 
+				// COPY CONSTRUCTOR
+				stack(const stack & other) :
+					c(other.c)
+				{
+					return ;
+				};
+
+				// DESTRUCTOR
+				~stack(void)
+				{
+					return ;
+				};
+
+				// OPERATOR =
 				stack& operator = (const stack & other)
 				{
+					if (this == &other)
+						return (*this);
 					c = other.c;
 					return (*this);
 				};
@@ -73,6 +76,8 @@ namespace ft
 				{
 					return (c.back());
 				};
+
+				// TOP CONST
 				const_reference top(void) const
 				{
 					return (c.back());
@@ -103,49 +108,51 @@ namespace ft
 				};
 
 				// RELATIONAL OPERATOR DECLARATIONS
-				friend bool ft::operator == (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-				friend bool ft::operator != (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-				friend bool ft::operator >  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-				friend bool ft::operator <  (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-				friend bool ft::operator >= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-				friend bool ft::operator <= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs);
-		};
+				friend bool ft::operator == (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+				friend bool ft::operator != (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+				friend bool ft::operator >  (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+				friend bool ft::operator <  (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+				friend bool ft::operator >= (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+				friend bool ft::operator <= (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs);
+
+		}; // END OF STACK CLASS
 
 	template <class T, class Container>
-		bool operator == (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		bool operator == (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs)
 		{
 			return (lhs.c == rhs.c);
 		};
 
 	template <class T, class Container>
-		bool operator != (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		bool operator != (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs)
 		{
 			return (lhs.c != rhs.c);
 		};
 
 	template <class T, class Container>
-		bool operator < (const stack<T,Container>& lhs, const stack<T,Container>& rhs) 
+		bool operator < (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs) 
 		{
 			return (lhs.c < rhs.c);
 		};
 
 	template <class T, class Container>
-		bool operator <= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		bool operator <= (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs)
 		{
 			return (lhs.c <= rhs.c);
 		};
 
 	template <class T, class Container>
-		bool operator > (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		bool operator > (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs)
 		{
 			return (lhs.c > rhs.c);
 		};
 
 	template <class T, class Container>
-		bool operator >= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+		bool operator >= (const ft::stack<T, Container> & lhs, const ft::stack<T, Container> & rhs)
 		{
 			return (lhs.c >= rhs.c);
 		};
 
-};
+}; // END OF NAMESPACE FT
+
 #endif

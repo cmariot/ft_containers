@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 23:29:59 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/08 13:49:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/18 09:02:44 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define TIMEOUT_DELAY	10
 
 # define GREEN		"\033[1;32m"
-# define RED		"\033[1;31m"
+# define RED_COLOR	"\033[1;31m"
 # define BOLDWHITE	"\033[1m\033[37m"
 # define RESET		"\033[0m"
 

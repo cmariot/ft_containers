@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02_RBTree_tests.cpp                                :+:      :+:    :+:   */
+/*   make_pair.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/16 08:17:37 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 20:38:50 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/16 22:42:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.hpp"
+#ifndef MAKE_PAIR_HPP
+# define MAKE_PAIR_HPP
 
-// TO DO :
-// - [X] Declare a new RBT (constructor)
-// - [X] Add a pair in the RBT (insert)
-// - [ ] Iterate in the nodes of the tree and return a pair (iterators)
-// - [ ] Find a pair in the tree depending its key / value (find)
-// - [ ] Delete a pair in the RBT (del)
+# include "pair.hpp"
 
-int	RBTree_test(void)
+namespace ft
 {
 
-	return (0);
-}
+	// MAKE PAIR
+	template <class T1, class T2>
+		ft::pair<T1, T2> make_pair(T1 x, T2 y)
+		{
+			return (ft::pair<T1, T2>(x, y));
+		};
+
+}; // END OF NAMESPACE FT
+
+#endif

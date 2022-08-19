@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/17 03:41:28 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/18 09:01:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	iterators_test(void)
 	// Caracteristics for all categories
 	{
 		// Copy assignable
-		ft::random_access_iterator<int> ft_a = ft_vector.begin();
+		ft::vector_iterator<int> ft_a = ft_vector.begin();
 		std::vector<int>::iterator		std_a = std_vector.begin();
 		if (*ft_a != *std_a)
 			return (-1);
 
 		// Copy constructible
-		ft::random_access_iterator<int> ft_b(ft_a);
+		ft::vector_iterator<int> ft_b(ft_a);
 		std::vector<int>::iterator		std_b(std_a);
 
 		// Postfix incrementation
@@ -55,10 +55,10 @@ int	iterators_test(void)
 
 	// Input iterator caracteristics
 	{
-		ft::random_access_iterator<int> ft_a = ft_vector.begin() + 2;
+		ft::vector_iterator<int> ft_a = ft_vector.begin() + 2;
 		std::vector<int>::iterator		std_a = std_vector.begin() + 2;
 
-		ft::random_access_iterator<int> ft_b(ft_a);
+		ft::vector_iterator<int> ft_b(ft_a);
 		std::vector<int>::iterator		std_b(std_a);
 
 		// Supports equality/inequality comparisons	
@@ -71,7 +71,7 @@ int	iterators_test(void)
 		if (*ft_a != 2 || *std_b != 2)
 			return (-1);
 
-		ft::random_access_iterator<int>		*ft_c = new ft::random_access_iterator<int>;
+		ft::vector_iterator<int>		*ft_c = new ft::vector_iterator<int>;
 		std::vector<int>::iterator	*std_c = new std::vector<int>::iterator;
 		*ft_c = ft_b;
 		*std_c = std_b;
@@ -84,7 +84,7 @@ int	iterators_test(void)
 
 	// Output iterator caracteristics
 	{
-		ft::random_access_iterator<int> ft_a = ft_vector.begin() + 2;
+		ft::vector_iterator<int> ft_a = ft_vector.begin() + 2;
 		std::vector<int>::iterator		std_a = std_vector.begin() + 2;
 
 		*ft_a = 42;
@@ -104,17 +104,17 @@ int	iterators_test(void)
 	// Forward iterator caracteristics
 	{
 		// Default constructible
-		ft::random_access_iterator<int> ft_a;
+		ft::vector_iterator<int> ft_a;
 		std::vector<int>::iterator		std_a;
 
-		ft_a = ft::random_access_iterator<int>();
+		ft_a = ft::vector_iterator<int>();
 		std_a = std::vector<int>::iterator();
 
 		ft_a = ft_vector.begin();
 		std_a = std_vector.begin();
 
 		// Multi pass
-		ft::random_access_iterator<int> ft_b;
+		ft::vector_iterator<int> ft_b;
 		std::vector<int>::iterator		std_b;
 
 		ft_b = ft_a;
@@ -132,7 +132,7 @@ int	iterators_test(void)
 
 	// Bidirectional iterator caracteristics
 	{
-		ft::random_access_iterator<int> ft_a = ft_vector.begin();
+		ft::vector_iterator<int> ft_a = ft_vector.begin();
 		std::vector<int>::iterator		std_a = std_vector.begin();
 
 		++ft_a;
@@ -171,7 +171,7 @@ int	iterators_test(void)
 	// Random access iterator caracteristics
 	{
 
-		ft::random_access_iterator<int> ft_a = ft_vector.begin();
+		ft::vector_iterator<int> ft_a = ft_vector.begin();
 		std::vector<int>::iterator		std_a = std_vector.begin();
 		
 		//Supports arithmetic operators + and -
@@ -187,7 +187,7 @@ int	iterators_test(void)
 			if (*(ft_a - 2) != *(std_a - 2))
 				return (-1);
 			// a - b
-			ft::random_access_iterator<int> ft_b = ft_vector.end();
+			ft::vector_iterator<int> ft_b = ft_vector.end();
 			std::vector<int>::iterator		std_b = std_vector.end();
 			if ((ft_b - ft_a) != (std_b - std_a))
 				return (-1);

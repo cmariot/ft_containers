@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enable_if.hpp                                      :+:      :+:    :+:   */
+/*   lexicographical_compare.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/16 20:19:21 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/17 01:11:15 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 20:43:01 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/16 22:40:19 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENABLE_IF
-# define ENABLE_IF
+#ifndef LEXICOGRAPHICAL_COMPARE_HPP
+# define LEXICOGRAPHICAL_COMPARE_HPP
 
 namespace ft
 {
 
-	// ENABLE_IF : Utile pour que des fonctions puissent compiler seulement si
-	// la condition Cond est vraie.
-
-	template <bool Cond, class T = void>
-		struct enable_if
-		{};
-
-	template<class T>
-		struct enable_if <true, T>
+	template <class InputIterator1, class InputIterator2>
+		bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
 		{
-			typedef T type;
+			while (first1 != last1)
+			{
+				if (first2 == last2 || *first2 < *first1)
+					return (false);
+				else if (*first1 < *first2)
+					return (true);
+				++first1;
+				++first2;
+			}
+			return (first2 != last2);
 		};
 
 }; // END OF NAMESPACE FT

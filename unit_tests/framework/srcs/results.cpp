@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_results.cpp                                :+:      :+:    :+:   */
+/*   results.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/07 21:36:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/18 09:03:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	results(int succeeded, int total, std::ofstream &fd, bool recursive)
 	if (succeeded == total)
 		fd << GREEN "[OK]" RESET << std::endl;
 	else
-		fd << RED "[KO]" RESET << std::endl;
+		fd << RED_COLOR "[KO]" RESET << std::endl;
 	if (recursive == false)
 		fd.close();
 	return (0);

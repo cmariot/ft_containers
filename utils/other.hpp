@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02_RBTree_tests.cpp                                :+:      :+:    :+:   */
+/*   other.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:18:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/16 08:17:37 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 21:45:35 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/17 01:11:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.hpp"
+#ifndef OTHER_HPP
+# define OTHER_HPP
 
-// TO DO :
-// - [X] Declare a new RBT (constructor)
-// - [X] Add a pair in the RBT (insert)
-// - [ ] Iterate in the nodes of the tree and return a pair (iterators)
-// - [ ] Find a pair in the tree depending its key / value (find)
-// - [ ] Delete a pair in the RBT (del)
-
-int	RBTree_test(void)
+namespace ft
 {
 
-	return (0);
-}
+	// USED IN VECTOR CLASS TO THROW EXCEPTION
+	template <class U>
+		std::string	itoa(U nb)
+		{
+			std::string		str_nb;
+
+			do
+			{
+				str_nb += '0' + (nb % 10);
+				nb /= 10;
+			} while (nb > 0);
+			return (std::string(str_nb.rbegin(), str_nb.rend()));
+		};
+
+}; // END OF NAMESPACE FT
+
+#endif

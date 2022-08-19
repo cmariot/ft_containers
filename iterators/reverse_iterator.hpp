@@ -5,18 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 19:30:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 12:28:41 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/16 21:43:54 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/16 21:45:09 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 
-# include <iostream>
-# include "random_access_iterator.hpp"
-
-namespace	ft
+namespace ft
 {
 	// REVERSE ITERATOR
 	template <class Iterator>

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:41:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/08 17:01:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/18 10:33:33 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ int	bound_tests(void)
 	itlow = mymap.lower_bound('b');   // itlow points to b
 	itup  = mymap.upper_bound('d');   // itup points to e (not d!)
 
-	ft::map<char,int> mynewmap;
-	mynewmap.insert(itlow, itup);        // insert [itlow,itup)
+	mymap.print();
+
+
+	mymap.erase(mymap.begin(), mymap.end());        // erases [itlow,itup)
+
+	mymap.print();
 
 	// print content:
-	for (ft::map<char, int>::iterator it = mynewmap.begin(); it != mynewmap.end(); ++it)
-		std::cout << it->first << " => " << it->second << '\n';
+	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << std::endl;
 
 	return (0);
 }

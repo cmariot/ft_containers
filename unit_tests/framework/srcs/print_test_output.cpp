@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:55:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/11 13:05:37 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/18 09:03:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_stdout_output(t_test *test, std::ofstream &fd)
 			fd << GREEN "[OUTPUT : OK]" RESET << std::endl;
 		else
 		{
-			fd << RED "[OUTPUT : KO]" << std::endl;
+			fd << RED_COLOR "[OUTPUT : KO]" << std::endl;
 			fd << "\t[OUTPUT]:\t[" << output << "]" << std::endl;
 			fd << "\t[EXPECTED]:\t[" << test->expected_output <<  "]" << RESET << std::endl;
 			test->status = KO;
@@ -77,24 +77,24 @@ void	print_test_output(t_test *test, int test_number, std::ofstream &fd, bool co
 	if (test->status == OK)
 		fd << GREEN "[OK]" RESET;
 	else if (test->status == KO)
-		fd << RED "[KO]" RESET;
+		fd << RED_COLOR "[KO]" RESET;
 	else if (test->status == TIMEOUT)
-		fd << RED "[TIMEOUT]" RESET;
+		fd << RED_COLOR "[TIMEOUT]" RESET;
 	else if (test->status == SIGSEGV)
-		fd << RED "[SIGSEGV]" RESET;
+		fd << RED_COLOR "[SIGSEGV]" RESET;
 	else if (test->status == SIGBUS)
-		fd << RED "[SIGBUS]" RESET;
+		fd << RED_COLOR "[SIGBUS]" RESET;
 	else if (test->status == SIGABRT)
-		fd << RED "[SIGABRT]" RESET;
+		fd << RED_COLOR "[SIGABRT]" RESET;
 	else if (test->status == SIGFPE)
-		fd << RED "[SIGFPE]" RESET;
+		fd << RED_COLOR "[SIGFPE]" RESET;
 	else if (test->status == SIGPIPE)
-		fd << RED "[SIGPIPE]" RESET;
+		fd << RED_COLOR "[SIGPIPE]" RESET;
 	else if (test->status == SIGILL)
-		fd << RED "[SIGILL]" RESET;
+		fd << RED_COLOR "[SIGILL]" RESET;
 	else if (test->status == 66)
-		fd << RED "[LEAKS]" RESET;
+		fd << RED_COLOR "[LEAKS]" RESET;
 	else
-		fd << RED "[EXIT : " << test->status << "]" RESET;
+		fd << RED_COLOR "[EXIT : " << test->status << "]" RESET;
 	check_stdout_output(test, fd);
 }
