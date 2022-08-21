@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 20:03:03 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/21 18:46:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,7 +434,8 @@ namespace ft
 					(
 					 iterator position,
 					 InputIterator first,
-					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value,
+					 InputIterator>::type last
 					)
 					{
 						iterator	it = begin();
