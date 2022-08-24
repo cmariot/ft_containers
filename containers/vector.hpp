@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/24 17:46:13 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/24 18:16:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,13 +192,23 @@ namespace ft
 				{
 					if (n < _size)
 					{
-						while (size() > n)
-							pop_back();
+						while (n < _size)
+						{
+							get_allocator().destroy(&_elements[_size - 1]);
+							_size--;
+						}
 					}
-					else if (n > _size)
+					else
 					{
-						while (size() < n)
-							push_back(val);
+						if (_capacity == 0 || n > 2 * _capacity)
+							reserve(n);
+						else if (n > _capacity)
+							reserve(_capacity * 2);
+						while (_size < n)
+						{
+							get_allocator().construct(_elements + _size, val);
+							++_size;
+						}
 					}
 				};
 
@@ -339,12 +349,15 @@ namespace ft
 				{
 					pointer		tmp;
 
-					if (_size + 1 > capacity())
+					if (capacity() == 0)
 					{
-						if (_capacity == 0)
-							_capacity = 1;
-						else
-							_capacity *= 2;
+						_capacity = 1;
+						_elements = get_allocator().allocate(_capacity);
+						get_allocator().construct(&_elements[_size], val);
+					}
+					else if (_size + 1 > capacity())
+					{
+						_capacity *= 2;
 						tmp = get_allocator().allocate(_capacity);
 						for (size_type i = 0 ; i < _size ; i++)
 						{
@@ -354,12 +367,6 @@ namespace ft
 						get_allocator().deallocate(_elements, _size);
 						get_allocator().construct(&tmp[_size], val);
 						_elements = tmp;
-					}
-					else if (capacity() == 0)
-					{
-						_capacity = 1;
-						_elements = get_allocator().allocate(_capacity);
-						get_allocator().construct(&_elements[_size], val);
 					}
 					else
 						get_allocator().construct(&_elements[_size], val);
