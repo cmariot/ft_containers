@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/21 18:46:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/24 17:46:13 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,32 +401,34 @@ namespace ft
 
 				void	insert(iterator position, size_type n, const value_type& val)
 				{
-					iterator	it = begin();
-					size_type	i = 0;
-					size_type	j = 1;
-					size_type	k = 0;
+						iterator	it = begin();
+						size_type	distance = n;
+						size_type	i = 0;
+						size_type	j = 1;
+						size_type	k = 0;
 
-					if (_size + n > _capacity)
-						reserve(_size + n);
-					while (it != position)
-					{
-						it++;
-						i++;
-					}
-					size_type backup = i;
-					while (i < _size)
-					{
-						get_allocator().construct(&_elements[_size + n - j], _elements[_size - j]);
-						j++;
-						i++;
-					}
-					while (k < n)
-					{
-						get_allocator().construct(&_elements[backup], val);
-						backup++;
-						k++;
-					}
-					_size += n;
+						if (_size + distance > _capacity)
+							reserve(_size + distance);
+						while (it != position)
+						{
+							it++;
+							i++;
+						}
+						size_type backup = i;
+						while (i < _size)
+						{
+							get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
+							get_allocator().destroy(&_elements[_size - j]);
+							j++;
+							i++;
+						}
+						while (k < distance)
+						{
+							get_allocator().construct(&_elements[backup], val);
+							k++;
+							backup++;
+						}
+						_size += distance;
 				};
 
 				template <class InputIterator>
@@ -434,8 +436,7 @@ namespace ft
 					(
 					 iterator position,
 					 InputIterator first,
-					 typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-					 InputIterator>::type last
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
 					)
 					{
 						iterator	it = begin();
@@ -455,6 +456,7 @@ namespace ft
 						while (i < _size)
 						{
 							get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
+							get_allocator().destroy(&_elements[_size - j]);
 							j++;
 							i++;
 						}
