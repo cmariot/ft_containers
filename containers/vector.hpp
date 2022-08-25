@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 16:05:35 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:18:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,12 +316,7 @@ namespace ft
 							clear();
 							get_allocator().deallocate(_elements, _size);
 						}
-						InputIterator tmp = first;
-						while (tmp != last)
-						{
-							_size++;
-							tmp++;
-						}
+						_size = std::distance(first, last);
 						_capacity = _size;
 						if (_size and _size <= max_size())
 						{
@@ -421,35 +416,38 @@ namespace ft
 						size_type	j = 1;
 						size_type	k = 0;
 
-						if (_size + distance > _capacity)
+						if (distance)
 						{
-							if (_capacity == 0 || _size + distance >= 2 * _capacity)
-								reserve(_size + distance);
-							else if (_size + distance < _size * 2)
-								reserve(_size * 2);
-							else
-								reserve(_capacity * 2);
+							if (_size + distance > _capacity)
+							{
+								if (_capacity == 0 || _size + distance >= 2 * _capacity)
+									reserve(_size + distance);
+								else if (_size + distance < _size * 2)
+									reserve(_size * 2);
+								else
+									reserve(_capacity * 2);
+							}
+							while (it != position)
+							{
+								it++;
+								i++;
+							}
+							size_type backup = i;
+							while (i < _size)
+							{
+								get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
+								get_allocator().destroy(&_elements[_size - j]);
+								j++;
+								i++;
+							}
+							while (k < distance)
+							{
+								get_allocator().construct(&_elements[backup], val);
+								k++;
+								backup++;
+							}
+							_size += distance;
 						}
-						while (it != position)
-						{
-							it++;
-							i++;
-						}
-						size_type backup = i;
-						while (i < _size)
-						{
-							get_allocator().construct(&_elements[_size + distance - j], _elements[_size - j]);
-							get_allocator().destroy(&_elements[_size - j]);
-							j++;
-							i++;
-						}
-						while (k < distance)
-						{
-							get_allocator().construct(&_elements[backup], val);
-							k++;
-							backup++;
-						}
-						_size += distance;
 				};
 
 				template <class InputIterator>
