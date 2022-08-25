@@ -6,12 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 16:58:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 18:49:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+
+# include <iostream>
 
 # include "../iterators/vector_iterator.hpp"
 # include "../iterators/reverse_iterator.hpp"
@@ -123,7 +125,8 @@ namespace ft
 				~vector(void)
 				{
 					clear();
-					get_allocator().deallocate(_elements, _size);
+					get_allocator().deallocate(_elements, _capacity);
+					_capacity = 0;
 					return ;
 				};
 
@@ -131,7 +134,7 @@ namespace ft
 				vector const &	operator = (const vector<T, Allocator> & rhs)
 				{
 					clear();
-					get_allocator().deallocate(_elements, _size);
+					get_allocator().deallocate(_elements, _capacity);
 					assign(rhs.begin(), rhs.end());
 					return (*this);
 				};
@@ -347,8 +350,15 @@ namespace ft
 					if (capacity() == 0)
 					{
 						_capacity = 1;
-						_elements = get_allocator().allocate(_capacity);
-						get_allocator().construct(&_elements[_size], val);
+						tmp = get_allocator().allocate(_capacity);
+						for (size_type i = 0 ; i < _size ; i++)
+						{
+							get_allocator().construct(&tmp[i], _elements[i]);
+							get_allocator().destroy(&_elements[i]);
+						}
+						get_allocator().deallocate(_elements, _size);
+						get_allocator().construct(&tmp[_size], val);
+						_elements = tmp;
 					}
 					else if (_size + 1 > capacity())
 					{
@@ -551,9 +561,8 @@ namespace ft
 				// CLEAR : destroy the array elements
 				void	clear(void)
 				{
-					for (size_type i = 0 ; i < _size ; i++)
-						get_allocator().destroy(&_elements[i]);
-					_size = 0;
+					while (_size)
+						get_allocator().destroy(&_elements[--_size]);
 				};
 
 				// ALLOCATOR

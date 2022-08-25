@@ -6,12 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:52 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/16 22:33:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 17:31:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAITS_HPP
 # define ITERATOR_TRAITS_HPP
+
+# include <iterator>
 
 namespace ft
 {
