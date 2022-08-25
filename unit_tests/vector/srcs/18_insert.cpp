@@ -6,11 +6,25 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:36 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/04 16:06:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 15:24:24 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
+
+void print_vector(ft::vector<int> &vector)
+{
+	std::cout << "FT  : ";
+	std::cout << "SIZE = " << vector.size();
+	std::cout << " CAP = " << vector.capacity() << std::endl;
+}
+
+void print_std_vector(std::vector<int> &vector)
+{
+	std::cout << "STD : ";
+	std::cout << "SIZE = " << vector.size();
+	std::cout << " CAP = " << vector.capacity() << std::endl;
+}
 
 int	insert_test(void)
 {
@@ -162,6 +176,46 @@ int	insert_test(void)
 			return (-1);
 
 	}
+	
+	// MAZOISE
+	{
+		std::cout << std::endl << "INSERT TESTS" << std::endl;
+		
+		ft::vector<int> test(1, 1);
+		std::vector<int> std_test(1, 1);
+
+		ft::vector<int> test2(5, 5);
+
+		test.insert(test.begin(), 200, 12);
+		std_test.insert(std_test.begin(), 200, 12);
+
+		print_vector(test);
+		print_std_vector(std_test);
+		
+		test.insert(test.begin() + 12, 200, 30);
+		std_test.insert(std_test.begin() + 12, 200, 30);
+
+		print_vector(test);
+		print_std_vector(std_test);
+
+		test.insert(test.end(), 12, 50);
+		std_test.insert(std_test.end(), 12, 50);
+
+		print_vector(test);
+		print_std_vector(std_test);
+
+		test.insert(test.end() - 1, 0, 60);
+		print_vector(test);
+		test.insert(test.end() - 1, 1, 70);
+		print_vector(test);
+		test.insert(test.begin() + 412, test2.begin(), test2.end());
+		print_vector(test);
+		test.insert(test.begin() + 6, test2.begin(), test2.end());
+		print_vector(test);
+		test.insert(test.end(), test2.begin(), test2.end());
+		print_vector(test);
+	}
+
 
 	return (0);
 }

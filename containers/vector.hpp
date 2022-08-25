@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/24 18:16:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:05:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,8 +308,7 @@ namespace ft
 					void assign
 					(
 					 InputIterator first,
-					 typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-					 InputIterator>::type last
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
 					)
 					{
 						if (_size)
@@ -357,7 +356,10 @@ namespace ft
 					}
 					else if (_size + 1 > capacity())
 					{
-						_capacity *= 2;
+						if (_capacity * 2 >= _size + 1)
+							_capacity *= 2;
+						else
+							_capacity = _size;
 						tmp = get_allocator().allocate(_capacity);
 						for (size_type i = 0 ; i < _size ; i++)
 						{
@@ -385,9 +387,14 @@ namespace ft
 					iterator	it = begin();
 					size_type	i = 0;
 					size_type	j = 1;
-
+					
 					if (_size + 1 > _capacity)
-						reserve(_size + 1);
+					{
+						if (_capacity == 0 || _size + 1 > 2 * _capacity)
+							reserve(_size + 1);
+						else if (_size + 1 > _capacity)
+							reserve(_capacity * 2);
+					}
 					while (it != position)
 					{
 						it++;
@@ -415,7 +422,14 @@ namespace ft
 						size_type	k = 0;
 
 						if (_size + distance > _capacity)
-							reserve(_size + distance);
+						{
+							if (_capacity == 0 || _size + distance >= 2 * _capacity)
+								reserve(_size + distance);
+							else if (_size + distance < _size * 2)
+								reserve(_size * 2);
+							else
+								reserve(_capacity * 2);
+						}
 						while (it != position)
 						{
 							it++;
@@ -453,7 +467,12 @@ namespace ft
 						size_type	k = 0;
 
 						if (_size + distance > _capacity)
-							reserve(_size + distance);
+						{
+							if (_capacity == 0 || _size + distance > 2 * _capacity)
+								reserve(_size + distance);
+							else if (_size + distance > _capacity)
+								reserve(_capacity * 2);
+						}
 						while (it != position)
 						{
 							it++;
