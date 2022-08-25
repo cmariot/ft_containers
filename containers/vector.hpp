@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 16:18:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:22:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,24 +311,10 @@ namespace ft
 					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last
 					)
 					{
-						if (_size)
-						{
-							clear();
-							get_allocator().deallocate(_elements, _size);
-						}
-						_size = std::distance(first, last);
-						_capacity = _size;
-						if (_size and _size <= max_size())
-						{
-							_elements = get_allocator().allocate(_capacity);
-							for (size_type i = 0 ; i < _size ; i++)
-							{
-								get_allocator().construct(&_elements[i], *first);
-								++first;
-							}
-						}
-						else
-							_elements = NULL;
+						clear();
+						reserve(std::distance(first, last));
+						for ( ; first != last ; ++first)
+							push_back(*first);
 					};
 				void	assign(size_type n, const value_type& val)
 				{
