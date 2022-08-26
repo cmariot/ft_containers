@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/08/26 15:35:32 by cmariot          ###   ########.fr        #
+#    Updated: 2022/08/26 17:34:14 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,12 @@ NAME			 = ft_containers
 CC				 = c++
 
 
-CFLAGS			 = -Wall -Wextra -Werror -std=c++98 -pthread -O3 -g3
-LFLAGS			 = -Wall -Wextra -Werror -std=c++98 -pthread -O3 -g3
+CFLAGS			 = -Wall -Wextra -Werror -std=c++98 -pthread -g3
+LFLAGS			 = -Wall -Wextra -Werror -std=c++98 -pthread -g3
 
 
 INCLUDES		 = -I containers
-INCLUDES		+= -I iterators
-INCLUDES		+= -I utils
+INCLUDES		+= -I unit_tests
 INCLUDES		+= -I unit_tests/framework/includes
 
 

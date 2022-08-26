@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:30 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 11:17:05 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:32:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,11 +388,6 @@ namespace ft
 				allocator_type get_allocator(void) const
 				{
 					return (_alloc);
-				};
-
-				void	print(void)
-				{
-					_tree.print();
 				};
 
 

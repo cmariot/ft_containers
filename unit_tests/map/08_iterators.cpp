@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 15:19:02 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:30:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	map_iterator_tests(void)
 	
 	while (it != ite)
 	{
-		std::cout << it->first << ":" << it->second << std::endl;
+		//std::cout << it->first << ":" << it->second << std::endl;
 		it++;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:41 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/14 11:08:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:26:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int	size_test(void)
 				return (-1);
 		}
 
-		// A tester : size() apres modification des vecteurs (insert ...)
-		
 	}
 	return (0);
 

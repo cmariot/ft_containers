@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 18:49:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:33:36 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include "../utils/equal.hpp"
 # include "../utils/lexicographical_compare.hpp"
 # include "../utils/other.hpp"
-
-#include <vector>
 
 namespace ft
 {

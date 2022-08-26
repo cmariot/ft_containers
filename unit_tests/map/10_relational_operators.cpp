@@ -31,7 +31,6 @@ int	map_relational_ope(void)
     if ((alice >= bob) == true) 
 		return (106);
  
-    std::cout << '\n';
  
     // Compare equal containers
     if ((alice == eve) == false)

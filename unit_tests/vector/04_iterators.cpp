@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 09:01:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:25:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	iterators_test(void)
 		ft::vector_iterator<int> ft_a = ft_vector.begin() + 2;
 		std::vector<int>::iterator		std_a = std_vector.begin() + 2;
 
-		ft::vector_iterator<int> ft_b(ft_a);
+		ft::vector_iterator<int>		ft_b(ft_a);
 		std::vector<int>::iterator		std_b(std_a);
 
 		// Supports equality/inequality comparisons	
@@ -72,11 +72,9 @@ int	iterators_test(void)
 			return (-1);
 
 		ft::vector_iterator<int>		*ft_c = new ft::vector_iterator<int>;
-		std::vector<int>::iterator	*std_c = new std::vector<int>::iterator;
+		std::vector<int>::iterator		*std_c = new std::vector<int>::iterator;
 		*ft_c = ft_b;
 		*std_c = std_b;
-		//if (typeid(ft_c->_ptr) != typeid(int))
-		//	return (-1);
 		
 		delete ft_c;
 		delete std_c;

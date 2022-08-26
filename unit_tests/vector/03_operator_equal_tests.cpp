@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 15:33:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:37:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ int	operator_equal_test(void)
 	{
 		ft::vector<char>	ft_default;
 		ft::vector<char>	ft_default_equal;
-
 		ft_default_equal = ft_default;
 
 		std::vector<char>	std_default;
 		std::vector<char>	std_default_equal;
-
 		std_default_equal = std_default;
 
 		if (ft_default_equal.size() != std_default_equal.size())
@@ -43,12 +41,10 @@ int	operator_equal_test(void)
 
 		ft::vector<int>			ft_fill(n, value);
 		ft::vector<int>			ft_fill_equal;
-
 		ft_fill_equal = ft_fill;
 
 		std::vector<int>		std_fill(n, value);
 		std::vector<int>		std_fill_equal;
-
 		std_fill_equal = std_fill;
 
 		if (ft_fill.size() != std_fill.size())
@@ -68,12 +64,10 @@ int	operator_equal_test(void)
 		{
 			ft::vector<int>			ft_copy(ft_fill);
 			ft::vector<int>			ft_copy_equal;
-
 			ft_copy_equal = ft_copy;
 
 			std::vector<int>		std_copy(std_fill);
 			std::vector<int>		std_copy_equal;
-
 			std_copy_equal = std_copy;
 
 			if (ft_copy_equal.size() != std_copy_equal.size())
@@ -91,12 +85,10 @@ int	operator_equal_test(void)
 		{
 			ft::vector<int>			ft_range(ft_fill.begin(), ft_fill.end());
 			ft::vector<int>			ft_range_equal;
-
 			ft_range_equal = ft_range;
 
 			std::vector<int>		std_range(std_fill.begin(), std_fill.end());
 			std::vector<int>		std_range_equal;
-
 			std_range_equal = std_range;
 
 			if (ft_range_equal.size() != std_range_equal.size())
@@ -111,7 +103,7 @@ int	operator_equal_test(void)
 
 		// Leaks tests
 		ft::vector<int>	ft_leaks_1;
-		ft::vector<int>	ft_leaks_2(static_cast<size_t>(5), 42);
+		ft::vector<int>	ft_leaks_2(5, 42);
 
 		ft_leaks_2 = ft_leaks_1;
 

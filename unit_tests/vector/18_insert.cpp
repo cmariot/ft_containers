@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:16:36 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 15:24:24 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:41:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,8 @@ int	insert_test(void)
 
 	}
 	
-	// MAZOISE
+	// MAZOISE TEST LEAKS
 	{
-		std::cout << std::endl << "INSERT TESTS" << std::endl;
 		
 		ft::vector<int> test(1, 1);
 		std::vector<int> std_test(1, 1);
@@ -189,31 +188,31 @@ int	insert_test(void)
 		test.insert(test.begin(), 200, 12);
 		std_test.insert(std_test.begin(), 200, 12);
 
-		print_vector(test);
-		print_std_vector(std_test);
+		//print_vector(test);
+		//print_std_vector(std_test);
 		
 		test.insert(test.begin() + 12, 200, 30);
 		std_test.insert(std_test.begin() + 12, 200, 30);
 
-		print_vector(test);
-		print_std_vector(std_test);
+		//print_vector(test);
+		//print_std_vector(std_test);
 
 		test.insert(test.end(), 12, 50);
 		std_test.insert(std_test.end(), 12, 50);
 
-		print_vector(test);
-		print_std_vector(std_test);
+		//print_vector(test);
+		//print_std_vector(std_test);
 
 		test.insert(test.end() - 1, 0, 60);
-		print_vector(test);
+		//print_vector(test);
 		test.insert(test.end() - 1, 1, 70);
-		print_vector(test);
+		//print_vector(test);
 		test.insert(test.begin() + 412, test2.begin(), test2.end());
-		print_vector(test);
+		//print_vector(test);
 		test.insert(test.begin() + 6, test2.begin(), test2.end());
-		print_vector(test);
+		//print_vector(test);
 		test.insert(test.end(), test2.begin(), test2.end());
-		print_vector(test);
+		//print_vector(test);
 	}
 
 

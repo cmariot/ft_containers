@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:41:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 15:19:20 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:32:32 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	map_bound_tests(void)
 	ft_map.insert(ft::make_pair<int, char>(4, 'e'));
 	ft_map.insert(ft::make_pair<int, char>(5, 'f'));
 
-	std::cout << ft_map.lower_bound(2)->first << std::endl;
+	//std::cout << ft_map.lower_bound(2)->first << std::endl;
 
 	ft::map<char,int> mymap;
 	ft::map<char,int>::iterator itlow, itup;
@@ -37,16 +37,11 @@ int	map_bound_tests(void)
 	itlow = mymap.lower_bound('b');   // itlow points to b
 	itup  = mymap.upper_bound('d');   // itup points to e (not d!)
 
-	mymap.print();
-
-
 	mymap.erase(mymap.begin(), mymap.end());        // erases [itlow,itup)
 
-	mymap.print();
-
 	// print content:
-	for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-		std::cout << it->first << " => " << it->second << std::endl;
+	//for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+	//	std::cout << it->first << " => " << it->second << std::endl;
 
 	return (0);
 }
