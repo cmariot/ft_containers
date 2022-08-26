@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-int	empty_test(void)
+int	map_empty_test(void)
 {
 	// EMPTY MAP CONSTUCTOR
 	ft::map<int, char>	ft_empty;

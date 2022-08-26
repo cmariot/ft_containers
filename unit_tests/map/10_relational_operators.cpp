@@ -1,6 +1,6 @@
 #include "tests.hpp"
 
-int	relational_ope(void)
+int	map_relational_ope(void)
 {
     ft::map<int, char> alice;
 	alice.insert(ft::make_pair<int, char>(1, 'a'));

@@ -6,13 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:41:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 10:33:33 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 15:19:20 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	bound_tests(void)
+int	map_bound_tests(void)
 {
 	ft::map<int, char>	ft_map;
 

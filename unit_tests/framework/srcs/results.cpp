@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 21:42:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 09:03:15 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 15:28:14 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	results(int succeeded, int total, std::ofstream &fd, bool recursive)
 		fd << GREEN "[OK]" RESET << std::endl;
 	else
 		fd << RED_COLOR "[KO]" RESET << std::endl;
-	if (recursive == false)
-		fd.close();
+	//if (recursive == false)
+		//fd.close();
 	return (0);
 }

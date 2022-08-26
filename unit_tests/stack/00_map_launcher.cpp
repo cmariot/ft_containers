@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   00_map_launcher.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 14:58:10 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/13 11:54:24 by cmariot          ###   ########.fr       */
+/*   Created: 2022/06/03 14:19:08 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/26 15:21:23 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	main(void)
+int	stack_launcher(void)
 {
-	map_launcher();
-	return (0);
+	s_test	*tests = NULL;
+	std::string function_name = "STACK";
+
+	load_test(&tests, function_name, "Constructor", (void *)&stack_constructors_tests, "");
+	return (launch_tests(&tests));
 }

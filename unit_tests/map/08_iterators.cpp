@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   04_destructor.cpp                                  :+:      :+:    :+:   */
+/*   08_iterators.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/26 06:47:58 by cmariot           #+#    #+#             */
-/*   Updated: 2022/07/26 06:50:04 by cmariot          ###   ########.fr       */
+/*   Created: 2022/07/26 20:04:06 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/26 15:19:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
 
-int	destructor_tests(void)
+int	map_iterator_tests(void)
 {
 	ft::map<int, char>	ft_map;
 
@@ -20,17 +20,16 @@ int	destructor_tests(void)
 	ft_map.insert(ft::pair<int, char>(2, 'b'));
 	ft_map.insert(ft::pair<int, char>(3, 'c'));
 
-	std::map<int, char>	std_map;
-	std_map.insert(std::pair<int, char>(1, 'a'));
-	std_map.insert(std::pair<int, char>(2, 'b'));
-	std_map.insert(std::pair<int, char>(3, 'c'));
+	ft::map<int, char>::iterator	it = ft_map.begin();
+	ft::map<int, char>::iterator	ite = ft_map.end();
+	
+	while (it != ite)
+	{
+		std::cout << it->first << ":" << it->second << std::endl;
+		it++;
+	}
 
-	ft::map<int, char>	ft_range(std_map.begin(), std_map.end()); 
-
-	// A tester apres l'implementation des iterateurs begin, end et ++
-	//ft::map<int, char>	ft_copy(ft_range);
-
-	//ft::map<int, char>	ft_equal = ft_copy;
+	ft::map<int, char>::const_iterator	cit = ft_map.begin();
 
 	return (0);
 }

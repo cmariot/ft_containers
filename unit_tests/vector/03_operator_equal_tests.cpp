@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:14:14 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/27 08:59:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 15:33:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	operator_equal_test(void)
 
 		if (ft_leaks_2.size() != ft_empty.size())
 			return (-1);
-		if (ft_leaks_2.capacity() != ft_empty.capacity())
+		if (ft_leaks_2.capacity() < ft_leaks_2.size())
 			return (-1);
 		for (size_t i = 0 ; i < ft_leaks_2.size() ; i++)
 			if (ft_leaks_2[i] != ft_empty[i])
