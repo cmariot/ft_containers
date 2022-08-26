@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_constructors.cpp                                :+:      :+:    :+:   */
+/*   03_operator_equal.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 19:51:25 by cmariot          ###   ########.fr       */
+/*   Created: 2022/08/26 19:20:15 by cmariot           #+#    #+#             */
+/*   Updated: 2022/08/26 20:00:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,32 @@ template <class T, class C>
 		return (0);
 	}
 
-int	stack_constructors_tests(void)
+
+int	stack_operator_equal_tests(void)
 {
-
-	// DEFAULT CONSTRUCTOR
-	ft::stack<int>							default_constructor;
-	std::stack<int, ft::vector<int> >		std_default_constructor;
-
-	if (compare_stack<int, ft::vector<int> >(default_constructor, std_default_constructor))
-		return (1);
-
-
-	// CONTAINER CONSTRUCTOR
+	// vector
 	ft::vector<int>							vector(5, 42);
 
+	// stack construct with vector
 	ft::stack<int>							container_constructor(vector);
 	std::stack<int, ft::vector<int> >		std_container_constructor(vector);
+
+	// empty stack
+	ft::stack<int>							empty;
+	std::stack<int, ft::vector<int> >		std_empty;
+
+	if (compare_stack<int, ft::vector<int> >(empty, std_empty))
+		return (1);
+
+	// empty = stack(vector)
+	empty = container_constructor;
+	std_empty = std_container_constructor;
 
 	if (compare_stack<int, ft::vector<int> >(container_constructor, std_container_constructor))
 		return (1);
 
+	if (compare_stack<int, ft::vector<int> >(empty, std_empty))
+		return (1);
 
 	return (0);
 }

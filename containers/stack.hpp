@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:34 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/25 18:55:44 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 19:39:39 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,6 @@ namespace ft
 				stack(const container_type & cont = Container()) :
 					c(cont)
 				{
-					return ;
-				};
-
-				// COPY CONSTRUCTOR
-				stack(const stack & other)
-				{
-					c = other.c;
 					return ;
 				};
 

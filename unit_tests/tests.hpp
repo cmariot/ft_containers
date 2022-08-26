@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 15:03:15 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 17:18:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/26 19:22:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,16 @@ int		swap2_test(void);
 # include <stack>
 
 int		stack_launcher(void);
+
 int		stack_constructors_tests(void);
+int		stack_destructors_tests(void);
+int		stack_operator_equal_tests(void);
+int		stack_top_tests(void);
+int		stack_empty_tests(void);
+int		stack_size_tests(void);
+int		stack_push_tests(void);
+int		stack_pop_tests(void);
+int		stack_relational_operators_tests(void);
 
 
 /* ************************************************************************** */

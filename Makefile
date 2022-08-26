@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/08/26 17:34:14 by cmariot          ###   ########.fr        #
+#    Updated: 2022/08/26 19:23:35 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,15 @@ VECTORS			= 00_vector_launcher.cpp \
 
 
 STACK			= 00_map_launcher.cpp \
-				  01_constructors.cpp
+				  01_constructors.cpp \
+				  02_destructors.cpp \
+				  03_operator_equal.cpp \
+				  04_top.cpp \
+				  05_empty.cpp \
+				  06_size.cpp \
+				  07_push.cpp \
+				  08_pop.cpp \
+				  09_relationnal_operators.cpp
 
 
 MAP				= 00_map_launcher.cpp \
