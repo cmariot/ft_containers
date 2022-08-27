@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 17:33:36 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/28 01:51:56 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ namespace ft
 				// OPERATOR =
 				vector const &	operator = (const vector<T, Allocator> & rhs)
 				{
+					if (this == &rhs)
+						return (*this);
 					clear();
 					get_allocator().deallocate(_elements, _capacity);
 					assign(rhs.begin(), rhs.end());

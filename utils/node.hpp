@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 22:17:18 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/17 17:14:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/28 01:51:21 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ namespace ft
 			public :
 
 				typedef ft::pair<const Key, Value>		value_type;
+				typedef std::allocator<value_type>		allocator;
 
 			// MEMBER OBJECTS
 			public :
@@ -50,15 +51,18 @@ namespace ft
 					left(nil),
 					right(nil),
 					parent(nil),
-					data(new value_type(key, value)),
+					data(NULL),
 					color(color)
 				{
+					data = allocator().allocate(1);
+					allocator().construct(data, value_type(key, value));
 					return ;
 				};
 
 				// COPY CONSTRUCTOR
 				node(const node & other)
 				{
+					data = NULL;
 					*this = other;
 					return ;
 				};
@@ -71,7 +75,13 @@ namespace ft
 					left = other.left;
 					right = other.right;
 					parent = other.parent;
-					data = new value_type(other.data->first, other.data->second);
+					if (data)
+					{
+						allocator().destroy(data);
+						allocator().deallocate(data, 1);
+					}
+					data = allocator().allocate(1);
+					allocator().construct(data, value_type(other.data->first, other.data->second));
 					color = other.color;
 					return (*this);
 				};
@@ -81,7 +91,8 @@ namespace ft
 				{
 					if (data)
 					{
-						delete data;
+						allocator().destroy(data);
+						allocator().deallocate(data, 1);
 						data = NULL;
 					}
 					return ;
