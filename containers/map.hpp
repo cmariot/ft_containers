@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:42:30 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 17:32:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/28 15:07:08 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ namespace ft
 				// INSERT VALUE
 				iterator insert(iterator hint, const value_type& val)
 				{
-					(void) hint;
+					(void)hint;
 					return (_tree.insert(val).first);
 				};
 

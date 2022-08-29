@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 06:48:13 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 15:18:45 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 10:42:35 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	map_clear_tests(void)
 	ft_map.insert(ft::pair<int, char>(3, 'c'));
 
 	if (ft_map.size() != 3)
+		return (1);
+
+	ft_map.clear();
+
+	if (ft_map.size() != 0)
 		return (1);
 
 	return (0);

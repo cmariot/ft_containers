@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 06:47:58 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 15:18:40 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 09:14:59 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,21 @@
 
 int	map_destructor_tests(void)
 {
+	// DEFAULT CONSTRUCTOR : EMPTY MAP
 	ft::map<int, char>	ft_map;
 
-	ft_map.insert(ft::pair<int, char>(1, 'a'));
-	ft_map.insert(ft::pair<int, char>(2, 'b'));
-	ft_map.insert(ft::pair<int, char>(3, 'c'));
+	ft_map.insert(std::pair<int, char>(1, 'a'));
+	ft_map.insert(std::pair<int, char>(2, 'b'));
+	ft_map.insert(std::pair<int, char>(3, 'c'));
 
-	std::map<int, char>	std_map;
-	std_map.insert(std::pair<int, char>(1, 'a'));
-	std_map.insert(std::pair<int, char>(2, 'b'));
-	std_map.insert(std::pair<int, char>(3, 'c'));
+	// RANGE CONSTRUCTOR
+	ft::map<int, char>	ft_range(ft_map.begin(), ft_map.end()); 
 
-	ft::map<int, char>	ft_range(std_map.begin(), std_map.end()); 
+	// COPY CONSTRUCTOR
+	ft::map<int, char>	ft_copy(ft_map);
 
-	// A tester apres l'implementation des iterateurs begin, end et ++
-	//ft::map<int, char>	ft_copy(ft_range);
-
-	//ft::map<int, char>	ft_equal = ft_copy;
+	// OPERATOR =
+	ft_copy = ft_map;
 
 	return (0);
 }

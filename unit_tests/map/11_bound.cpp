@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:41:57 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 17:32:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 10:36:15 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	map_bound_tests(void)
 	mymap['d'] = 80;
 	mymap['e'] = 100;
 
-	itlow = mymap.lower_bound('b');   // itlow points to b
-	itup  = mymap.upper_bound('d');   // itup points to e (not d!)
+	itlow = mymap.lower_bound('b');					// itlow points to b
+	itup  = mymap.upper_bound('d');					// itup points to e (not d!)
 
 	mymap.erase(mymap.begin(), mymap.end());        // erases [itlow,itup)
 

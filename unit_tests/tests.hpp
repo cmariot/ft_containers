@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 15:03:15 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/26 19:22:18 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 10:49:01 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,15 @@ int		map_iterator_tests(void);
 int		map_empty_test(void);
 int		map_relational_ope(void);
 int		map_bound_tests(void);
+int		map_equal_test(void);
+int		map_size_test(void);
+int		map_max_size_test(void);
+int		map_access_test(void);
+int		map_insert_test(void);
+int		map_erase_test(void);
+int		map_find_test(void);
+int		map_count_test(void);
+int		map_allocator_test(void);
 
 
 #endif
