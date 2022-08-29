@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/08/29 12:19:55 by cmariot          ###   ########.fr        #
+#    Updated: 2022/08/29 14:05:13 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,6 +183,8 @@ leaks :			all
 showleaks :		all
 				valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=66 ./$(NAME)
 
+ft :
+				$(CC) $(CFLAGS) -I containers -D FT=1 main.cpp -o ft
 
 test :			all
 				./$(NAME)

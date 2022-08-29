@@ -6,12 +6,11 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 17:17:42 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/29 10:46:55 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 15:58:18 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
-#include <list>
 
 int	map_constructors_tests(void)
 {
