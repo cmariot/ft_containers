@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:01:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/29 18:19:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 19:16:11 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #endif
 
 #include <iostream>
+#include <sys/time.h>
 
 template <class T>
 void	print_vector(NS::vector<T> & vector)
@@ -210,15 +211,29 @@ void	test_map(void)
 	std::cout << map.count(94) << std::endl;
 }
 
+double	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
 int	main(void)
 {
 	if (FT == 1)
 		std::cout << "Test for namespace ft" << std::endl;
 	else
 		std::cout << "Test for namespace std" << std::endl;
-
+	
+	double	start = (double)clock();
+	
 	test_vector();
 	test_stack();
 	test_map();
+	
+	double	end = 1000 * ((double)clock() - start) / CLOCKS_PER_SEC;
+	std::cout << "Done in " << end << " ms." << std::endl;
+	
 	return (0);
 }
