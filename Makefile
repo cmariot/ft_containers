@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/08/29 10:54:26 by cmariot          ###   ########.fr        #
+#    Updated: 2022/08/29 12:19:55 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ STACK			= 00_map_launcher.cpp \
 
 MAP				= 00_map_launcher.cpp \
 				  01_pair_tests.cpp \
-				  02_RBTree_tests.cpp \
+				  02_operator_equal.cpp \
 				  03_constructors.cpp \
 				  04_destructor.cpp \
 				  05_clear.cpp \
@@ -110,15 +110,14 @@ MAP				= 00_map_launcher.cpp \
 				  09_empty.cpp \
 				  10_relational_operators.cpp \
 				  11_bound.cpp \
-				  12_operator_equal.cpp \
+				  12_allocator.cpp \
 				  13_size.cpp \
 				  14_max_size.cpp \
 				  15_operator[].cpp \
 				  16_insert.cpp \
 				  17_erase.cpp \
 				  18_find.cpp \
-				  19_count.cpp \
-				  20_allocator.cpp
+				  19_count.cpp
 
 
 
