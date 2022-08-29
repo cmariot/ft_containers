@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:01:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/29 16:23:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/29 18:19:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,10 +200,23 @@ void	test_map(void)
 	map.insert(map.end(), NS::make_pair<int, char>(999, 'f'));
 
 	print_map<int, char>(map);
+
+	map.erase(++(map.begin()));
+	map.erase(--(map.end()), map.end());
+	map.erase(99);
+	print_map<int, char>(map);
+
+	std::cout << map.find(94)->first << std::endl;
+	std::cout << map.count(94) << std::endl;
 }
 
 int	main(void)
 {
+	if (FT == 1)
+		std::cout << "Test for namespace ft" << std::endl;
+	else
+		std::cout << "Test for namespace std" << std::endl;
+
 	test_vector();
 	test_stack();
 	test_map();

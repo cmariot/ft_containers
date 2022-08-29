@@ -6,7 +6,7 @@
 #    By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/30 11:15:47 by cmariot           #+#    #+#              #
-#    Updated: 2022/08/29 14:05:13 by cmariot          ###   ########.fr        #
+#    Updated: 2022/08/29 18:21:40 by cmariot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,7 +184,11 @@ showleaks :		all
 				valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=66 ./$(NAME)
 
 ft :
+				rm -rf ft std ft.log std.log
 				$(CC) $(CFLAGS) -I containers -D FT=1 main.cpp -o ft
+				$(CC) $(CFLAGS) -I containers main.cpp -o std
+				./ft > ft.log
+				./std > std.log
 
 test :			all
 				./$(NAME)
@@ -200,6 +204,7 @@ clean :
 
 
 fclean :
+				@rm -rf ft std ft.log std.log
 				@-rm -f $(NAME)
 				@rm -rf VECTOR.log STACK.log MAP.log valgrind.log
 				@-rm -rf $(OBJ_ROOTDIR) $(DEPENDS)
