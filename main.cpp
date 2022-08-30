@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:01:33 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/29 19:16:11 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/30 12:51:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,15 +225,15 @@ int	main(void)
 		std::cout << "Test for namespace ft" << std::endl;
 	else
 		std::cout << "Test for namespace std" << std::endl;
-	
+
 	double	start = (double)clock();
-	
+
 	test_vector();
 	test_stack();
 	test_map();
-	
+
 	double	end = 1000 * ((double)clock() - start) / CLOCKS_PER_SEC;
 	std::cout << "Done in " << end << " ms." << std::endl;
-	
+
 	return (0);
 }

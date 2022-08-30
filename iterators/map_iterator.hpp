@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:43:27 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 09:15:31 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/30 12:47:04 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace ft
 			public:
 
 				typedef Iter															iterator_type;
-				typedef ft::bidirectional_iterator_tag									iterator_category;
+				typedef std::bidirectional_iterator_tag									iterator_category;
 				typedef typename ft::iterator_traits<iterator_type>::value_type			value_type;
 				typedef typename ft::iterator_traits<iterator_type>::difference_type	difference_type;
 				typedef typename ft::iterator_traits<iterator_type>::pointer			pointer;

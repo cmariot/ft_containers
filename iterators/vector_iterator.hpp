@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:44:00 by cmariot           #+#    #+#             */
-/*   Updated: 2022/08/18 11:05:32 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/08/30 12:48:46 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ namespace ft
 			{
 				return (_ptr != rhs._ptr);
 			};
-			
+
 			// OPERATOR >
 			bool operator > (const vector_iterator & rhs) const
 			{
